@@ -873,21 +873,21 @@
 <body>
 
 <!-- Sidebar: CPT Codes (Floating Overlay) -->
-<div class="panel sidebar" id="sidebar">
+<div class="panel sidebar" id="sidebar" role="navigation" aria-label="CPT Code Navigation">
     <div class="panel-title" style="font-size: 14px; padding: 8px;">
         <span>CPT</span>
-        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">◀</button>
+        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar" aria-label="Toggle CPT sidebar visibility">◀</button>
     </div>
-    <div class="sidebar-section" id="cptSidebar"></div>
+    <div class="sidebar-section" id="cptSidebar" role="list" aria-label="CPT codes and categories"></div>
 </div>
 
 <!-- Floating Toggle Button (shown when sidebar is collapsed) -->
-<div class="floating-toggle" onclick="toggleSidebar()" title="Open sidebar">
-    <span>☰</span>
+<div class="floating-toggle" onclick="toggleSidebar()" title="Open sidebar" role="button" aria-label="Open CPT sidebar" tabindex="0">
+    <span aria-hidden="true">☰</span>
 </div>
 
 <!-- Backdrop overlay -->
-<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()" role="presentation" aria-hidden="true"></div>
 
 <!-- Complete Documentation Modal (Slide-in Panel) -->
 <div id="completeDocModal" style="display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 500px; background: #2a2a2a; border-left: 2px solid #555; box-shadow: -4px 0 20px rgba(0,0,0,0.5); z-index: 2000; transform: translateX(100%); transition: transform 0.3s ease; overflow-y: auto;">
@@ -909,23 +909,23 @@
 
 <div class="container" id="container">
     <!-- Narratives Panel -->
-    <div class="panel" id="narratives-panel">
+    <div class="panel" id="narratives-panel" role="region" aria-label="Narrative Selection">
         <div class="panel-title" style="display: flex; justify-content: space-between; align-items: center;">
             <span id="narrativesPanelTitle">Narratives (0)</span>
-            <button class="btn" onclick="toggleMode()" style="padding: 4px 12px; font-size: 12px; background: #555;">
-                <span id="modeToggleText">📝 Templates</span>
+            <button class="btn" onclick="toggleMode()" style="padding: 4px 12px; font-size: 12px; background: #555;" aria-label="Toggle between narratives and templates mode">
+                <span id="modeToggleText" aria-hidden="true">📝 Templates</span>
             </button>
         </div>
         <!-- Search Bar -->
         <div class="search-bar-container">
             <div class="search-bar">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="narrativeSearch" class="search-input" placeholder="Search narratives..." autocomplete="off">
-                <button class="search-clear-btn" id="searchClearBtn" onclick="clearNarrativeSearch()" title="Clear search (Esc)" style="display: none;">×</button>
+                <span class="search-icon" aria-hidden="true">🔍</span>
+                <input type="text" id="narrativeSearch" class="search-input" placeholder="Search narratives..." autocomplete="off" aria-label="Search narratives by keyword">
+                <button class="search-clear-btn" id="searchClearBtn" onclick="clearNarrativeSearch()" title="Clear search (Esc)" style="display: none;" aria-label="Clear search">×</button>
             </div>
-            <div class="search-results-count" id="searchResultsCount" style="display: none;"></div>
+            <div class="search-results-count" id="searchResultsCount" style="display: none;" role="status" aria-live="polite"></div>
         </div>
-        <div class="panel-content" id="narrativeList"></div>
+        <div class="panel-content" id="narrativeList" role="list" aria-label="Available narratives"></div>
         <div class="panel-content" id="templateBuilder" style="display: none; padding: 15px;">
             <div id="templateSelection">
                 <h3 style="margin: 0 0 15px 0; font-size: 16px; color: #e0e0e0;">Build from Template</h3>
@@ -958,18 +958,18 @@
     <div class="resizer" data-resizer-index="0"></div>
 
     <!-- Middle Panel: Editor -->
-    <div class="panel" id="middle-panel">
+    <div class="panel" id="middle-panel" role="main" aria-label="Narrative Editor">
         <div class="panel-title">Editor</div>
         <div class="panel-content">
-            <div class="editor-content" id="editorContent" contenteditable="true">
+            <div class="editor-content" id="editorContent" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Edit narrative content">
                 Select a narrative from the left to begin editing...
             </div>
         </div>
-        <div class="editor-actions">
-            <button class="btn" id="undoBtn" onclick="undo()" title="Undo (Ctrl+Z)" disabled style="opacity: 0.5; cursor: not-allowed;">↶ Undo</button>
-            <button class="btn" id="redoBtn" onclick="redo()" title="Redo (Ctrl+Y)" disabled style="opacity: 0.5; cursor: not-allowed;">↷ Redo</button>
-            <button class="btn" onclick="showCompleteDocumentationModal()">✓ Complete Documentation</button>
-            <button class="btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+        <div class="editor-actions" role="toolbar" aria-label="Editor actions">
+            <button class="btn" id="undoBtn" onclick="undo()" title="Undo (Ctrl+Z)" disabled style="opacity: 0.5; cursor: not-allowed;" aria-label="Undo last change">↶ Undo</button>
+            <button class="btn" id="redoBtn" onclick="redo()" title="Redo (Ctrl+Y)" disabled style="opacity: 0.5; cursor: not-allowed;" aria-label="Redo last undone change">↷ Redo</button>
+            <button class="btn" onclick="showCompleteDocumentationModal()" aria-label="Open documentation completion assistant">✓ Complete Documentation</button>
+            <button class="btn" onclick="copyToClipboard()" aria-label="Copy narrative to clipboard">Copy to Clipboard</button>
         </div>
     </div>
 
@@ -977,11 +977,11 @@
     <div class="resizer" data-resizer-index="1"></div>
 
     <!-- Right Panel: Replacement Options -->
-    <div class="panel" id="right-panel">
+    <div class="panel" id="right-panel" role="complementary" aria-label="Component Replacement Options">
         <div class="panel-title">Replace Component</div>
-        <div class="options-header" id="optionsHeader">Click a highlighted component to see options</div>
-        <div class="panel-content" id="optionsPanel"></div>
-        <div id="suggestionsPanel" style="display: none;"></div>
+        <div class="options-header" id="optionsHeader" role="status">Click a highlighted component to see options</div>
+        <div class="panel-content" id="optionsPanel" role="list" aria-label="Replacement options for selected component"></div>
+        <div id="suggestionsPanel" style="display: none;" role="complementary" aria-label="Related component suggestions"></div>
     </div>
 </div>
 
@@ -3096,6 +3096,17 @@ function selectNarrative(narrative, itemElement) {
     addToRecent(getNarrativeId(narrative));
     updateSidebarCounts(); // Refresh counts
 
+    // BUGFIX: Clear selectedComponent to prevent stale references
+    selectedComponent = null;
+
+    // Clear options panel when loading new narrative
+    const optionsPanel = document.getElementById('optionsPanel');
+    const optionsHeader = document.getElementById('optionsHeader');
+    if (optionsPanel && optionsHeader) {
+        optionsPanel.innerHTML = '';
+        optionsHeader.textContent = 'Click a highlighted component to see options';
+    }
+
     document.querySelectorAll('.narrative-item').forEach(item => {
         item.classList.remove('selected');
     });
@@ -3509,6 +3520,13 @@ function replaceComponent(newText) {
     // Validate newText before replacing
     if (!newText || newText.trim() === '') {
         alert('Please select a valid replacement option.');
+        return;
+    }
+
+    // Security: Validate max length to prevent layout breaking
+    const MAX_COMPONENT_LENGTH = 500;
+    if (newText.length > MAX_COMPONENT_LENGTH) {
+        alert(`Text is too long (${newText.length} characters). Maximum allowed is ${MAX_COMPONENT_LENGTH} characters.`);
         return;
     }
 
@@ -4266,15 +4284,73 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Save direct text edits to history
-let editTimeout;
-document.getElementById('editorContent').addEventListener('input', () => {
-    // Debounce to avoid saving on every keystroke
-    clearTimeout(editTimeout);
-    editTimeout = setTimeout(() => {
-        saveHistory();
-    }, 500); // Save after 500ms of no typing
-});
+// ============================================================================
+// Editor Input Handler: Validation + History Saving (consolidated)
+// ============================================================================
+(function initEditorInputHandler() {
+    const editorContent = document.getElementById('editorContent');
+    if (!editorContent) {
+        console.warn('Editor content element not found');
+        return;
+    }
+
+    const MAX_EDITOR_LENGTH = 10000; // Max characters for entire narrative
+    let editTimeout;
+
+    // Consolidated input event listener (validation + history saving)
+    editorContent.addEventListener('input', () => {
+        const currentLength = editorContent.innerText.length;
+
+        // Validate max length
+        if (currentLength > MAX_EDITOR_LENGTH) {
+            // Truncate content if it exceeds max length
+            const textContent = editorContent.innerText;
+            const truncated = textContent.substring(0, MAX_EDITOR_LENGTH);
+            editorContent.innerText = truncated;
+
+            // Show warning
+            const warning = document.createElement('div');
+            warning.textContent = `⚠ Maximum length of ${MAX_EDITOR_LENGTH} characters reached`;
+            warning.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #ff6b6b; color: white; padding: 10px 20px; border-radius: 4px; z-index: 9999; animation: fadeOut 3s forwards;';
+            document.body.appendChild(warning);
+            setTimeout(() => warning.remove(), 3000);
+        }
+
+        // Debounced history saving (avoid saving on every keystroke)
+        clearTimeout(editTimeout);
+        editTimeout = setTimeout(() => {
+            saveHistory();
+        }, 500);
+    });
+
+    // Prevent paste of extremely long content
+    editorContent.addEventListener('paste', (e) => {
+        e.preventDefault();
+
+        const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+        const currentText = editorContent.innerText || '';
+
+        if (pastedText.length > MAX_EDITOR_LENGTH) {
+            alert(`Pasted content is too long (${pastedText.length} characters). Maximum allowed is ${MAX_EDITOR_LENGTH} characters.`);
+            return;
+        }
+
+        if (currentText.length + pastedText.length > MAX_EDITOR_LENGTH) {
+            const availableSpace = MAX_EDITOR_LENGTH - currentText.length;
+            if (availableSpace > 0) {
+                const truncatedText = pastedText.substring(0, availableSpace);
+                document.execCommand('insertText', false, truncatedText);
+                alert(`Content truncated to fit within ${MAX_EDITOR_LENGTH} character limit.`);
+            } else {
+                alert('Cannot paste: Maximum length reached.');
+            }
+            return;
+        }
+
+        // Insert as plain text to prevent HTML injection
+        document.execCommand('insertText', false, pastedText);
+    });
+})();
 
 // Initialize
 loadCategoryMappings();
@@ -4420,170 +4496,7 @@ initializeNarrativeSearch();
 })();
 
 // ============================================================================
-// COMPREHENSIVE KEYBOARD SHORTCUTS FOR NARRATIVE NAVIGATION
-// ============================================================================
-
-// Track current highlighted narrative index for keyboard navigation
-let currentHighlightedIndex = -1;
-
-// Add CSS for highlighted state (if not already present)
-const style = document.createElement('style');
-style.textContent = `
-    .narrative-item.highlighted {
-        border-color: #888 !important;
-        box-shadow: 0 0 8px rgba(100, 149, 237, 0.5) !important;
-        background: #383838 !important;
-    }
-`;
-document.head.appendChild(style);
-
-// Main keyboard navigation event listener
-document.addEventListener('keydown', (e) => {
-    const narrativeList = document.getElementById('narrativeList');
-    const narrativeItems = Array.from(document.querySelectorAll('.narrative-item'));
-
-    // Only process these shortcuts when not typing in an input/textarea
-    const activeElement = document.activeElement;
-    const isTyping = activeElement.tagName === 'INPUT' ||
-                     activeElement.tagName === 'TEXTAREA' ||
-                     activeElement.isContentEditable;
-
-    // ========================================================================
-    // 1. ARROW UP - Navigate to previous narrative in list
-    // ========================================================================
-    if (e.key === 'ArrowUp' && !isTyping && narrativeItems.length > 0) {
-        e.preventDefault();
-
-        // Move to previous item (or wrap to last if at beginning)
-        if (currentHighlightedIndex <= 0) {
-            currentHighlightedIndex = narrativeItems.length - 1;
-        } else {
-            currentHighlightedIndex--;
-        }
-
-        // Update visual highlight
-        narrativeItems.forEach(item => item.classList.remove('highlighted'));
-        const highlightedItem = narrativeItems[currentHighlightedIndex];
-        highlightedItem.classList.add('highlighted');
-
-        // Scroll into view smoothly
-        highlightedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    // ========================================================================
-    // 2. ARROW DOWN - Navigate to next narrative in list
-    // ========================================================================
-    else if (e.key === 'ArrowDown' && !isTyping && narrativeItems.length > 0) {
-        e.preventDefault();
-
-        // Move to next item (or wrap to first if at end)
-        if (currentHighlightedIndex >= narrativeItems.length - 1) {
-            currentHighlightedIndex = 0;
-        } else {
-            currentHighlightedIndex++;
-        }
-
-        // Update visual highlight
-        narrativeItems.forEach(item => item.classList.remove('highlighted'));
-        const highlightedItem = narrativeItems[currentHighlightedIndex];
-        highlightedItem.classList.add('highlighted');
-
-        // Scroll into view smoothly
-        highlightedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    // ========================================================================
-    // 3. ENTER - Load the currently highlighted narrative into editor
-    // ========================================================================
-    else if (e.key === 'Enter' && !isTyping && currentHighlightedIndex >= 0 && narrativeItems.length > 0) {
-        e.preventDefault();
-
-        const highlightedItem = narrativeItems[currentHighlightedIndex];
-        if (highlightedItem) {
-            // Trigger click on the highlighted item to load it
-            highlightedItem.click();
-        }
-    }
-
-    // ========================================================================
-    // 4. TAB / SHIFT+TAB - Navigate between editable components in editor
-    // ========================================================================
-    else if (e.key === 'Tab' && !isTyping) {
-        const editableComponents = Array.from(document.querySelectorAll('.editable-component'));
-
-        if (editableComponents.length > 0) {
-            e.preventDefault();
-
-            // Find currently selected component index
-            let currentIndex = editableComponents.findIndex(comp => comp.classList.contains('selected'));
-
-            // Calculate next index based on Shift key (backward) or not (forward)
-            let nextIndex;
-            if (e.shiftKey) {
-                // Shift+Tab: Move backward
-                nextIndex = currentIndex <= 0 ? editableComponents.length - 1 : currentIndex - 1;
-            } else {
-                // Tab: Move forward
-                nextIndex = currentIndex >= editableComponents.length - 1 ? 0 : currentIndex + 1;
-            }
-
-            // Click the next component to select it
-            editableComponents[nextIndex].click();
-
-            // Scroll into view
-            editableComponents[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }
-
-    // ========================================================================
-    // 5. NUMBER KEYS 1-9 - Quick-select replacement options from right panel
-    // ========================================================================
-    else if (e.key >= '1' && e.key <= '9' && !isTyping) {
-        e.preventDefault();
-
-        const optionNumber = parseInt(e.key);
-
-        // Try to find option buttons in the right panel
-        const optionButtons = document.querySelectorAll('.option-btn, .type-btn');
-
-        if (optionButtons.length >= optionNumber) {
-            // Click the corresponding option (1-based index, so subtract 1)
-            optionButtons[optionNumber - 1].click();
-        }
-    }
-
-    // ========================================================================
-    // 6. ALT+F - Toggle favorite for currently selected narrative
-    // ========================================================================
-    else if (e.altKey && e.key === 'f') {
-        e.preventDefault();
-
-        // Find the currently selected narrative item
-        const selectedItem = document.querySelector('.narrative-item.selected');
-
-        if (selectedItem) {
-            // Find and click the star icon within the selected item
-            const starIcon = selectedItem.querySelector('.narrative-star');
-            if (starIcon) {
-                starIcon.click();
-            }
-        }
-    }
-});
-
-// ============================================================================
-// HELPER: Reset highlighted index when narratives list changes
-// ============================================================================
-const originalDisplayNarratives = window.displayNarratives;
-if (typeof originalDisplayNarratives === 'function') {
-    window.displayNarratives = function() {
-        originalDisplayNarratives.apply(this, arguments);
-        currentHighlightedIndex = -1; // Reset highlight when list refreshes
-    };
-}
-
-// ============================================================================
-// PRIORITY 2 FIX #4: Restore sidebar collapse state on page load
+// Restore sidebar collapse state on page load
 // ============================================================================
 (function() {
     const isCollapsed = localStorage.getItem('ot_sidebar_collapsed') === 'true';
