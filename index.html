@@ -1811,21 +1811,31 @@ const replacementOptions = {
 
 async function loadCategoryMappings() {
     try {
-        const response = await fetch('data/category_mappings.json');
+        const response = await fetch('category_mappings.json');
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: Failed to load category_mappings.json`);
+        }
         categoryMappings = await response.json();
         console.log('Category mappings loaded:', Object.keys(categoryMappings).length, 'categories');
     } catch (error) {
         console.error('Error loading category mappings:', error);
+        // Fallback to empty object
+        categoryMappings = {};
     }
 }
 
 async function loadConsolidatedCategories() {
     try {
-        const response = await fetch('data/CONSOLIDATED_CATEGORIES.json');
+        const response = await fetch('CONSOLIDATED_CATEGORIES.json');
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: Failed to load CONSOLIDATED_CATEGORIES.json`);
+        }
         consolidatedCategories = await response.json();
         console.log('Consolidated categories loaded');
     } catch (error) {
         console.error('Error loading consolidated categories:', error);
+        // Fallback to empty object
+        consolidatedCategories = {};
     }
 }
 
@@ -1837,11 +1847,20 @@ async function loadNarratives() {
     }
 
     try {
+        // Helper function to fetch and validate JSON
+        const fetchJSON = async (url) => {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: Failed to load ${url}`);
+            }
+            return response.json();
+        };
+
         const [data97530, data97535, data97110, data97112] = await Promise.all([
-            fetch('data/97530_MASTER_NARRATIVES.json').then(r => r.json()),
-            fetch('data/97535_MASTER_NARRATIVES.json').then(r => r.json()),
-            fetch('data/97110_MASTER_NARRATIVES.json').then(r => r.json()),
-            fetch('data/97112_MASTER_NARRATIVES.json').then(r => r.json())
+            fetchJSON('97530_MASTER_NARRATIVES.json'),
+            fetchJSON('97535_MASTER_NARRATIVES.json'),
+            fetchJSON('97110_MASTER_NARRATIVES.json'),
+            fetchJSON('97112_MASTER_NARRATIVES.json')
         ]);
 
         data97530.forEach(n => n.cpt = 'CPT 97530');
@@ -1851,12 +1870,21 @@ async function loadNarratives() {
 
         narratives = [...data97530, ...data97535, ...data97110, ...data97112];
 
+        console.log(`Successfully loaded ${narratives.length} narratives`);
         populateFilters();
         displayNarratives();
     } catch (error) {
         console.error('Error loading narratives:', error);
         if (listContainer) {
-            listContainer.innerHTML = '<p style="padding: 20px; color: #ff6b6b; text-align: center;">⚠ Error loading data<br><small style="color: #999;">Please refresh the page to try again</small></p>';
+            listContainer.innerHTML = `<div style="padding: 20px; text-align: center;">
+                <p style="color: #ff6b6b; margin-bottom: 10px;">⚠ Error Loading Narratives</p>
+                <p style="color: #999; font-size: 13px; margin-bottom: 15px;">${error.message}</p>
+                <p style="color: #aaa; font-size: 12px;">Please ensure all JSON files are in the same directory as index.html:<br>
+                • 97530_MASTER_NARRATIVES.json<br>
+                • 97535_MASTER_NARRATIVES.json<br>
+                • 97110_MASTER_NARRATIVES.json<br>
+                • 97112_MASTER_NARRATIVES.json</p>
+            </div>`;
         }
     }
 }
@@ -1872,7 +1900,10 @@ let templateValues = {};
 async function loadTemplates() {
     try {
         // Load narrative templates (JSON format)
-        const response = await fetch('data/narrative_templates.json');
+        const response = await fetch('narrative_templates.json');
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: Failed to load narrative_templates.json`);
+        }
         narrativeTemplates = await response.json();
 
         // Load therapeutic activities and self-care data (JS format)
@@ -1883,8 +1914,11 @@ async function loadTemplates() {
         mergeAllTemplates();
 
         populateTemplateCategorySelect();
+        console.log('Templates loaded successfully');
     } catch (error) {
         console.error('Error loading templates:', error);
+        // Templates are optional - app can work without them
+        narrativeTemplates = {};
     }
 }
 
@@ -1892,7 +1926,7 @@ async function loadTherapeuticActivities() {
     try {
         // Load the JS file as a script
         const script = document.createElement('script');
-        script.src = 'data/therapeutic_activities_data.js';
+        script.src = 'therapeutic_activities_data.js';
         document.head.appendChild(script);
 
         // Wait for script to load
@@ -1915,7 +1949,7 @@ async function loadSelfCareData() {
     try {
         // Load the JS file as a script
         const script = document.createElement('script');
-        script.src = 'data/self_care_data.js';
+        script.src = 'self_care_data.js';
         document.head.appendChild(script);
 
         // Wait for script to load
