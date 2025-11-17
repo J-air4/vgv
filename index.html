@@ -3989,6 +3989,10 @@ document.addEventListener('keydown', (e) => {
         else if (selectedComponent) {
             selectedComponent.classList.remove('selected');
             selectedComponent = null;
+            document.getElementById('optionsPanel').innerHTML = '';
+            document.getElementById('optionsHeader').textContent = 'Click a highlighted component to see options';
+        }
+            selectedComponent = null;
             document.getElementById('optionsPanel').style.display = 'none';
         }
     }
