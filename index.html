@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OT Narrative Editor</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23be123c' width='100' height='100' rx='20'/%3E%3Ctext x='50' y='70' font-size='60' font-weight='bold' fill='%23ffe4e6' text-anchor='middle' font-family='sans-serif'%3EOT%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -2166,7 +2167,7 @@ async function loadTherapeuticActivities() {
         // Wait for script to load
         await new Promise((resolve, reject) => {
             script.onload = resolve;
-            script.onerror = reject;
+            script.onerror = () => reject(new Error('Failed to load therapeutic_activities_data.js'));
         });
 
         // Convert to template format
@@ -2175,7 +2176,7 @@ async function loadTherapeuticActivities() {
         }
     } catch (error) {
         // File is optional - template system works without it
-        console.warn('Therapeutic activities templates not available:', error.message);
+        console.info(`Optional file not loaded: ${error.message}`);
     }
 }
 
@@ -2189,7 +2190,7 @@ async function loadSelfCareData() {
         // Wait for script to load
         await new Promise((resolve, reject) => {
             script.onload = resolve;
-            script.onerror = reject;
+            script.onerror = () => reject(new Error('Failed to load self_care_data.js'));
         });
 
         // Convert to template format
@@ -2198,7 +2199,7 @@ async function loadSelfCareData() {
         }
     } catch (error) {
         // File is optional - template system works without it
-        console.warn('Self-care templates not available:', error.message);
+        console.info(`Optional file not loaded: ${error.message}`);
     }
 }
 
