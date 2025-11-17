@@ -2159,6 +2159,179 @@ async function loadTemplates() {
     }
 }
 
+async function loadTherapeuticActivities() {
+    try {
+        // Load the JS file as a script
+        const script = document.createElement('script');
+        script.src = 'therapeutic_activities_data.js';
+        document.head.appendChild(script);
+
+        // Wait for script to load
+        await new Promise((resolve, reject) => {
+            script.onload = resolve;
+            script.onerror = () => reject(new Error('Failed to load therapeutic_activities_data.js'));
+        });
+
+        // Convert to template format
+        if (typeof therapeuticActivitiesNotes !== 'undefined') {
+            therapeuticActivitiesTemplates = convertTherapeuticActivitiesToTemplates(therapeuticActivitiesNotes);
+        }
+    } catch (error) {
+        // File is optional - template system works without it
+        console.info(`Optional file not loaded: ${error.message}`);
+    }
+}
+
+async function loadSelfCareData() {
+    try {
+        // Load the JS file as a script
+        const script = document.createElement('script');
+        script.src = 'self_care_data.js';
+        document.head.appendChild(script);
+
+        // Wait for script to load
+        await new Promise((resolve, reject) => {
+            script.onload = resolve;
+            script.onerror = () => reject(new Error('Failed to load self_care_data.js'));
+        });
+
+        // Convert to template format
+        if (typeof selfCareNotes !== 'undefined') {
+            selfCareTemplates = convertSelfCareToTemplates(selfCareNotes);
+        }
+    } catch (error) {
+        // File is optional - template system works without it
+        console.info(`Optional file not loaded: ${error.message}`);
+    }
+}
+
+function convertTherapeuticActivitiesToTemplates(dataObject) {
+    const templates = {};
+
+    Object.keys(dataObject).forEach(mainCategory => {
+        const categoryData = dataObject[mainCategory];
+
+        Object.keys(categoryData).forEach(subCategory => {
+            const content = categoryData[subCategory];
+            const templateKey = `THERAPEUTIC_${mainCategory.replace(/[^A-Z0-9]/gi, '_').replace(/_+/g, '_')}_${subCategory.replace(/[^A-Z0-9]/gi, '_').replace(/_+/g, '_')}`;
+
+            if (typeof content === 'string') {
+                // Template format with [variable] placeholders
+                templates[templateKey] = {
+                    cpt: 'Therapeutic',
+                    category: mainCategory,
+                    subcategory: subCategory,
+                    variants: [createVariantFromTemplate(content, subCategory, mainCategory)]
+                };
+            }
+        });
+    });
+
+    return templates;
+}
+
+function convertSelfCareToTemplates(dataObject) {
+    const templates = {};
+
+    Object.keys(dataObject).forEach(mainCategory => {
+        const categoryData = dataObject[mainCategory];
+
+        Object.keys(categoryData).forEach(subCategory => {
+            const content = categoryData[subCategory];
+            const templateKey = `SELFCARE_${mainCategory.replace(/[^A-Z0-9]/gi, '_').replace(/_+/g, '_')}_${subCategory.replace(/[^A-Z0-9]/gi, '_').replace(/_+/g, '_')}`;
+
+            if (typeof content === 'object') {
+                // Note-based format with Note 1A, Note 1B, etc.
+                templates[templateKey] = {
+                    cpt: '97535',
+                    category: mainCategory,
+                    subcategory: subCategory,
+                    variants: Object.keys(content).map(noteKey =>
+                        createVariantFromNote(content[noteKey], noteKey, subCategory)
+                    )
+                };
+            }
+        });
+    });
+
+    return templates;
+}
+
+function createVariantFromTemplate(templateStr, name, categoryName) {
+    const variables = {};
+    const variablePattern = /\[([^\]]+?)\]/g;
+    let match;
+
+    // Extract all unique variables from template
+    const foundVars = new Set();
+    const tempStr = templateStr;
+    while ((match = variablePattern.exec(tempStr)) !== null) {
+        foundVars.add(match[1]);
+    }
+
+    // Create variable definitions
+    foundVars.forEach(varText => {
+        const varName = varText.replace(/[^A-Z0-9_]/gi, '_').toUpperCase().replace(/_+/g, '_');
+
+        // Detect if it's a selection from options
+        if (varText.includes('/')) {
+            const options = varText.split('/').map(opt => opt.trim());
+            variables[varName] = {
+                type: 'dropdown',
+                label: varText.split('/')[0].trim(),
+                options: options
+            };
+        } else if (varText.toLowerCase().includes('optional')) {
+            // Optional text field
+            variables[varName] = {
+                type: 'text',
+                label: varText.replace(/optional:/i, '').trim(),
+                placeholder: 'Optional'
+            };
+        } else {
+            // Generic text field or dropdown based on common patterns
+            variables[varName] = {
+                type: 'text',
+                label: varText,
+                placeholder: `Enter ${varText.toLowerCase()}`
+            };
+        }
+    });
+
+    // Convert [variable] to {{VARIABLE}} format
+    let structure = templateStr.replace(/\[([^\]]+?)\]/g, (match, varText) => {
+        const varName = varText.replace(/[^A-Z0-9_]/gi, '_').toUpperCase().replace(/_+/g, '_');
+        return `{{${varName}}}`;
+    });
+
+    return {
+        id: name.toLowerCase().replace(/[^a-z0-9]/g, '_'),
+        name: name,
+        description: `${categoryName} - ${name}`,
+        structure: structure,
+        variables: variables
+    };
+}
+
+function createVariantFromNote(noteText, noteId, categoryName) {
+    return {
+        id: noteId.toLowerCase().replace(/[^a-z0-9]/g, '_'),
+        name: noteId,
+        description: `${categoryName} - ${noteId}`,
+        structure: noteText,
+        variables: {}
+    };
+}
+
+function mergeAllTemplates() {
+    // Merge all template sources into narrativeTemplates
+    narrativeTemplates = {
+        ...narrativeTemplates,
+        ...therapeuticActivitiesTemplates,
+        ...selfCareTemplates
+    };
+}
+
 function populateTemplateCategorySelect() {
     const select = document.getElementById('templateCategorySelect');
     select.innerHTML = '<option value="">Select a category...</option>';
