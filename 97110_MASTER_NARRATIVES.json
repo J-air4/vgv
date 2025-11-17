@@ -2,242 +2,241 @@
   {
     "category": "UPPER_EXTREMITY_SHOULDER_ROM",
     "intervention": "Shoulder ROM (Post-Op)",
-    "narrative": "Skilled interventions focused on L shoulder flexion/abduction PROM in supine to improve [Patient Goal], 2/2 rotator cuff repair. Patient completed 2 sets of 12 reps of AAROM with pulley assist. Passive elevation to 105° and external rotation to 30° were performed. Mod verbal cues for pain management and to avoid active muscle contraction were provided. Current L shoulder PROM 105°, pain 3/10 with PROM."
+    "narrative": "Skilled therapeutic exercise focused on L shoulder flexion/abduction PROM in supine to improve [Patient Goal], 2/2 rotator cuff repair (post-op week 3). Patient completed 2 sets of 12 reps of AAROM with pulley assist to protect surgical repair while promoting ROM. Passive elevation to 105° (vs 85° at baseline) and external rotation to 30° (vs 20° at baseline) performed with controlled, gentle movements. Mod verbal cues for pain management (maintaining <4/10 pain) and to avoid active muscle contraction during protected healing phase. Current L shoulder PROM 105° flexion, pain 3/10 with PROM. Patient continues to require skilled OT for progressive ROM advancement and post-surgical precaution monitoring."
   },
   {
     "category": "UPPER_EXTREMITY_SHOULDER_ROM",
     "intervention": "Shoulder ROM (Bilateral)",
-    "narrative": "To promote functional reach for [Patient Goal], Patient completed 3 sets of 10 reps of B shoulder AROM exercises, targeting bilateral frozen shoulder. Session included table slides, wall walks progressing height, and seated overhead reach. Verbal cues for proper breathing and scapular control were provided to ensure correct form. R shoulder AROM 80°, L shoulder AROM 75°."
+    "narrative": "Skilled therapeutic exercise to promote functional overhead reach for [Patient Goal], 2/2 bilateral adhesive capsulitis. Patient completed 3 sets of 10 reps of bilateral shoulder AROM exercises, targeting capsular restrictions. Session included table slides (5 min), progressive wall walks advancing 2 inches per week, and seated overhead reach with dowel. Verbal cues for proper breathing techniques to promote relaxation and scapular control to ensure correct movement patterns. R shoulder AROM 80° flexion (vs 65° at baseline), L shoulder AROM 75° flexion (vs 60° at baseline), demonstrating improved functional ROM."
   },
   {
     "category": "UPPER_EXTREMITY_SHOULDER_ROM",
     "intervention": "Shoulder ROM (Unilateral)",
-    "narrative": "To improve [Patient Goal], Patient completed 3 sets of 8 reps of R shoulder AROM/PROM, addressing post-op capsular tightness. Activities included supine passive flexion, AAROM with cane assist, and progressive wall climbing. Tactile cues at scapula for stability and min verbal cues for progression were required. PROM improved to 120°, AROM 100°."
+    "narrative": "Skilled therapeutic exercise to improve [Patient Goal], 2/2 R shoulder contracture following fracture. Patient completed 3 sets of 8 reps of R shoulder AROM/PROM exercises, addressing post-immobilization capsular tightness. Activities included supine passive flexion with sustained end-range holds (30 sec), AAROM with cane assist for elevation and rotation, and progressive wall climbing with 2-inch advancement goals. Tactile cues at scapula for stability and min verbal cues for proper progression and pain-free motion. PROM improved to 120° (vs 100° at baseline), AROM 100° (vs 80° at baseline), demonstrating functional gains."
   },
   {
     "category": "UPPER_EXTREMITY_SHOULDER_STRENGTHENING",
     "intervention": "Shoulder Strengthening (Bilateral)",
-    "narrative": "To promote functional UE strength for [Patient Goal], Patient completed 3 sets of 10 reps of B shoulder strengthening exercises using a red resistive band, 2/2 rotator cuff weakness. Min verbal cues were provided for proper body mechanics and controlled movements."
+    "narrative": "Skilled therapeutic exercise to promote functional UE strength for [Patient Goal], 2/2 bilateral rotator cuff weakness (4/5 strength). Patient completed 3 sets of 10 reps of bilateral shoulder strengthening exercises using red (medium) resistive band to progress muscular endurance. Exercises included external rotation in neutral, internal rotation, scaption, and rows to target rotator cuff and scapular stabilizers. Min verbal cues provided for proper body mechanics and controlled eccentric movements to prevent compensatory patterns. Patient tolerated medium resistance vs light (yellow band) at baseline."
   },
   {
     "category": "UPPER_EXTREMITY_SHOULDER_STRENGTHENING",
     "intervention": "Shoulder Strengthening (Rotator Cuff)",
-    "narrative": "Skilled interventions focused on R shoulder strengthening to improve [Patient Goal], 2/2 supraspinatus tendinopathy. Patient completed 2 sets of exercises: 12 reps external rotation with yellow band, 10 reps scaption with 3 lb weights, and 8 reps prone T's. Tactile cues for scapular retraction and verbal cues to avoid shoulder elevation were provided to ensure proper form."
+    "narrative": "Skilled therapeutic exercise focused on R shoulder strengthening to improve [Patient Goal], 2/2 supraspinatus tendinopathy with weakness (3+/5 strength). Patient completed 2 sets of rotator cuff specific exercises: 12 reps external rotation with yellow (light) band, 10 reps scaption with 3 lb weights at 30° abduction (empty can modified), and 8 reps prone T's for scapular retraction. Tactile cues for scapular retraction and depression; verbal cues to avoid shoulder elevation and maintain neutral spine to ensure proper muscle recruitment. Patient progressed to 3 lb weights vs 2 lb at baseline."
   },
   {
     "category": "UPPER_EXTREMITY_SHOULDER_STRENGTHENING",
     "intervention": "Shoulder Strengthening (Post-Mastectomy)",
-    "narrative": "To promote functional UE use for [Patient Goal], Patient completed 3 sets of strengthening exercises, addressing post-mastectomy weakness. Activities included 10 wall push-ups, 10 prone rows with 2 lb weights, and 12 band pull-aparts (yellow). Min verbal cues for posture and tactile cues at scapula for activation were required."
+    "narrative": "Skilled therapeutic exercise to promote functional UE use for [Patient Goal], 2/2 post-mastectomy weakness (R UE 3/5 strength) and lymphedema precautions. Patient completed 3 sets of progressive strengthening: 10 wall push-ups (vs 6 at baseline), 10 prone rows with 2 lb weights, and 12 yellow band pull-aparts for scapular strengthening. Min verbal cues for upright posture and tactile cues at scapula for proper muscle activation. Patient educated on lymphedema precautions during resistance training. Patient demonstrated improved strength without increased edema (circumference measurements stable)."
   },
   {
     "category": "UPPER_EXTREMITY_ELBOW_WRIST_ROM",
     "intervention": "Elbow/Wrist ROM (Contractures)",
-    "narrative": "Patient engaged in 3 sets of 10 reps of R elbow/wrist AROM and sustained stretching to improve [Patient Goal], 2/2 contractures. Mod verbal cues were required for proper positioning to maximize stretch. Current R elbow extension deficit -25°, wrist supination 30°."
+    "narrative": "Patient engaged in skilled therapeutic exercise with 3 sets of 10 reps of R elbow/wrist AROM and sustained stretching (30 sec holds x5) to improve [Patient Goal], 2/2 chronic contractures from prolonged immobilization. Mod verbal cues required for proper joint alignment and positioning to maximize tissue elongation and stretch effectiveness. Current R elbow extension deficit -25° (vs -35° at baseline), wrist supination 30° (vs 20° at baseline), demonstrating gradual ROM improvement. Patient continues to require skilled OT for progressive ROM advancement."
   },
   {
     "category": "UPPER_EXTREMITY_ELBOW_WRIST_ROM",
     "intervention": "Elbow ROM (Post-Fracture)",
-    "narrative": "To promote functional reach for [Patient Goal], Patient completed 3 sets of 12 reps of L elbow AROM, addressing an elbow contracture post-fracture. Activities included active flexion/extension and passive overpressure into extension (x30 sec holds). Min verbal cues were provided for controlled movement. L elbow flexion 125°, extension deficit -15°."
+    "narrative": "Skilled therapeutic exercise to promote functional reach for [Patient Goal], 2/2 L elbow contracture following distal humerus fracture. Patient completed 3 sets of 12 reps of L elbow AROM including active flexion/extension and passive end-range overpressure into extension (30 sec holds x3) to address capsular restrictions. Min verbal cues provided for controlled, pain-free movement (<4/10 pain). L elbow flexion 125° (vs 115° at baseline), extension deficit -15° (vs -25° at baseline), demonstrating improved functional ROM for ADL tasks."
   },
   {
     "category": "UPPER_EXTREMITY_ELBOW_WRIST_ROM",
     "intervention": "Wrist ROM (Arthritis)",
-    "narrative": "Skilled interventions focused on R wrist AROM to improve [Patient Goal], 2/2 wrist arthritis. Patient completed 2 sets of 15 reps of wrist AROM in all planes and tendon gliding exercises. Verbal cues were provided for pain-free ROM and neutral positioning during glides."
+    "narrative": "Skilled therapeutic exercise focused on R wrist AROM to improve [Patient Goal], 2/2 wrist osteoarthritis limiting functional hand use. Patient completed 2 sets of 15 reps of wrist AROM in all planes (flexion/extension, radial/ulnar deviation) and tendon gliding exercises (5 positions x10 reps) to maintain joint mobility and tendon excursion. Verbal cues provided for pain-free ROM (maintaining <3/10 pain) and neutral wrist positioning during tendon glides to optimize muscle-tendon function."
   },
   {
     "category": "UPPER_EXTREMITY_ELBOW_WRIST_ROM",
     "intervention": "Forearm Supination/Pronation (Bilateral)",
-    "narrative": "To promote UE function for [Patient Goal], Patient completed 3 sets of 10 reps of B forearm supination/pronation AROM, 2/2 prolonged immobilization. Activities included pronation/supination with dowel, wrist circles, and elbow AROM. Tactile cues for neutral wrist and min verbal cues for full excursion were required."
+    "narrative": "Skilled therapeutic exercise to promote UE function for [Patient Goal], 2/2 bilateral forearm stiffness following prolonged immobilization. Patient completed 3 sets of 10 reps of bilateral forearm supination/pronation AROM. Activities included pronation/supination with dowel (progressing arc of motion), wrist circles for combined movement, and active elbow AROM. Tactile cues for neutral wrist alignment and min verbal cues for achieving full rotational excursion. Patient achieved 70° supination bilaterally vs 50° at baseline."
   },
   {
     "category": "UPPER_EXTREMITY_ELBOW_WRIST_ROM",
     "intervention": "Forearm Supination/Pronation (Unilateral)",
-    "narrative": "Due to difficulty with [Task, e.g., turning doorknobs] noted at start of tx, Patient completed 3x12 reps of manually-facilitated L forearm supination/pronation. This was incorporated with L shoulder, wrist, and digit extension/flexion (2x10 reps) to promote joint flexibility and circulation, 2/2 post-fracture stiffness."
+    "narrative": "Skilled therapeutic exercise to address difficulty with [Task, e.g., turning doorknobs] noted at evaluation. Patient completed 3 sets of 12 reps of manually-facilitated L forearm supination/pronation to improve rotational ROM. Exercise integrated with L shoulder, wrist, and digit extension/flexion (2 sets x10 reps) to promote joint flexibility, circulation, and combined movement patterns, 2/2 post-fracture stiffness. Patient achieved 65° supination (vs 45° at baseline) and 70° pronation (vs 50° at baseline)."
   },
   {
     "category": "UPPER_EXTREMITY_GRIP_STRENGTHENING",
     "intervention": "Grip Strengthening (General Weakness)",
-    "narrative": "To promote functional hand strength for [Patient Goal], Patient completed 3 sets of 10 reps of theraputty exercises (medium resistance) for power grip and pinch, 2/2 generalized weakness. Min verbal cues for finger isolation and proper technique were provided to facilitate motor control."
+    "narrative": "Skilled therapeutic exercise to promote functional hand strength for [Patient Goal], 2/2 generalized weakness (grip strength R 12 lbs, L 10 lbs). Patient completed 3 sets of 10 reps of theraputty exercises using medium (red) resistance for power grip, lateral pinch, and tip pinch strengthening. Min verbal cues for proper finger isolation and technique to facilitate optimal motor control and muscle recruitment. Patient progressed to medium resistance vs soft (yellow) at baseline."
   },
   {
     "category": "UPPER_EXTREMITY_GRIP_STRENGTHENING",
     "intervention": "Grip Strengthening (Post-CVA)",
-    "narrative": "To promote functional grasp for [Patient Goal], Patient completed 3 sets of 10 reps of R hand grip/pinch strengthening, addressing weakness post-CVA. Activities included theraputty (firm) exercises and hand gripper (medium resistance). Tactile cues for finger positioning and verbal cues for sustained contraction were required. Grip strength R 8 lbs."
+    "narrative": "Skilled therapeutic exercise to promote functional grasp for [Patient Goal], 2/2 R hand weakness post-CVA (R grip 2/5 strength). Patient completed 3 sets of 10 reps of R hand grip and pinch strengthening exercises. Activities included theraputty (firm) manipulation and hand gripper exercises with medium resistance to build functional strength. Tactile cues for proper finger positioning and verbal cues for sustained muscle contraction (5 sec holds). R grip strength improved to 8 lbs vs 5 lbs at baseline, demonstrating functional strength gains."
   },
   {
     "category": "UPPER_EXTREMITY_GRIP_STRENGTHENING",
     "intervention": "Grip Strengthening (Arthritis)",
-    "narrative": "Patient participated in B hand grip strengthening to improve [Patient Goal], 2/2 arthritis. Patient completed 2 sets of 12 reps using hand grippers (graded resistance), theraputty manipulation, and functional grasping. Min verbal cues were provided for joint protection techniques during the tasks."
+    "narrative": "Patient participated in skilled therapeutic exercise for bilateral hand grip strengthening to improve [Patient Goal], 2/2 hand osteoarthritis. Patient completed 2 sets of 12 reps using graded resistance hand grippers (light to medium), theraputty manipulation, and functional grasping of weighted objects (1-3 lbs). Min verbal cues provided for joint protection techniques (avoiding pinch/twist during maximal effort) to prevent pain exacerbation. Patient tolerated medium resistance without increased pain."
   },
   {
     "category": "UPPER_EXTREMITY_GRIP_STRENGTHENING",
     "intervention": "Grip Strengthening (Neuropathy)",
-    "narrative": "Patient engaged in 3 sets of 10 reps of L hand grip strengthening to promote tool use for [Patient Goal], 2/2 peripheral neuropathy. Activities included grippers (light to medium), theraputty, and finger extension with bands. Mod verbal cues were required for visual compensation 2/2 sensory loss."
+    "narrative": "Patient engaged in skilled therapeutic exercise with 3 sets of 10 reps of L hand grip strengthening to promote tool use for [Patient Goal], 2/2 peripheral neuropathy with decreased sensation and weakness. Activities included progressive grippers (light to medium resistance), theraputty manipulation, and finger extension exercises with resistance bands. Mod verbal cues required for compensatory visual monitoring of grasp force, 2/2 diminished sensory feedback limiting force modulation."
   },
   {
     "category": "UPPER_EXTREMITY_HAND_FINGER",
     "intervention": "Hand Intrinsic Strengthening",
-    "narrative": "To promote fine motor function for [Patient Goal], Patient engaged in 3 sets of 10 reps of R hand intrinsic strengthening, 2/2 arthritis. Activities included finger abduction/adduction and MCP flexion/extension with graded resistance. Tactile cues for precision and verbal cues for full ROM were required."
+    "narrative": "Skilled therapeutic exercise to promote fine motor function for [Patient Goal], 2/2 hand osteoarthritis affecting intrinsic muscles. Patient engaged in 3 sets of 10 reps of R hand intrinsic muscle strengthening. Activities included finger abduction/adduction against resistance, MCP flexion/extension with IP joints extended, and resistance band finger exercises. Tactile cues for precision of isolated movements and verbal cues for achieving full ROM. Patient demonstrated improved intrinsic strength with sustained MCP flexion 8 sec vs 4 sec at baseline."
   },
   {
     "category": "UPPER_EXTREMITY_HAND_FINGER",
     "intervention": "Finger ROM (Tendon Repair)",
-    "narrative": "Patient completed 3 sets of 10 reps of L hand finger ROM exercises to promote functional grasp, 2/2 tendon repair. Activities included tendon gliding and blocking exercises. Min verbal cues were provided to protect the repair and avoid excessive force."
+    "narrative": "Patient completed skilled therapeutic exercise with 3 sets of 10 reps of L hand finger ROM exercises to promote functional grasp recovery, 2/2 flexor tendon repair (post-op week 6, entering active ROM phase). Activities included tendon gliding exercises (all 5 positions) and digit blocking exercises for isolated FDP/FDS activation. Min verbal cues provided to protect surgical repair (avoiding excessive force) while promoting optimal tendon excursion. Patient achieved composite flexion to palm vs 2cm gap at baseline."
   },
   {
     "category": "UPPER_EXTREMITY_HAND_FINGER",
     "intervention": "Hand Coordination (Dexterity)",
-    "narrative": "Patient participated in 2 sets of 20 reps of B hand coordination exercises to promote fine motor dexterity for [Patient Goal], 2/2 Parkinson's. Activities included finger tapping, coin manipulation, and grip/release. Mod verbal cues for speed/accuracy and tactile cues for isolation were required."
+    "narrative": "Patient participated in skilled therapeutic exercise with 2 sets of 20 reps of bilateral hand coordination exercises to promote fine motor dexterity for [Patient Goal], 2/2 Parkinson's disease affecting motor control. Activities included rapid finger tapping (testing frequency), coin manipulation, and repetitive grip/release exercises to address bradykinesia. Mod verbal cues for optimal speed/accuracy balance and tactile cues for finger isolation. Patient completed 40 taps in 10 sec vs 25 taps at baseline, demonstrating improved motor speed."
   },
   {
     "category": "LOWER_EXTREMITY_HIP_KNEE_ROM",
     "intervention": "Hip/Knee ROM (THA Precautions)",
-    "narrative": "To promote functional LE ROM for [Patient Goal], Patient completed 3 sets of 10 reps of L hip/knee AROM, 2/2 L THA. Activities included heel slides (to 90° hip flexion), SLR, and seated knee extension. Verbal cues were provided to maintain hip precautions throughout. Current L hip AROM 85°, knee 110°."
+    "narrative": "Skilled therapeutic exercise to promote functional LE ROM for [Patient Goal], 2/2 L total hip arthroplasty (post-op week 2). Patient completed 3 sets of 10 reps of L hip/knee AROM within hip precautions. Activities included supine heel slides (limited to 90° hip flexion), straight leg raises, and seated knee extension to maintain quad strength. Verbal cues provided to maintain hip precautions (no flexion >90°, no adduction past midline, no internal rotation) throughout all movements. Current L hip AROM 85° (vs 70° at baseline), knee flexion 110° (vs 95° at baseline)."
   },
   {
     "category": "LOWER_EXTREMITY_HIP_KNEE_ROM",
     "intervention": "Hip/Knee ROM (Stair Climbing)",
-    "narrative": "Patient participated in 3 sets of 10 reps of B hip/knee ROM in standing to improve [Patient Goal], 2/2 bilateral knee OA. Activities included wall slides, step-ups to 4-inch step, and standing hip/knee flexion. Tactile cues at knees for alignment and min verbal cues for depth were required."
+    "narrative": "Patient participated in skilled therapeutic exercise with 3 sets of 10 reps of bilateral hip/knee ROM in standing to improve [Patient Goal], 2/2 bilateral knee osteoarthritis limiting stair negotiation. Activities included wall slides (to 90° knee flexion), step-ups to 4-inch step (progressing height weekly), and standing active hip/knee flexion. Tactile cues at knees for proper alignment (preventing valgus collapse) and min verbal cues for depth control. Patient achieved step-up to 6-inch height vs 4-inch at baseline."
   },
   {
     "category": "LOWER_EXTREMITY_HIP_KNEE_ROM",
     "intervention": "Knee ROM (Post-TKR)",
-    "narrative": "To promote transfer safety for [Patient Goal], Patient completed 3 sets of 10 reps of R knee flexion/extension AROM, 2/2 R TKR. Activities included heel slides, PROM overpressure into flexion (x30 sec hold), and seated knee extension with quad sets. Verbal cues for relaxation during PROM were provided. R knee flexion 105°, extension -2°."
+    "narrative": "Skilled therapeutic exercise to promote safe transfer mechanics for [Patient Goal], 2/2 R total knee replacement (post-op week 3). Patient completed 3 sets of 10 reps of R knee flexion/extension AROM. Activities included supine heel slides, PROM overpressure into flexion (30 sec hold x3) to address capsular restrictions, and seated knee extension with isometric quad sets (5 sec holds). Verbal cues for muscle relaxation during PROM to optimize tissue elongation. R knee flexion 105° (vs 90° at baseline), extension deficit -2° (vs -8° at baseline), demonstrating functional ROM improvement."
   },
   {
     "category": "LOWER_EXTREMITY_ANKLE_ROM",
     "intervention": "Ankle ROM (General)",
-    "narrative": "Patient completed 5 reps of 30-second holds of B ankle dorsiflexion AROM/PROM to improve [Patient Goal], 2/2 prolonged immobilization. Activities included towel stretches and standing calf stretches. Min verbal cues were provided for proper alignment. Patient tolerated stretching with min discomfort."
+    "narrative": "Patient completed skilled therapeutic exercise with 5 reps of 30-second sustained holds of bilateral ankle dorsiflexion AROM/PROM to improve [Patient Goal], 2/2 ankle plantar flexion contractures from prolonged immobilization. Activities included towel stretches in long sitting and standing calf stretches against wall. Min verbal cues provided for proper knee and foot alignment (knee straight for gastroc, knee bent for soleus). Patient tolerated stretching with minimal discomfort (2/10). Patient achieved 5° dorsiflexion bilaterally vs -5° (plantarflexion) at baseline."
   },
   {
     "category": "LOWER_EXTREMITY_ANKLE_ROM",
     "intervention": "Ankle ROM (Gait)",
-    "narrative": "To promote safe ambulation for [Patient Goal], Patient completed 3 sets of 12 reps of R ankle AROM, 2/2 ankle fracture. Activities included alphabet exercises, band resistance, and heel/toe raises. Verbal cues were provided for equal weight bearing and controlled movement."
+    "narrative": "Skilled therapeutic exercise to promote safe ambulation for [Patient Goal], 2/2 R ankle fracture with ROM limitations. Patient completed 3 sets of 12 reps of R ankle AROM in all planes. Activities included ankle alphabet exercises for combined movements, resistance band exercises (all 4 directions), and controlled heel/toe raises. Verbal cues provided for equal weight bearing distribution and controlled movement patterns to prevent compensatory movements. Patient achieved 10° dorsiflexion vs 5° at baseline."
   },
   {
     "category": "LOWER_EXTREMITY_ANKLE_ROM",
     "intervention": "Ankle ROM (Balance/Stairs)",
-    "narrative": "Patient participated in 3 sets of 10 reps of L ankle AROM to improve [Patient Goal], 2/2 ankle instability. Activities included towel scrunches, inversion/eversion with band, and controlled stepping. Tactile cues for alignment were provided, with SBA for standing activities."
+    "narrative": "Patient participated in skilled therapeutic exercise with 3 sets of 10 reps of L ankle AROM to improve [Patient Goal], 2/2 chronic ankle instability affecting balance. Activities included active towel scrunches for intrinsic foot strengthening, ankle inversion/eversion with resistance band (yellow), and controlled stepping progressions. Tactile cues for proper alignment (maintaining subtalar neutral), with SBA for safety during standing activities. Patient demonstrated improved active ROM: inversion 25° vs 15° at baseline."
   },
   {
     "category": "LOWER_EXTREMITY_STRENGTHENING",
     "intervention": "LE Strengthening (General)",
-    "narrative": "To promote functional LE strength for [Patient Goal], Patient completed 2 sets of BLE strengthening exercises, 2/2 generalized weakness. Activities included 10 STS, 8 mini squats, and 10 heel/toe raises. Tactile cues at knees for proper alignment (preventing knee valgus) and min verbal cues for depth were required."
+    "narrative": "Skilled therapeutic exercise to promote functional LE strength for [Patient Goal], 2/2 generalized weakness (LE strength 3+/5 bilaterally). Patient completed 2 sets of bilateral LE strengthening exercises: 10 sit-to-stand transfers (vs 6 at baseline), 8 mini squats (to 45° knee flexion), and 10 bilateral heel/toe raises. Tactile cues at knees for proper alignment (preventing knee valgus) and min verbal cues for depth control and proper mechanics. Patient demonstrated improved strength and endurance."
   },
   {
     "category": "LOWER_EXTREMITY_STRENGTHENING",
     "intervention": "LE Strengthening (Transfers)",
-    "narrative": "Patient participated in 3 sets of 8 reps of BLE strengthening to promote transfer independence, 2/2 quadriceps weakness. Activities included STS with reduced armrest use, wall squats with holds, and step-ups. Mod verbal cues for depth and tactile cues to prevent knee valgus were required."
+    "narrative": "Patient participated in skilled therapeutic exercise with 3 sets of 8 reps of bilateral LE strengthening to promote transfer independence, 2/2 quadriceps weakness (3/5 strength bilaterally). Activities included sit-to-stand with progressively reduced armrest use, wall squats with 10 sec holds, and step-ups to 4-inch platform. Mod verbal cues for proper depth (90° knee flexion) and tactile cues to prevent knee valgus collapse. Patient completed STS with min armrest use vs mod armrest dependence at baseline."
   },
   {
     "category": "LOWER_EXTREMITY_STRENGTHENING",
     "intervention": "LE Strengthening (Stairs)",
-    "narrative": "Patient engaged in 2 sets of 10 reps of BLE strengthening to improve [Patient Goal], 2/2 hip/knee weakness. Activities included step-ups, lateral step-downs, and resistance band leg press. Verbal cues were provided for controlled descent and proper weight distribution."
+    "narrative": "Patient engaged in skilled therapeutic exercise with 2 sets of 10 reps of bilateral LE strengthening to improve [Patient Goal], 2/2 hip/knee weakness (hip 3/5, knee 3+/5) limiting stair negotiation. Activities included progressive step-ups (4-inch to 7-inch height), lateral step-downs for eccentric control, and resistance band leg press in sitting. Verbal cues provided for controlled eccentric descent and proper weight distribution. Patient advanced to 7-inch step height vs 4-inch at baseline."
   },
-
   {
     "category": "CORE_TRUNK_CERVICAL_ROM",
     "intervention": "Cervical ROM (General)",
-    "narrative": "Patient participated in 3 sets of 8 reps of cervical AROM in all planes to improve [Patient Goal], 2/2 cervical strain. Min verbal cues were provided for proper mechanics and to avoid shoulder elevation. Current cervical rotation 55° B, lateral flexion 30° B."
+    "narrative": "Patient participated in skilled therapeutic exercise with 3 sets of 8 reps of cervical AROM in all planes to improve [Patient Goal], 2/2 cervical strain and muscle tightness. Exercises included active rotation, lateral flexion, flexion/extension in pain-free ranges. Min verbal cues provided for proper mechanics (isolated cervical movement) and to avoid compensatory shoulder elevation. Current cervical rotation 55° bilaterally (vs 40° at baseline), lateral flexion 30° bilaterally (vs 20° at baseline), demonstrating improved functional ROM."
   },
   {
     "category": "CORE_TRUNK_CERVICAL_ROM",
     "intervention": "Cervical ROM (Stiffness)",
-    "narrative": "Patient completed 2 sets of 12 reps of cervical AROM to promote neck mobility, 2/2 chronic stiffness. Activities included active rotation with overpressure and lateral flexion stretches. Tactile cues for isolated movement and verbal cues for neutral thoracic spine were provided."
+    "narrative": "Patient completed skilled therapeutic exercise with 2 sets of 12 reps of cervical AROM to promote neck mobility for [Patient Goal], 2/2 chronic cervical stiffness. Activities included active rotation with gentle end-range overpressure (self-applied), lateral flexion stretches with 20 sec holds, and chin tucks. Tactile cues for isolated cervical movement and verbal cues for maintaining neutral thoracic spine and relaxed shoulders. Patient achieved 65° rotation bilaterally vs 50° at baseline."
   },
   {
     "category": "CORE_TRUNK_TRUNK_ROM",
     "intervention": "Trunk ROM (General)",
-    "narrative": "To promote functional trunk ROM for [Patient Goal], Patient completed 3 sets of 10 reps of trunk rotation and lateral flexion, 2/2 lumbar stiffness. Activities were performed seated and standing. Verbal cues were provided for isolated trunk movement without hip rotation. Patient tolerated exercises with min discomfort."
+    "narrative": "Skilled therapeutic exercise to promote functional trunk ROM for [Patient Goal], 2/2 lumbar stiffness limiting functional mobility. Patient completed 3 sets of 10 reps of trunk rotation and lateral flexion exercises. Activities performed both seated and standing to vary muscle recruitment. Verbal cues provided for isolated trunk movement (limiting hip rotation) and maintaining neutral spine during rotation. Patient tolerated exercises with minimal discomfort (2/10 pain). Trunk rotation improved to 45° bilaterally vs 30° at baseline."
   },
   {
     "category": "CORE_TRUNK_TRUNK_ROM",
     "intervention": "Trunk ROM (Lifting)",
-    "narrative": "Patient participated in 3 sets of 8 reps of trunk flexion/extension to promote safe lifting mechanics, 2/2 chronic low back pain. Activities included cat-cow, pelvic tilts, and controlled forward bends. Min verbal cues for neutral spine and proper breathing were provided."
+    "narrative": "Patient participated in skilled therapeutic exercise with 3 sets of 8 reps of controlled trunk flexion/extension to promote safe lifting mechanics, 2/2 chronic low back pain and movement dysfunction. Activities included cat-cow progressions in quadruped, pelvic tilts in supine, and controlled forward bends with hip hinge pattern. Min verbal cues for maintaining neutral spine alignment and proper breathing coordination (exhale on exertion). Patient demonstrated improved hip hinge mechanics vs lumbar flexion pattern at baseline."
   },
   {
     "category": "CORE_TRUNK_CORE_STRENGTHENING",
     "intervention": "Core Strengthening (General)",
-    "narrative": "To improve trunk stability for [Patient Goal], skilled interventions focused on core strengthening, 2/2 deconditioning. Patient completed 3 sets of 10 reps of seated marching, trunk rotation, and bridging exercises. Mod verbal cues for proper form and tactile cues to abdominals were required to facilitate engagement."
+    "narrative": "Skilled therapeutic exercise to improve trunk stability for [Patient Goal], 2/2 deconditioning and core weakness (trunk strength 3/5). Patient completed 3 sets of 10 reps of progressive core strengthening: seated marching with resistance, trunk rotation against resistance, and bridging with 10 sec holds. Mod verbal cues for proper form (neutral spine, controlled movement) and tactile cues to abdominals to facilitate muscle engagement and awareness. Patient held bridge 10 sec vs 5 sec at baseline."
   },
   {
     "category": "CORE_TRUNK_CORE_STRENGTHENING",
     "intervention": "Core Strengthening (Bed Mobility)",
-    "narrative": "Patient participated in 3 sets of 10 reps of core strengthening to promote trunk stability for transfers, 2/2 abdominal weakness. Activities included bridges, pelvic tilts, and seated marching. Mod verbal cues for proper form and tactile cues to abdominals were required for engagement."
+    "narrative": "Patient participated in skilled therapeutic exercise with 3 sets of 10 reps of core strengthening to promote trunk stability for safe transfers, 2/2 abdominal weakness (2+/5 strength). Activities included supine bridges with progressive holds, pelvic tilts with abdominal bracing, and seated marching with trunk stabilization. Mod verbal cues for proper form and tactile cues to abdominal muscles to facilitate engagement. Patient able to perform 10 bridges vs 5 at baseline with improved control."
   },
   {
     "category": "CORE_TRUNK_CORE_STRENGTHENING",
     "intervention": "Core Strengthening (Standing Balance)",
-    "narrative": "Patient received 2 sets of core strengthening exercises to promote balance for [Patient Goal], 2/2 poor trunk control. Activities included 10 reps of standing marching with resistance, 30 sec plank holds, and 10 reps of trunk rotation with ball. Min verbal cues for neutral spine were provided."
+    "narrative": "Patient completed skilled therapeutic exercise with 2 sets of core strengthening to promote standing balance for [Patient Goal], 2/2 poor trunk control affecting postural stability. Activities included 10 reps of standing marching with resistance band at thighs, modified plank holds (30 sec on elevated surface), and 10 reps of trunk rotation holding weighted ball (2 lbs). Min verbal cues for maintaining neutral spine throughout movements. Patient held plank 30 sec vs 15 sec at baseline."
   },
   {
     "category": "CORE_TRUNK_CORE_STRENGTHENING",
     "intervention": "Core Strengthening (Posture)",
-    "narrative": "Patient completed 2 sets of 12 reps of core strengthening to promote upright posture, 2/2 chronic back pain. Activities included dead bugs, bird dogs, and core bracing. Verbal cues were provided for neutral pelvis and proper breathing."
+    "narrative": "Patient completed skilled therapeutic exercise with 2 sets of 12 reps of core strengthening to promote upright posture, 2/2 chronic back pain and postural dysfunction. Activities included dead bugs with controlled limb movements, bird dogs with 10 sec holds, and core bracing exercises in multiple positions. Verbal cues provided for maintaining neutral pelvic position and coordinating breathing with movement (exhale during exertion). Patient demonstrated improved postural endurance, maintaining neutral spine 5 min vs 2 min at baseline."
   },
   {
     "category": "GENERAL_STRENGTH_ENDURANCE",
     "intervention": "Progressive Resistive Exercise (PRE)",
-    "narrative": "Patient completed a progressive resistive exercise program for BUE/BLE to improve [Patient Goal], 2/2 deconditioning. 3 sets of 10 reps of resistive band exercises for major muscle groups were completed, progressing from yellow to green band. Min verbal cues were provided for proper form, breathing, and tempo."
+    "narrative": "Patient completed skilled progressive resistive exercise program for bilateral UE/LE to improve [Patient Goal], 2/2 deconditioning and generalized weakness. Patient performed 3 sets of 10 reps of resistance band exercises targeting major muscle groups (shoulder, elbow, hip, knee), progressing from yellow (light) to green (medium) resistance band. Min verbal cues provided for proper form, breathing coordination (exhale on exertion), and controlled tempo (2 sec concentric, 3 sec eccentric). Patient tolerated green band resistance vs yellow at baseline."
   },
   {
     "category": "GENERAL_STRENGTH_ENDURANCE",
     "intervention": "PRE (Work Conditioning)",
-    "narrative": "Patient participated in 3 sets of 10 reps of a progressive resistive exercise program for work conditioning, 2/2 injury recovery. Activities included functional lifting patterns and progressive weight training. Mod verbal cues were required for body mechanics and to avoid compensatory patterns."
+    "narrative": "Patient participated in skilled progressive resistive exercise program with 3 sets of 10 reps for work conditioning, 2/2 injury recovery and return-to-work preparation. Activities included functional lifting patterns simulating job demands (floor to waist, waist to overhead) and progressive weight training (5-15 lbs). Mod verbal cues required for optimal body mechanics (hip hinge, neutral spine) and to avoid compensatory movement patterns. Patient progressed to 15 lb lifts vs 10 lb at baseline."
   },
   {
     "category": "GENERAL_STRENGTH_ENDURANCE",
     "intervention": "Stretching & Flexibility (General)",
-    "narrative": "Patient engaged in 3 reps of 30-second holds of therapeutic stretching to promote flexibility for [Patient Goal], 2/2 generalized tightness. Stretches included hamstring, calf, and shoulder. Instruction was provided on proper technique, breathing, and avoiding bouncing movements."
+    "narrative": "Patient engaged in skilled therapeutic stretching with 3 reps of 30-second sustained holds to promote flexibility for [Patient Goal], 2/2 generalized muscle tightness limiting functional mobility. Stretches included static holds for hamstrings, gastrocnemius/soleus, and shoulder musculature. Comprehensive instruction provided on proper technique (no bouncing, gentle sustained stretch), coordinated breathing (exhale into stretch), and maintaining stretches in pain-free range. Patient tolerated all stretches at minimal discomfort level (2/10)."
   },
   {
     "category": "GENERAL_STRENGTH_ENDURANCE",
     "intervention": "Stretching & Flexibility (LE)",
-    "narrative": "Patient completed 4 reps of 30-second holds of BLE therapeutic stretching to promote gait mechanics, 2/2 muscle tightness. Stretches included hip flexors, hamstrings, and gastroc/soleus. Min verbal cues were provided for maintaining alignment during sustained stretches."
+    "narrative": "Patient completed skilled therapeutic stretching with 4 reps of 30-second sustained holds of bilateral LE muscles to promote optimal gait mechanics, 2/2 muscle tightness (hip flexors, hamstrings) limiting stride length. Stretches included hip flexor stretch in modified lunge, hamstring stretch in supine with strap, and standing gastrocnemius/soleus stretches (knee straight and bent). Min verbal cues provided for maintaining proper alignment and optimal joint positioning during sustained holds. Patient achieved improved hamstring length, SLR to 75° vs 60° at baseline."
   },
   {
     "category": "GENERAL_STRENGTH_ENDURANCE",
     "intervention": "Stretching & Flexibility (UE/Posture)",
-    "narrative": "Patient received 3 reps of 30-second holds of therapeutic stretching for UE/trunk to promote upright posture, 2/2 rounded shoulders. Stretches included pectoral, lat, and cervical. Verbal cues were provided for feeling stretch in targeted muscles and relaxed breathing."
+    "narrative": "Patient completed skilled therapeutic stretching with 3 reps of 30-second holds of UE/trunk muscles to promote upright posture, 2/2 rounded shoulder posture and muscle imbalances. Stretches included pectoral corner stretch, latissimus dorsi stretch, and upper trapezius/levator stretch. Verbal cues provided for feeling stretch in targeted muscles, maintaining relaxed breathing, and avoiding compensatory movements. Patient demonstrated improved posture, achieving neutral shoulder position vs 2-inch forward posture at baseline."
   },
   {
     "category": "GENERAL_STRENGTH_ENDURANCE",
     "intervention": "Endurance & Activity Tolerance (Maintained)",
-    "narrative": "Patient demonstrated maintained BUE/BLE strength at functional level. Patient able to complete sit<>stand from standard height chair x5 with min use of armrests. Activity tolerance maintained at 15 min for standing tasks before requiring seated rest break."
+    "narrative": "Patient demonstrated maintained bilateral UE/LE strength at functional level for ADL performance. Patient able to complete sit<>stand from standard height chair x5 reps with minimal use of armrests (vs requiring moderate armrest push at prior evaluation). Static grip strength maintained: R 18 lbs, L 16 lbs. Activity tolerance maintained at 15 min for standing tasks before requiring seated rest break. Patient continues to require skilled OT for periodic strength reassessment and exercise program progression."
   },
   {
     "category": "GENERAL_STRENGTH_ENDURANCE",
     "intervention": "Endurance & Activity Tolerance (Declining)",
-    "narrative": "Patient exhibited declining BUE/BLE strength 2/2 deconditioning. Mod physical assist required for sit<>stand transitions compared to min assist at baseline. Patient demonstrated decreased grip strength, unable to open containers independently. Activity tolerance decreased to 5 min before requiring rest 2/2 generalized weakness."
+    "narrative": "Patient exhibited declining bilateral UE/LE strength this session, 2/2 progressive deconditioning. Mod physical assist required for sit<>stand transitions compared to min assist at prior evaluation, representing functional decline. Patient demonstrated decreased grip strength (R 8 lbs vs 12 lbs at baseline, L 6 lbs vs 10 lbs at baseline), unable to open containers independently. Activity tolerance decreased to 5 min before requiring rest vs 12 min at baseline, 2/2 generalized weakness and decreased endurance. Patient continues to require skilled OT to slow decline and maximize remaining function."
   },
   {
     "category": "MODALITY_PREPARATION",
     "intervention": "Moist Heat Application",
-    "narrative": "Applied moist heat to [Body Part] for [Time, e.g., 10 minutes] prior to stretching. This was done to warm up soft tissue and increase the extensibility of shortened tissue. Patient tolerated well with no adverse reaction."
+    "narrative": "Skilled application of moist heat to [Body Part] for [Time, e.g., 10 minutes] prior to therapeutic stretching exercises to prepare tissues. Thermal modality applied to warm soft tissue, increase local circulation, and improve extensibility of shortened connective tissue for optimal stretching effectiveness. Patient tolerated modality well with no adverse reaction. Skin monitored throughout for appropriate temperature and tissue response."
   },
   {
     "category": "MODALITY_PREPARATION",
     "intervention": "Soft Tissue Release / Massage",
-    "narrative": "Performed soft tissue release and deep massage to [Body Part] to increase local circulation and decrease muscle spasms/stiffness. This was applied after moist heat to further improve soft tissue extensibility prior to stretching."
+    "narrative": "Skilled soft tissue mobilization and therapeutic massage applied to [Body Part] to increase local circulation, decrease muscle spasms/tightness, and prepare tissues for exercise. Manual techniques applied following moist heat application to further improve soft tissue extensibility and mobility prior to therapeutic stretching and strengthening. Patient tolerated techniques well; tissues demonstrated improved pliability for exercise."
   },
   {
     "category": "MODALITY_PREPARATION",
     "intervention": "Joint Mobilization",
-    "narrative": "Joint mobilization (Grade [I-IV]) applied to [Joint] while addressing soft tissue integrity. Slight manual distraction of the joint surface was utilized in conjunction with mobilization to inhibit joint pain and muscle spasms around the joint."
+    "narrative": "Skilled joint mobilization (Grade [I-IV]) applied to [Joint] to address capsular restrictions and improve joint arthrokinematics. Gentle manual distraction of joint surface utilized in conjunction with oscillatory mobilization to inhibit joint pain, reduce muscle spasms around joint, and improve accessory joint motion for optimal active ROM. Patient tolerated mobilization techniques well; demonstrated improved joint mobility for functional movement."
   },
   {
     "category": "EDEMA_REDUCTION",
     "intervention": "AROM for Edema (UE)",
-    "narrative": "To reduce edema and promote functional use 2/2 lymphedema, Patient performed 4 sets of 15 reps of R UE AROM. Activities included active pumping exercises and elevation. Instruction was provided in home program adherence and proper elevation technique."
+    "narrative": "Skilled therapeutic exercise to reduce edema and promote functional use, 2/2 R UE lymphedema (moderate 2+ pitting edema). Patient performed 4 sets of 15 reps of R UE AROM exercises in elevated position. Activities included active pumping exercises (hand opening/closing, wrist circles, elbow flexion/extension) to promote lymphatic drainage. Comprehensive instruction provided in home program adherence, proper elevation technique (above heart level), and signs requiring medical attention. Circumferential measurements: forearm 26cm vs 28cm at baseline."
   },
   {
     "category": "EDEMA_REDUCTION",
     "intervention": "AROM for Edema (LE)",
-    "narrative": "Patient participated in 4 sets of 15 reps of R LE AROM with elevation to promote edema reduction, 2/2 chronic venous insufficiency. Activities included ankle pumps, knee extension, and hip flexion. Instruction in elevation positioning and compression use was provided."
+    "narrative": "Patient participated in skilled therapeutic exercise with 4 sets of 15 reps of R LE AROM with elevation to promote edema reduction, 2/2 chronic venous insufficiency with moderate LE edema (2+ pitting). Activities included ankle pumps (dorsiflexion/plantarflexion), active knee extension, and hip flexion exercises in elevated supine position. Comprehensive instruction in proper elevation positioning (LE elevated above heart), compression stocking use, and skin monitoring for breakdown. Ankle circumference: 24cm vs 26cm at baseline."
   },
   {
     "category": "EDEMA_REDUCTION",
     "intervention": "AROM for Edema (Hand)",
-    "narrative": "Patient engaged in 3 sets of 10 reps of R hand/wrist AROM with elevation to reduce edema and restore function, 2/2 CRPS. Activities included gentle AROM and graded motor imagery. Min verbal cues were provided for pain management and gradual progression."
+    "narrative": "Patient engaged in skilled therapeutic exercise with 3 sets of 10 reps of R hand/wrist AROM with elevation to reduce edema and restore function, 2/2 complex regional pain syndrome (CRPS) with hand swelling. Activities included gentle AROM exercises (within pain tolerance <4/10), graded motor imagery for pain modulation, and progressive loading exercises. Min verbal cues provided for pain management strategies and gradual, gentle progression to avoid symptom flare. Hand volume decreased 15ml vs baseline, demonstrating reduced edema."
   }
 ]
