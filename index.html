@@ -480,6 +480,54 @@
             font-weight: 500;
         }
 
+        /* Quick Access Filters */
+        .quick-access-filters {
+            display: flex;
+            gap: 8px;
+            padding: 10px 12px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #444;
+            flex-shrink: 0;
+        }
+
+        .filter-btn {
+            flex: 1;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: 6px;
+            padding: 8px 10px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .filter-btn:hover {
+            background: #3a3030;
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--amber-900) 0%, var(--amber-800) 100%);
+            border-color: var(--amber-700);
+            color: var(--amber-100);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .filter-btn.active:hover {
+            background: linear-gradient(135deg, var(--amber-800) 0%, var(--amber-700) 100%);
+        }
+
+        .filter-count {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
         /* Middle Panel - Editor */
         .editor-content {
             padding: 16px;
@@ -845,6 +893,18 @@
             </div>
             <div class="search-results-count" id="searchResultsCount" style="display: none;" role="status" aria-live="polite"></div>
         </div>
+        <!-- Quick Access Filters -->
+        <div class="quick-access-filters">
+            <button class="filter-btn active" onclick="selectQuickAccessFilter(null)" id="filterAll" aria-label="Show all narratives">
+                📋 All
+            </button>
+            <button class="filter-btn" onclick="selectQuickAccessFilter('FAVORITES')" id="filterFavorites" aria-label="Show favorite narratives">
+                ★ Favorites <span class="filter-count" id="favoritesCount">(0)</span>
+            </button>
+            <button class="filter-btn" onclick="selectQuickAccessFilter('RECENT')" id="filterRecent" aria-label="Show recently viewed narratives">
+                ⌚ Recent <span class="filter-count" id="recentCount">(0)</span>
+            </button>
+        </div>
         <div class="panel-content" id="narrativeList" role="list" aria-label="Available narratives"></div>
         <div class="panel-content" id="templateBuilder" style="display: none; padding: 15px;">
             <div id="templateSelection">
@@ -1058,6 +1118,36 @@ function addToRecent(narrativeId) {
 // Helper to create unique ID for each narrative
 function getNarrativeId(narrative) {
     return `${narrative.cpt}_${narrative.category}_${narrative.narrative.substring(0, 50)}`;
+}
+
+// Quick Access Filter Selection
+function selectQuickAccessFilter(filter) {
+    currentQuickAccessFilter = filter;
+
+    // Update button states
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    if (filter === 'FAVORITES') {
+        document.getElementById('filterFavorites').classList.add('active');
+    } else if (filter === 'RECENT') {
+        document.getElementById('filterRecent').classList.add('active');
+    } else {
+        document.getElementById('filterAll').classList.add('active');
+    }
+
+    // Refresh the narrative display
+    displayNarratives();
+}
+
+// Update filter counts
+function updateFilterCounts() {
+    const favoritesCount = getFavorites().length;
+    const recentCount = getRecentNarratives().length;
+
+    document.getElementById('favoritesCount').textContent = `(${favoritesCount})`;
+    document.getElementById('recentCount').textContent = `(${recentCount})`;
 }
 
 const replacementOptions = {
@@ -2508,6 +2598,9 @@ function displayNarratives() {
     while (listContainer.firstChild) {
         listContainer.removeChild(listContainer.firstChild);
     }
+
+    // Update filter counts
+    updateFilterCounts();
 
     let filtered = narratives;
 
