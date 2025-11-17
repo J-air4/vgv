@@ -50,6 +50,7 @@
             --bg-primary: #1a1515;
             --bg-secondary: #2a2424;
             --bg-tertiary: #332828;
+            --bg-hover: #3a2828;
             --border-primary: #553333;
             --border-hover: #774444;
             --text-primary: #f0e0e0;
@@ -101,7 +102,7 @@
         }
 
         .panel-title {
-            background: linear-gradient(135deg, var(--bg-tertiary) 0%, #3a2828 100%);
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-hover) 100%);
             color: var(--text-primary);
             padding: 12px 16px;
             font-weight: 600;
@@ -428,7 +429,7 @@
         .search-bar:focus-within {
             border-color: var(--amber-700);
             box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
-            background: linear-gradient(135deg, var(--bg-tertiary) 0%, #3a2828 100%);
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-hover) 100%);
         }
 
         .search-icon {
@@ -507,7 +508,7 @@
         }
 
         .filter-btn:hover {
-            background: #3a2828;
+            background: var(--bg-hover);
             border-color: var(--border-hover);
             color: var(--text-primary);
         }
@@ -697,7 +698,7 @@
             display: block;
             width: 100%;
             text-align: left;
-            background: linear-gradient(135deg, var(--bg-tertiary) 0%, #3a2828 100%);
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-hover) 100%);
             border: 1px solid var(--border-primary);
             border-radius: 6px;
             padding: 10px 14px;
@@ -712,7 +713,7 @@
         }
 
         .option-btn:hover {
-            background: linear-gradient(135deg, var(--amber-900) 0%, #3a2828 100%);
+            background: linear-gradient(135deg, var(--amber-900) 0%, var(--bg-hover) 100%);
             border-color: var(--amber-700);
             color: var(--amber-100);
             transform: translateX(2px);
