@@ -2199,7 +2199,7 @@ async function loadSelfCareData() {
         }
     } catch (error) {
         // File is optional - template system works without it
-        // Silently skip if file is not available
+        console.info(`Optional file not loaded: ${error.message}`);
     }
 }
 
