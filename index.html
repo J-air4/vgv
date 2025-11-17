@@ -197,6 +197,12 @@
             color: #fff;
         }
 
+        .sidebar-toggle:focus {
+            outline: 2px solid #4299e1;
+            outline-offset: 2px;
+            background: #444;
+        }
+
         /* Collapsed Sidebar */
         #sidebar.collapsed {
             left: -260px;
@@ -224,6 +230,16 @@
         .floating-toggle:hover {
             background: #333;
             border-color: #666;
+        }
+
+        .floating-toggle:focus {
+            outline: 2px solid #4299e1;
+            outline-offset: 2px;
+            background: #333;
+        }
+
+        .floating-toggle:active {
+            transform: scale(0.95);
         }
 
         .floating-toggle span {
@@ -1091,6 +1107,12 @@ function clearHistory() {
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const backdrop = document.getElementById('sidebarBackdrop');
+
+    if (!sidebar || !backdrop) {
+        console.error('Sidebar or backdrop element not found');
+        return;
+    }
+
     const isCurrentlyCollapsed = sidebar.classList.contains('collapsed');
 
     console.log('Toggle sidebar called. Currently collapsed:', isCurrentlyCollapsed);
@@ -1101,12 +1123,14 @@ function toggleSidebar() {
         sidebar.classList.remove('collapsed');
         backdrop.classList.add('visible');
         localStorage.setItem('ot_sidebar_collapsed', 'false');
+        sidebar.setAttribute('aria-hidden', 'false');
         console.log('Expanding sidebar');
     } else {
         // Collapse: add collapsed, hide backdrop
         sidebar.classList.add('collapsed');
         backdrop.classList.remove('visible');
         localStorage.setItem('ot_sidebar_collapsed', 'true');
+        sidebar.setAttribute('aria-hidden', 'true');
         console.log('Collapsing sidebar');
     }
 }
@@ -4530,17 +4554,39 @@ initializeNarrativeSearch();
 })();
 
 // ============================================================================
-// Restore sidebar collapse state on page load
+// Restore sidebar collapse state on page load & Add keyboard support
 // ============================================================================
-(function() {
+(function initSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    const floatingToggle = document.querySelector('.floating-toggle');
+
+    if (!sidebar || !backdrop) {
+        console.warn('Sidebar elements not found during initialization');
+        return;
+    }
+
+    // Restore collapsed state from localStorage
     const isCollapsed = localStorage.getItem('ot_sidebar_collapsed') === 'true';
     if (isCollapsed) {
-        const sidebar = document.getElementById('sidebar');
-        const backdrop = document.getElementById('sidebarBackdrop');
-        if (sidebar && backdrop) {
-            sidebar.classList.add('collapsed');
-            backdrop.classList.remove('visible');
-        }
+        sidebar.classList.add('collapsed');
+        backdrop.classList.remove('visible');
+        sidebar.setAttribute('aria-hidden', 'true');
+        console.log('Restored sidebar collapsed state');
+    } else {
+        sidebar.setAttribute('aria-hidden', 'false');
+    }
+
+    // Add keyboard support for floating toggle button
+    if (floatingToggle) {
+        floatingToggle.addEventListener('keydown', (e) => {
+            // Space or Enter to toggle
+            if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                toggleSidebar();
+            }
+        });
+        console.log('Keyboard support added to floating toggle button');
     }
 })();
 
