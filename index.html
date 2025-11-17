@@ -3972,28 +3972,18 @@ document.addEventListener('keydown', (e) => {
             }
         }
     }
-    // Alt+S to toggle sidebar
-    else if (e.altKey && e.key === 's') {
-        e.preventDefault();
-        toggleSidebar();
-    }
     // Alt+T to toggle template mode
     else if (e.altKey && e.key === 't') {
         e.preventDefault();
         const toggleBtn = document.querySelector('button[onclick="toggleMode()"]');
         if (toggleBtn) toggleMode();
     }
-    // Escape to close modals and sidebar
+    // Escape to close modals
     else if (e.key === 'Escape') {
         const modal = document.getElementById('completeDocModal');
-        const sidebar = document.getElementById('sidebar');
 
         if (modal && modal.style.display !== 'none') {
             closeCompleteDocModal();
-        }
-        // Close sidebar if expanded
-        else if (sidebar && !sidebar.classList.contains('collapsed')) {
-            toggleSidebar();
         }
         // Deselect component if selected
         else if (selectedComponent) {
