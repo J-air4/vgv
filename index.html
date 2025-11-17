@@ -1332,9 +1332,14 @@ function toggleSidebar() {
 
     // Toggle the collapsed state
     if (isCurrentlyCollapsed) {
-        // Expand: remove collapsed, show backdrop
+        // Expand: remove collapsed, show backdrop ONLY on mobile
         sidebar.classList.remove('collapsed');
-        backdrop.classList.add('visible');
+
+        // Only show backdrop on mobile screens
+        if (window.innerWidth <= 768) {
+            backdrop.classList.add('visible');
+        }
+
         localStorage.setItem('ot_sidebar_collapsed', 'false');
         sidebar.setAttribute('aria-hidden', 'false');
     } else {
@@ -2106,8 +2111,6 @@ async function loadNarratives() {
         narratives = [...data97530, ...data97535, ...data97110, ...data97112];
 
         console.log(`Successfully loaded ${narratives.length} narratives`);
-        populateFilters();
-        displayNarratives();
     } catch (error) {
         console.error('Error loading narratives:', error);
         if (listContainer) {
@@ -2121,13 +2124,18 @@ async function loadNarratives() {
                 • 97112_MASTER_NARRATIVES.json</p>
             </div>`;
         }
+        // Ensure narratives is an empty array if loading fails
+        narratives = [];
     }
+
+    // These functions now run even if the try block fails,
+    // ensuring the UI (like the sidebar) still renders.
+    populateFilters();
+    displayNarratives();
 }
 
 // === TEMPLATE SYSTEM ===
 let narrativeTemplates = {};
-let therapeuticActivitiesTemplates = {};
-let selfCareTemplates = {};
 let currentMode = 'narratives'; // 'narratives' or 'templates'
 let selectedTemplate = null;
 let templateValues = {};
@@ -2141,13 +2149,7 @@ async function loadTemplates() {
         }
         narrativeTemplates = await response.json();
 
-        // Load therapeutic activities and self-care data (JS format)
-        await loadTherapeuticActivities();
-        await loadSelfCareData();
-
-        // Merge all templates
-        mergeAllTemplates();
-
+        // Populate the dropdown select
         populateTemplateCategorySelect();
         console.log('Templates loaded successfully');
     } catch (error) {
@@ -2334,25 +2336,15 @@ function populateTemplateCategorySelect() {
     const select = document.getElementById('templateCategorySelect');
     select.innerHTML = '<option value="">Select a category...</option>';
 
-    // Group templates by source
+    // Group templates (simplified)
     const grouped = {
-        'Narrative Templates': [],
-        'Therapeutic Activities': [],
-        'Self-Care Activities': []
+        'Narrative Templates': []
     };
 
     Object.keys(narrativeTemplates).forEach(key => {
         const template = narrativeTemplates[key];
-
-        // Group by CPT code or key prefix
-        if (key.startsWith('THERAPEUTIC_') || key.startsWith('97530_')) {
-            grouped['Therapeutic Activities'].push({ key, template });
-        } else if (key.startsWith('SELFCARE_') || key.startsWith('97535_')) {
-            grouped['Self-Care Activities'].push({ key, template });
-        } else {
-            // Everything else including 97110_, 97112_, etc.
-            grouped['Narrative Templates'].push({ key, template });
-        }
+        // All templates are now in one group
+        grouped['Narrative Templates'].push({ key, template });
     });
 
     // Add options grouped by source
@@ -2361,10 +2353,10 @@ function populateTemplateCategorySelect() {
             const optgroup = document.createElement('optgroup');
             optgroup.label = groupName;
 
-            // Sort templates alphabetically within each group (case-insensitive)
+            // Sort templates alphabetically
             grouped[groupName].sort((a, b) => {
-                const nameA = a.template.subcategory || a.template.category;
-                const nameB = b.template.subcategory || b.template.category;
+                const nameA = a.template.category;
+                const nameB = b.template.category;
                 return nameA.toLowerCase().localeCompare(nameB.toLowerCase());
             });
 
@@ -2373,15 +2365,7 @@ function populateTemplateCategorySelect() {
                 option.value = key;
 
                 // Format display text
-                let displayText = '';
-                if (template.subcategory) {
-                    displayText = `${template.category} - ${template.subcategory}`;
-                } else if (template.cpt) {
-                    displayText = `CPT ${template.cpt} - ${template.category}`;
-                } else {
-                    displayText = template.category;
-                }
-
+                let displayText = `CPT ${template.cpt} - ${template.category}`;
                 option.textContent = displayText;
                 optgroup.appendChild(option);
             });
