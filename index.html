@@ -1,0 +1,4603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OT Narrative Editor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Animation for notifications */
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: translateY(0); }
+            70% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* Loading spinner animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1a1a1a;
+            height: 100vh;
+            overflow: hidden;
+            font-size: 16px;
+            color: #e0e0e0;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1.5fr 10px 1fr 10px 0.5fr;
+            gap: 0;
+            height: 100vh;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .resizer {
+            background: #333;
+            cursor: col-resize;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            transition: background 0.2s;
+        }
+
+        .resizer:hover {
+            background: #555;
+        }
+
+        .panel {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .panel-title {
+            background: #333;
+            color: #e0e0e0;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .flex-score {
+            display: none;
+        }
+
+        .panel-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            background: #222;
+            margin: 0;
+            padding: 8px;
+            min-height: 0;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            bottom: 10px;
+            width: 250px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            transition: left 0.3s ease;
+        }
+
+        .sidebar-section {
+            border-bottom: 1px solid #444;
+            flex-shrink: 0;
+        }
+
+        .sidebar-item {
+            padding: 10px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #ccc;
+            border-bottom: 1px solid #333;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-item:hover {
+            background: #333;
+        }
+
+        .sidebar-item.active {
+            background: #444;
+            color: #fff;
+            border-left: 3px solid #666;
+        }
+
+        .sidebar-item.cpt-item {
+            font-weight: 600;
+            background: #2a2a2a;
+        }
+
+        .sidebar-item.cpt-item.expanded {
+            background: #333;
+        }
+
+        .sidebar-arrow {
+            font-size: 10px;
+            transition: transform 0.2s;
+            margin-left: 4px;
+        }
+
+        .sidebar-item.expanded .sidebar-arrow {
+            transform: rotate(90deg);
+        }
+
+        .sidebar-categories {
+            display: none;
+            background: #1a1a1a;
+        }
+
+        .sidebar-categories.expanded {
+            display: block;
+        }
+
+        .sidebar-category-item {
+            padding: 8px 8px 8px 20px;
+            cursor: pointer;
+            font-size: 11px;
+            color: #aaa;
+            border-bottom: 1px solid #2a2a2a;
+            transition: all 0.2s;
+        }
+
+        .sidebar-category-item:hover {
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+        .sidebar-category-item.active {
+            background: #3a3a3a;
+            color: #fff;
+            border-left: 3px solid #888;
+        }
+
+        /* Sidebar Toggle Button */
+        .sidebar-toggle {
+            background: transparent;
+            border: none;
+            color: #ccc;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .sidebar-toggle:hover {
+            background: #444;
+            color: #fff;
+        }
+
+        /* Collapsed Sidebar */
+        #sidebar.collapsed {
+            left: -260px;
+        }
+
+        /* Floating Toggle Button */
+        .floating-toggle {
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            width: 40px;
+            height: 40px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            transition: all 0.2s;
+        }
+
+        .floating-toggle:hover {
+            background: #333;
+            border-color: #666;
+        }
+
+        .floating-toggle span {
+            color: #ccc;
+            font-size: 20px;
+        }
+
+        #sidebar.collapsed + .floating-toggle {
+            display: flex;
+        }
+
+        /* Backdrop overlay */
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-backdrop.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Left Panel - Narrative List */
+        .filter-section {
+            padding: 12px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #444;
+            flex-shrink: 0;
+        }
+
+        .filter-label {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 0 6px 0;
+            color: #999;
+            margin-bottom: 0;
+        }
+
+        .category-group {
+            margin-bottom: 8px;
+        }
+
+        .category-header {
+            padding: 8px;
+            background: #333;
+            border: 1px solid #444;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            color: #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .category-header:hover {
+            background: #3a3a3a;
+        }
+
+        .category-header.expanded {
+            background: #3a3a3a;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .category-arrow {
+            font-size: 10px;
+            transition: transform 0.2s;
+        }
+
+        .category-header.expanded .category-arrow {
+            transform: rotate(90deg);
+        }
+
+        .category-narratives {
+            display: none;
+            padding: 4px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-top: none;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .category-narratives.expanded {
+            display: grid;
+        }
+
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 0;
+            background: transparent;
+        }
+
+        .filter-tab {
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 5px 12px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #ccc;
+        }
+
+        .filter-tab:hover {
+            background: #444;
+            border-color: #666;
+        }
+
+        .filter-tab.active {
+            background: #555;
+            color: #fff;
+            border-color: #777;
+        }
+
+        #narrativeList {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            padding: 4px;
+        }
+
+        .narrative-group-header {
+            grid-column: 1 / -1;
+            padding: 8px 12px;
+            margin-top: 12px;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #2c5282 0%, #2d3748 100%);
+            color: #e2e8f0;
+            font-weight: 600;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-left: 4px solid #4299e1;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .narrative-group-header:first-child {
+            margin-top: 0;
+        }
+
+        .narrative-item {
+            padding: 3px 4px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            background: #333;
+            height: 36px;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            color: #ccc;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .narrative-item:hover {
+            border-color: #666;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .narrative-item.selected {
+            background: #444;
+            color: #fff;
+            border-color: #777;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .narrative-item-title {
+            font-weight: 600;
+            margin-bottom: 1px;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .narrative-item-preview {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .narrative-item.selected .narrative-item-preview {
+            color: #ccc;
+        }
+
+        .narrative-star {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            cursor: pointer;
+            font-size: 0.9em;
+            padding: 1px 2px;
+            user-select: none;
+            z-index: 10;
+        }
+
+        .narrative-star:hover {
+            transform: scale(1.2);
+        }
+
+        .narrative-item {
+            position: relative;
+        }
+
+        .narrative-item.favorited {
+            border-color: #886;
+            background: #443;
+            box-shadow: 0 2px 4px rgba(136, 136, 102, 0.3);
+        }
+
+        .narrative-item.favorited.selected {
+            background: #554;
+            border-color: #887;
+        }
+
+        .narrative-badge {
+            position: absolute;
+            top: 8px;
+            right: 28px;
+            background-color: #28A745;
+            color: white;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 7px;
+            border-radius: 10px;
+            z-index: 10;
+            display: none; /* Hidden - not used */
+        }
+
+        .narrative-item-title {
+            padding-right: 15px; /* Reduced for star icon only */
+        }
+
+        /* Search Bar Styles */
+        .search-bar-container {
+            background: #2a2a2a;
+            padding: 10px 12px 8px 12px;
+            border-bottom: 1px solid #444;
+            flex-shrink: 0;
+        }
+
+        .search-bar {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+        }
+
+        .search-bar:focus-within {
+            border-color: #777;
+            box-shadow: 0 0 0 2px rgba(119, 119, 119, 0.2);
+        }
+
+        .search-icon {
+            padding: 0 8px;
+            color: #888;
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #e0e0e0;
+            padding: 8px 8px 8px 0;
+            font-size: 13px;
+            outline: none;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .search-input::placeholder {
+            color: #666;
+        }
+
+        .search-clear-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0 10px;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .search-clear-btn:hover {
+            color: #ccc;
+        }
+
+        .search-results-count {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+        }
+
+        .search-results-count.has-search {
+            color: #aaa;
+            font-weight: 500;
+        }
+
+        /* Middle Panel - Editor */
+        .editor-content {
+            padding: 16px;
+            line-height: 1.7;
+            font-size: 15px;
+            background: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        .editable-component {
+            padding: 3px 6px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .editable-component:hover {
+            opacity: 0.8;
+            transform: scale(1.02);
+        }
+
+        .editable-component.selected {
+            background: #FF9800 !important;
+            border-color: #F57C00 !important;
+            box-shadow: 0 2px 4px rgba(245, 124, 0, 0.3);
+        }
+
+        /* Component type specific colors - High contrast for dark theme */
+        .component-assistance { background: #FFD700; border-color: #FFA500; color: #000; font-weight: 500; }
+        .component-impairment { background: #FF6B6B; border-color: #FF4444; color: #000; font-weight: 500; }
+        .component-performance { background: #51CF66; border-color: #37B24D; color: #000; font-weight: 500; }
+        .component-intervention { background: #4DABF7; border-color: #228BE6; color: #000; font-weight: 500; }
+        .component-equipment { background: #B197FC; border-color: #9775FA; color: #000; font-weight: 500; }
+        .component-body_region { background: #FFE066; border-color: #FCC419; color: #000; font-weight: 500; }
+        .component-goal { background: #8CE99A; border-color: #69DB7C; color: #000; font-weight: 500; }
+        .component-activity { background: #74C0FC; border-color: #4DABF7; color: #000; font-weight: 500; }
+
+        /* Placeholder component styles - distinct styling to indicate they need replacement */
+        .placeholder-component {
+            background: #FF69B4 !important;
+            border: 2px dashed #FF1493 !important;
+            color: #000 !important;
+            font-weight: 600;
+            font-style: italic;
+            animation: placeholder-pulse 2s ease-in-out infinite;
+        }
+
+        .component-placeholder_goal { background: #FF69B4; border-color: #FF1493; }
+        .component-placeholder_body_part { background: #FFA07A; border-color: #FF6347; }
+        .component-placeholder_time { background: #87CEEB; border-color: #4682B4; }
+        .component-placeholder_task { background: #DDA0DD; border-color: #BA55D3; }
+
+        @keyframes placeholder-pulse {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.4);
+            }
+            50% {
+                opacity: 0.85;
+                box-shadow: 0 0 8px 3px rgba(255, 105, 180, 0.3);
+            }
+        }
+
+        /* Quick Edit Mode - Highlight all components */
+        .quick-edit-mode .editable-component {
+            background-color: #FFF9C4 !important;
+            border: 2px solid #FFC107 !important;
+            color: #000;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.5); }
+            50% { box-shadow: 0 0 12px 4px rgba(255, 193, 7, 0.3); }
+        }
+
+        /* Accessibility: Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            .placeholder-component {
+                animation: none;
+                border: 2px solid #FF1493;
+                box-shadow: 0 0 0 2px rgba(255, 20, 147, 0.3);
+            }
+
+            .quick-edit-mode .editable-component {
+                animation: none;
+                box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.4);
+            }
+
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .editor-actions {
+            padding: 12px;
+            background: #2a2a2a;
+            border-top: 1px solid #444;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            background: #555;
+            border: 1px solid #666;
+            border-radius: 4px;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            color: #e0e0e0;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: #666;
+        }
+
+        .btn:active {
+            background: #004085;
+            transform: translateY(1px);
+        }
+
+        /* Accessibility: Focus indicators for keyboard navigation */
+        .narrative-item:focus,
+        .editable-component:focus,
+        .sidebar-item:focus,
+        .option-btn:focus,
+        button:focus {
+            outline: 2px solid #4299e1;
+            outline-offset: 2px;
+        }
+
+        /* Keyboard navigation highlight */
+        .narrative-item.highlighted {
+            border-color: #888 !important;
+            box-shadow: 0 0 8px rgba(100, 149, 237, 0.5) !important;
+            background: #383838 !important;
+        }
+
+        .btn:focus {
+            outline: 2px solid #007BFF;
+            outline-offset: 2px;
+        }
+
+        /* Right Panel - Options (Dark Theme) */
+        .options-header {
+            padding: 12px;
+            background: #333;
+            border-bottom: 1px solid #444;
+            font-weight: 600;
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 400;
+            color: #e0e0e0;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            background: #333;
+            border-color: #4299e1;
+            transform: translateX(2px);
+        }
+
+        .option-btn:active {
+            background: #3a3a3a;
+            transform: translateX(0px);
+        }
+
+        /* Suggestions Panel and Chips (Dark Theme) */
+        #suggestionsPanel {
+            border-top: 1px solid #444;
+            padding: 12px;
+            background: #2a2a2a;
+        }
+
+        .suggestions-header {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 0 8px 0;
+            color: #e0e0e0;
+            margin-bottom: 0;
+        }
+
+        .suggestion-chip {
+            background: #1e3a2e;
+            border: 1px solid #2d5a3d;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            display: block;
+            width: 100%;
+            text-align: left;
+            color: #9ae6b4;
+            transition: all 0.2s;
+        }
+
+        .suggestion-chip:hover {
+            background: #2d5a3d;
+            border-color: #48bb78;
+            transform: translateX(2px);
+        }
+
+        .suggestion-chip:active {
+            background: #1e4a2f;
+            transform: translateX(0px);
+        }
+
+        /* Two-Step Assistance Selection */
+        .two-step-container {
+            padding: 12px;
+        }
+
+        .step-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 12px 0 8px 0;
+            padding: 0;
+            color: #495057;
+        }
+
+        .level-button-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .level-btn {
+            flex: 1;
+            min-width: 80px;
+            padding: 10px 14px;
+            background: #F8F9FA;
+            border: 1px solid #DEE2E6;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .level-btn:hover {
+            background: #E9ECEF;
+            border-color: #007BFF;
+        }
+
+        .level-btn.active {
+            background: #007BFF;
+            color: #FFFFFF;
+            border-color: #007BFF;
+        }
+
+        .level-btn:active {
+            transform: scale(0.98);
+        }
+
+        .type-button-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+
+        .type-btn {
+            padding: 10px 14px;
+            background: #FFFFFF;
+            border: 1px solid #DEE2E6;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .type-btn:hover {
+            background: #F8F9FA;
+            border-color: #007BFF;
+            transform: translateX(2px);
+        }
+
+        .type-btn:active {
+            background: #E9ECEF;
+            transform: translateX(0px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .divider {
+            border: 0;
+            border-top: 1px solid #DEE2E6;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar: CPT Codes (Floating Overlay) -->
+<div class="panel sidebar" id="sidebar">
+    <div class="panel-title" style="font-size: 14px; padding: 8px;">
+        <span>CPT</span>
+        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">◀</button>
+    </div>
+    <div class="sidebar-section" id="cptSidebar"></div>
+</div>
+
+<!-- Floating Toggle Button (shown when sidebar is collapsed) -->
+<div class="floating-toggle" onclick="toggleSidebar()" title="Open sidebar">
+    <span>☰</span>
+</div>
+
+<!-- Backdrop overlay -->
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+<!-- Complete Documentation Modal (Slide-in Panel) -->
+<div id="completeDocModal" style="display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 500px; background: #2a2a2a; border-left: 2px solid #555; box-shadow: -4px 0 20px rgba(0,0,0,0.5); z-index: 2000; transform: translateX(100%); transition: transform 0.3s ease; overflow-y: auto;">
+    <div style="padding: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 0; background: #2a2a2a; padding-bottom: 15px; border-bottom: 1px solid #444;">
+            <h2 style="margin: 0; color: #fff; font-size: 20px;">✓ Complete Your Documentation</h2>
+            <button onclick="closeCompleteDocModal()" style="background: none; border: none; color: #999; font-size: 24px; cursor: pointer; padding: 0; width: 30px; height: 30px;">&times;</button>
+        </div>
+        <div id="completeDocContent"></div>
+        <div style="display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; position: sticky; bottom: 0; background: #2a2a2a; padding-top: 15px; border-top: 1px solid #444;">
+            <button class="btn" onclick="closeCompleteDocModal()" style="background: #555;">Cancel</button>
+            <button class="btn" onclick="applyDocumentationCompletions()" style="background: #007BFF;">Add to Narrative</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Backdrop (semi-transparent) -->
+<div id="completeDocBackdrop" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 1999;" onclick="closeCompleteDocModal()"></div>
+
+<div class="container" id="container">
+    <!-- Narratives Panel -->
+    <div class="panel" id="narratives-panel">
+        <div class="panel-title" style="display: flex; justify-content: space-between; align-items: center;">
+            <span id="narrativesPanelTitle">Narratives (0)</span>
+            <button class="btn" onclick="toggleMode()" style="padding: 4px 12px; font-size: 12px; background: #555;">
+                <span id="modeToggleText">📝 Templates</span>
+            </button>
+        </div>
+        <!-- Search Bar -->
+        <div class="search-bar-container">
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="narrativeSearch" class="search-input" placeholder="Search narratives..." autocomplete="off">
+                <button class="search-clear-btn" id="searchClearBtn" onclick="clearNarrativeSearch()" title="Clear search (Esc)" style="display: none;">×</button>
+            </div>
+            <div class="search-results-count" id="searchResultsCount" style="display: none;"></div>
+        </div>
+        <div class="panel-content" id="narrativeList"></div>
+        <div class="panel-content" id="templateBuilder" style="display: none; padding: 15px;">
+            <div id="templateSelection">
+                <h3 style="margin: 0 0 15px 0; font-size: 16px; color: #e0e0e0;">Build from Template</h3>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-size: 13px; color: #ccc;">Category:</label>
+                    <select id="templateCategorySelect" onchange="loadTemplateVariants()" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #e0e0e0; border-radius: 4px;">
+                        <option value="">Select a category...</option>
+                    </select>
+                </div>
+
+                <div id="variantSelection" style="display: none; margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-size: 13px; color: #ccc;">Template Style:</label>
+                    <select id="templateVariantSelect" onchange="loadTemplateForm()" style="width: 100%; padding: 8px; background: #333; border: 1px solid #555; color: #e0e0e0; border-radius: 4px;">
+                        <option value="">Select a style...</option>
+                    </select>
+                    <div id="variantDescription" style="margin-top: 5px; font-size: 11px; color: #999; font-style: italic;"></div>
+                </div>
+            </div>
+
+            <div id="templateForm" style="display: none;">
+                <h4 style="margin: 20px 0 10px 0; font-size: 14px; color: #e0e0e0; border-bottom: 1px solid #444; padding-bottom: 5px;">Fill in Variables:</h4>
+                <div id="templateFormFields"></div>
+                <button class="btn" onclick="generateNarrativeFromTemplate()" style="width: 100%; margin-top: 15px; background: #007BFF;">Generate Narrative</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resizer 1 -->
+    <div class="resizer" data-resizer-index="0"></div>
+
+    <!-- Middle Panel: Editor -->
+    <div class="panel" id="middle-panel">
+        <div class="panel-title">Editor</div>
+        <div class="panel-content">
+            <div class="editor-content" id="editorContent" contenteditable="true">
+                Select a narrative from the left to begin editing...
+            </div>
+        </div>
+        <div class="editor-actions">
+            <button class="btn" id="undoBtn" onclick="undo()" title="Undo (Ctrl+Z)" disabled style="opacity: 0.5; cursor: not-allowed;">↶ Undo</button>
+            <button class="btn" id="redoBtn" onclick="redo()" title="Redo (Ctrl+Y)" disabled style="opacity: 0.5; cursor: not-allowed;">↷ Redo</button>
+            <button class="btn" onclick="showCompleteDocumentationModal()">✓ Complete Documentation</button>
+            <button class="btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <!-- Resizer 2 -->
+    <div class="resizer" data-resizer-index="1"></div>
+
+    <!-- Right Panel: Replacement Options -->
+    <div class="panel" id="right-panel">
+        <div class="panel-title">Replace Component</div>
+        <div class="options-header" id="optionsHeader">Click a highlighted component to see options</div>
+        <div class="panel-content" id="optionsPanel"></div>
+        <div id="suggestionsPanel" style="display: none;"></div>
+    </div>
+</div>
+
+<script>
+let narratives = [];
+let currentNarrative = null;
+let selectedComponent = null;
+let currentCptFilter = 'ALL';
+let currentCategoryFilter = 'ALL';
+let currentQuickAccessFilter = null;
+let currentSearchQuery = '';
+let categoryMappings = {};
+let consolidatedCategories = {};
+
+// Keyboard navigation tracking
+let currentHighlightedIndex = -1;
+
+// Undo/Redo history management
+let editHistory = [];
+let historyIndex = -1;
+const MAX_HISTORY = 50;
+
+// Format category names - remove underscores and capitalize
+function formatCategoryName(category) {
+    if (!category) return '';
+    return category
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+}
+
+// Undo/Redo Functions
+function saveHistory() {
+    const editorContent = document.getElementById('editorContent');
+    const currentState = editorContent.innerHTML;
+
+    // Remove any future history if we're not at the end
+    if (historyIndex < editHistory.length - 1) {
+        editHistory = editHistory.slice(0, historyIndex + 1);
+    }
+
+    // Add new state
+    editHistory.push(currentState);
+
+    // Limit history size
+    if (editHistory.length > MAX_HISTORY) {
+        editHistory.shift();
+    } else {
+        historyIndex++;
+    }
+
+    updateUndoRedoButtons();
+}
+
+function undo() {
+    if (historyIndex > 0) {
+        historyIndex--;
+        const editorContent = document.getElementById('editorContent');
+        editorContent.innerHTML = editHistory[historyIndex];
+        updateUndoRedoButtons();
+
+        // Clear selected component
+        selectedComponent = null;
+        document.getElementById('optionsPanel').innerHTML = '';
+        document.getElementById('optionsHeader').textContent = 'Click a highlighted component to see options';
+    }
+}
+
+function redo() {
+    if (historyIndex < editHistory.length - 1) {
+        historyIndex++;
+        const editorContent = document.getElementById('editorContent');
+        editorContent.innerHTML = editHistory[historyIndex];
+        updateUndoRedoButtons();
+
+        // Clear selected component
+        selectedComponent = null;
+        document.getElementById('optionsPanel').innerHTML = '';
+        document.getElementById('optionsHeader').textContent = 'Click a highlighted component to see options';
+    }
+}
+
+function updateUndoRedoButtons() {
+    const undoBtn = document.getElementById('undoBtn');
+    const redoBtn = document.getElementById('redoBtn');
+
+    if (undoBtn) {
+        undoBtn.disabled = historyIndex <= 0;
+        undoBtn.style.opacity = historyIndex <= 0 ? '0.5' : '1';
+        undoBtn.style.cursor = historyIndex <= 0 ? 'not-allowed' : 'pointer';
+    }
+
+    if (redoBtn) {
+        redoBtn.disabled = historyIndex >= editHistory.length - 1;
+        redoBtn.style.opacity = historyIndex >= editHistory.length - 1 ? '0.5' : '1';
+        redoBtn.style.cursor = historyIndex >= editHistory.length - 1 ? 'not-allowed' : 'pointer';
+    }
+}
+
+function clearHistory() {
+    editHistory = [];
+    historyIndex = -1;
+    updateUndoRedoButtons();
+}
+
+// Toggle sidebar collapse
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    const isCurrentlyCollapsed = sidebar.classList.contains('collapsed');
+
+    console.log('Toggle sidebar called. Currently collapsed:', isCurrentlyCollapsed);
+
+    // Toggle the collapsed state
+    if (isCurrentlyCollapsed) {
+        // Expand: remove collapsed, show backdrop
+        sidebar.classList.remove('collapsed');
+        backdrop.classList.add('visible');
+        localStorage.setItem('ot_sidebar_collapsed', 'false');
+        console.log('Expanding sidebar');
+    } else {
+        // Collapse: add collapsed, hide backdrop
+        sidebar.classList.add('collapsed');
+        backdrop.classList.remove('visible');
+        localStorage.setItem('ot_sidebar_collapsed', 'true');
+        console.log('Collapsing sidebar');
+    }
+}
+
+// LocalStorage helpers for favorites and recent
+function getFavorites() {
+    const stored = localStorage.getItem('ot_favorites');
+    return stored ? JSON.parse(stored) : [];
+}
+
+function saveFavorites(favorites) {
+    localStorage.setItem('ot_favorites', JSON.stringify(favorites));
+}
+
+function toggleFavorite(narrativeId) {
+    let favorites = getFavorites();
+    const index = favorites.indexOf(narrativeId);
+
+    if (index > -1) {
+        favorites.splice(index, 1); // Remove
+    } else {
+        favorites.push(narrativeId); // Add
+    }
+
+    saveFavorites(favorites);
+    return favorites.includes(narrativeId);
+}
+
+function isFavorite(narrativeId) {
+    return getFavorites().includes(narrativeId);
+}
+
+function getRecentNarratives() {
+    const stored = localStorage.getItem('ot_recent');
+    return stored ? JSON.parse(stored) : [];
+}
+
+function addToRecent(narrativeId) {
+    let recent = getRecentNarratives();
+
+    // Remove if already exists
+    recent = recent.filter(id => id !== narrativeId);
+
+    // Add to beginning
+    recent.unshift(narrativeId);
+
+    // Keep only last 10
+    recent = recent.slice(0, 10);
+
+    localStorage.setItem('ot_recent', JSON.stringify(recent));
+}
+
+// Helper to create unique ID for each narrative
+function getNarrativeId(narrative) {
+    return `${narrative.cpt}_${narrative.category}_${narrative.narrative.substring(0, 50)}`;
+}
+
+const replacementOptions = {
+    // === ASSISTANCE LEVELS ===
+    // Comprehensive assistance with all cue types
+    assistance: [
+        // Physical Assistance
+        'Min physical assist',
+        'Mod physical assist',
+        'Max physical assist',
+        'Min assist',
+        'Mod assist',
+        'Max assist',
+        'Total assist',
+        'Hand-over-hand assist',
+
+        // Tactile Cues
+        'Min tactile cues',
+        'Mod tactile cues',
+        'Max tactile cues',
+        'Light touch cues',
+        'Tactile prompting',
+
+        // Verbal Cues
+        'Min verbal cues',
+        'Mod verbal cues',
+        'Max verbal cues',
+        'Verbal prompting',
+        'Verbal redirection',
+        'Simple verbal cues',
+        'Complex verbal instruction',
+
+        // Visual Cues
+        'Visual cues',
+        'Visual demonstration',
+        'Visual modeling',
+        'Gestural cues',
+        'Visual prompts',
+
+        // Cognitive Cues
+        'Cognitive cues',
+        'Memory cues',
+        'Sequencing cues',
+        'Problem-solving cues',
+
+        // Supervision & Monitoring
+        'CGA',
+        'SBA',
+        'Supervision',
+        'Setup assist',
+        'Modified independence',
+        'Complete independence'
+    ],
+
+    // === IMPAIRMENTS ===
+    // Comprehensive impairment categories
+    impairment: [
+        // Physical Impairments
+        '2/2 balance deficits',
+        '2/2 decreased endurance',
+        '2/2 decreased trunk control',
+        '2/2 decreased LE strength',
+        '2/2 decreased UE strength',
+        '2/2 BLE weakness',
+        '2/2 BUE weakness',
+        '2/2 poor weight shifting',
+        '2/2 coordination deficits',
+        '2/2 vestibular deficits',
+        '2/2 decreased pincer strength',
+        '2/2 poor proprioceptive awareness',
+        '2/2 ROM limitations',
+        '2/2 hip precautions',
+        '2/2 poor postural control',
+        '2/2 decreased core strength',
+        '2/2 quadriceps weakness',
+        '2/2 adhesive capsulitis',
+        '2/2 rotator cuff weakness',
+        '2/2 poor standing tolerance',
+        '2/2 gait abnormalities',
+        '2/2 joint instability',
+        '2/2 muscle atrophy',
+        '2/2 decreased grip strength',
+
+        // Cognitive Impairments
+        '2/2 cognitive deficits',
+        '2/2 memory impairment',
+        '2/2 decreased attention span',
+        '2/2 executive dysfunction',
+        '2/2 impaired judgment',
+        '2/2 decreased safety awareness',
+        '2/2 sequencing deficits',
+        '2/2 problem-solving deficits',
+
+        // Perceptual Impairments
+        '2/2 perceptual deficits',
+        '2/2 visual field deficits',
+        '2/2 spatial awareness deficits',
+        '2/2 body awareness deficits',
+        '2/2 visual-motor deficits',
+
+        // Psychosocial Impairments
+        '2/2 decreased motivation',
+        '2/2 anxiety',
+        '2/2 depression',
+        '2/2 fear of falling',
+        '2/2 social isolation'
+    ],
+
+    // === PERFORMANCE QUALIFIERS ===
+    // Detailed performance descriptions
+    performance: [
+        'Patient able to',
+        'Patient demonstrated',
+        'Patient completed',
+        'Patient performed',
+        'Patient achieved',
+        'Patient initiated',
+        'Patient maintained',
+        'Patient required',
+        'Patient needed',
+        'Patient exhibited',
+        'Demonstrated improved',
+        'Demonstrated increased',
+        'Demonstrated decreased',
+        'Required increased time',
+        'Required decreased time',
+        'Completed task with',
+        'Performed task with',
+        'Limited success',
+        'Good success',
+        'Moderate success',
+        'Patient tolerated',
+        'Patient tolerated well',
+        'Showing progress',
+        'Showing improvement',
+        'Indicating potential for',
+        'Demonstrating functional gains',
+        'Made progress toward',
+        'Continues to require',
+        'Benefits from',
+        'Responded well to',
+        'Struggled with',
+        'Difficulty with'
+    ],
+
+    // === INTERVENTIONS ===
+    // Comprehensive interventions by category
+    intervention: [
+        // ADL Training
+        'compensatory technique training',
+        'cueing hierarchy training',
+        'lower extremity dressing technique training',
+        'upper extremity dressing techniques',
+        'fastener management',
+        'bathing technique training',
+        'grooming technique training',
+        'toileting technique training',
+        'feeding technique training',
+
+        // Mobility Training
+        'safety training for functional mobility',
+        'bed mobility training',
+        'transfer training',
+        'gait training',
+        'stair negotiation training',
+        'wheelchair mobility training',
+        'fall recovery training',
+
+        // Therapeutic Interventions
+        'neuromuscular reeducation',
+        'strengthening activities',
+        'range of motion techniques',
+        'balance training',
+        'coordination training',
+        'endurance training',
+        'postural training',
+        'weight-bearing activities',
+        'proprioceptive training',
+
+        // Cognitive Training
+        'energy conservation training',
+        'cognitive strategy training',
+        'memory compensation techniques',
+        'sequencing training',
+        'problem-solving training',
+        'safety awareness training',
+
+        // Equipment & Adaptive
+        'assistive device instruction',
+        'adaptive equipment training',
+        'environmental modification training',
+        'home safety assessment',
+
+        // Therapeutic Exercise
+        'therapeutic exercise',
+        'progressive resistive exercises',
+        'active ROM exercises',
+        'passive ROM exercises',
+        'stretching techniques',
+        'core stabilization',
+
+        // Manual Therapy
+        'manual therapy techniques',
+        'soft tissue mobilization',
+        'joint mobilization',
+
+        // Functional Training
+        'task-specific training',
+        'functional mobility training',
+        'community integration training',
+        'IADL training',
+        'home management training'
+    ],
+
+    // === EQUIPMENT ===
+    // Expanded equipment list
+    equipment: [
+        // Bathing Equipment
+        'long-handled sponge',
+        'shower chair',
+        'tub bench',
+        'grab bars',
+        'handheld shower head',
+        'non-slip mat',
+        'bath transfer bench',
+
+        // Dressing Equipment
+        'reacher',
+        'sock aid',
+        'button hook',
+        'dressing stick',
+        'shoe horn',
+        'elastic shoelaces',
+        'zipper pull',
+
+        // Mobility Equipment
+        'w/c',
+        'wheelchair',
+        'RW',
+        'rolling walker',
+        'standard walker',
+        'quad cane',
+        'single point cane',
+        'crutches',
+        'sliding board',
+        'gait belt',
+
+        // Toilet Equipment
+        'elevated toilet seat',
+        'bedside commode',
+        '3-in-1 commode',
+        'toilet safety frame',
+
+        // Bed Equipment
+        'bed rail',
+        'bed assist handle',
+        'trapeze bar',
+        'hospital bed',
+
+        // Eating Equipment
+        'universal cuff',
+        'rocker knife',
+        'built-up utensils',
+        'plate guard',
+        'non-slip mat',
+        'adaptive cup',
+        'weighted utensils',
+
+        // Other Equipment
+        'hip kit',
+        'leg lifter',
+        'jar opener',
+        'key turner',
+        'book holder',
+        'writing aid'
+    ],
+
+    // === BODY REGIONS ===
+    // Detailed body regions
+    body_region: [
+        // General Regions
+        'UB',
+        'LB',
+        'BLE',
+        'BUE',
+        'RLE',
+        'LLE',
+        'RUE',
+        'LUE',
+        'trunk',
+        'core',
+        'back',
+        'neck',
+        'face',
+
+        // Shoulders
+        'R shoulder',
+        'L shoulder',
+        'B shoulder',
+        'bilateral shoulders',
+
+        // Elbows
+        'R elbow',
+        'L elbow',
+        'B elbow',
+        'bilateral elbows',
+
+        // Wrists/Hands
+        'R wrist',
+        'L wrist',
+        'B wrist',
+        'R hand',
+        'L hand',
+        'B hand',
+        'bilateral hands',
+
+        // Hips
+        'R hip',
+        'L hip',
+        'B hip',
+        'bilateral hips',
+        'hips',
+
+        // Knees
+        'R knee',
+        'L knee',
+        'B knee',
+        'bilateral knees',
+
+        // Ankles/Feet
+        'R ankle',
+        'L ankle',
+        'B ankle',
+        'R foot',
+        'L foot',
+        'B foot',
+        'bilateral feet',
+
+        // Spine
+        'cervical spine',
+        'thoracic spine',
+        'lumbar spine',
+        'sacral spine'
+    ],
+
+    // === POSITION ===
+    // Patient positions for activities
+    position: [
+        'sitting',
+        'standing',
+        'supine',
+        'prone',
+        'side-lying',
+        'R side-lying',
+        'L side-lying',
+        'seated at EOB',
+        'seated in w/c',
+        'seated in chair',
+        'semi-reclined',
+        'reclined',
+        'kneeling',
+        'half-kneeling',
+        'quadruped',
+        'tall kneeling',
+        'modified plantigrade',
+        'in parallel bars',
+        'at kitchen counter',
+        'at bathroom sink'
+    ],
+
+    // === DURATION & REPETITIONS ===
+    // Duration and rep ranges
+    duration_reps: [
+        '1 rep',
+        '2 reps',
+        '3 reps',
+        '5 reps',
+        '8 reps',
+        '10 reps',
+        '12 reps',
+        '15 reps',
+        '20 reps',
+        '2 sets of 10',
+        '3 sets of 10',
+        '2 sets of 15',
+        '3 sets of 15',
+        '30 seconds',
+        '45 seconds',
+        '1 minute',
+        '2 minutes',
+        '3 minutes',
+        '5 minutes',
+        '10 minutes',
+        '15 minutes',
+        '20 minutes',
+        '30 minutes',
+        '45 minutes',
+        '1 hour'
+    ],
+
+    // === PAIN ===
+    // Pain levels and descriptors
+    pain: [
+        'no pain',
+        'minimal pain',
+        'mild pain',
+        'moderate pain',
+        'severe pain',
+        'pain-free',
+        'with pain',
+        'without pain',
+        'pain 0/10',
+        'pain 1/10',
+        'pain 2/10',
+        'pain 3/10',
+        'pain 4/10',
+        'pain 5/10',
+        'pain 6/10',
+        'pain 7/10',
+        'pain 8/10',
+        'pain 9/10',
+        'pain 10/10',
+        'reported pain',
+        'denied pain',
+        'tolerable pain',
+        'intolerable pain',
+        'sharp pain',
+        'dull pain',
+        'aching pain',
+        'burning pain',
+        'radiating pain'
+    ],
+
+    // === FREQUENCY ===
+    // Treatment and activity frequency
+    frequency: [
+        '1x',
+        '2x',
+        '3x',
+        '4x',
+        '5x',
+        'x1',
+        'x2',
+        'x3',
+        'x4',
+        'x5',
+        'daily',
+        'BID',
+        'TID',
+        'QID',
+        'weekly',
+        '2x/week',
+        '3x/week',
+        '5x/week',
+        'per session',
+        'throughout session',
+        'intermittently',
+        'continuously',
+        'as needed',
+        'PRN',
+        'every hour',
+        'every 2 hours'
+    ],
+
+    // === PATIENT RESPONSE ===
+    // Patient responses to intervention
+    patient_response: [
+        'positive response',
+        'good response',
+        'fair response',
+        'poor response',
+        'excellent response',
+        'minimal response',
+        'favorable response',
+        'tolerated well',
+        'tolerated poorly',
+        'cooperative',
+        'uncooperative',
+        'motivated',
+        'unmotivated',
+        'engaged',
+        'disengaged',
+        'fatigued',
+        'alert',
+        'confused',
+        'oriented',
+        'following commands',
+        'difficulty following commands',
+        'understood instructions',
+        'difficulty understanding',
+        'verbalized understanding',
+        'demonstrated understanding',
+        'expressed frustration',
+        'expressed satisfaction',
+        'willing to participate',
+        'reluctant to participate'
+    ],
+
+    // === GOALS ===
+    goal: [
+        'to promote independence and safety',
+        'to increase independence',
+        'to improve bathroom independence',
+        'to improve dressing independence',
+        'to improve household mobility',
+        'to improve kitchen task performance',
+        'to reduce fall risk',
+        'to advance task performance',
+        'to improve functional mobility',
+        'to increase safety awareness',
+        'to enhance quality of life',
+        'to maximize independence',
+        'to improve ADL performance',
+        'to improve IADL performance',
+        'to increase strength',
+        'to improve balance',
+        'to improve coordination',
+        'to increase ROM',
+        'to improve endurance',
+        'to return to prior level of function'
+    ],
+
+    // === ACTIVITIES ===
+    activity: [
+        'shower transfer',
+        'tub transfer',
+        'UB washing',
+        'LB washing',
+        'bathing sequence',
+        'UB dressing',
+        'LB dressing',
+        'self-feeding',
+        'toileting routine',
+        'toilet transfer',
+        'grooming tasks',
+        'light meal prep',
+        'oral care',
+        'medication management',
+        'Transfer training',
+        'Bed mobility training',
+        'Standing balance activities',
+        'Gait training',
+        'Stair negotiation',
+        'W/C propulsion',
+        'Kitchen activities',
+        'Laundry tasks',
+        'Home management'
+    ],
+
+    // === PLACEHOLDER TYPES ===
+    // Enhanced placeholder options
+    placeholder_goal: [
+        'bathroom independence',
+        'dressing independence',
+        'safe functional mobility',
+        'kitchen task performance',
+        'household management',
+        'safe bathing',
+        'feeding independence',
+        'grooming independence',
+        'toileting independence',
+        'safe transfers',
+        'bed mobility',
+        'upper body dressing',
+        'lower body dressing',
+        'medication management',
+        'home safety',
+        'fall risk reduction',
+        'community mobility',
+        'ADL independence',
+        'IADL independence',
+        'safe ambulation'
+    ],
+
+    placeholder_body_part: [
+        'R shoulder',
+        'L shoulder',
+        'B shoulder',
+        'R knee',
+        'L knee',
+        'B knee',
+        'R hip',
+        'L hip',
+        'B hip',
+        'R ankle',
+        'L ankle',
+        'B ankle',
+        'R elbow',
+        'L elbow',
+        'R wrist',
+        'L wrist',
+        'R hand',
+        'L hand',
+        'BUE',
+        'BLE',
+        'RUE',
+        'LUE',
+        'RLE',
+        'LLE',
+        'trunk',
+        'core',
+        'back',
+        'neck',
+        'cervical spine',
+        'lumbar spine'
+    ],
+
+    placeholder_time: [
+        '2 minutes',
+        '3 minutes',
+        '5 minutes',
+        '8 minutes',
+        '10 minutes',
+        '12 minutes',
+        '15 minutes',
+        '20 minutes',
+        '25 minutes',
+        '30 minutes',
+        '45 minutes',
+        '1 hour'
+    ],
+
+    placeholder_task: [
+        'bathing',
+        'showering',
+        'dressing',
+        'grooming',
+        'toileting',
+        'feeding',
+        'meal preparation',
+        'light housekeeping',
+        'laundry',
+        'bed mobility',
+        'transfers',
+        'walking',
+        'stair negotiation',
+        'medication management',
+        'phone use',
+        'money management',
+        'community mobility',
+        'grocery shopping',
+        'cooking',
+        'cleaning',
+        'wheelchair mobility'
+    ]
+};
+
+async function loadCategoryMappings() {
+    try {
+        const response = await fetch('data/category_mappings.json');
+        categoryMappings = await response.json();
+        console.log('Category mappings loaded:', Object.keys(categoryMappings).length, 'categories');
+    } catch (error) {
+        console.error('Error loading category mappings:', error);
+    }
+}
+
+async function loadConsolidatedCategories() {
+    try {
+        const response = await fetch('data/CONSOLIDATED_CATEGORIES.json');
+        consolidatedCategories = await response.json();
+        console.log('Consolidated categories loaded');
+    } catch (error) {
+        console.error('Error loading consolidated categories:', error);
+    }
+}
+
+async function loadNarratives() {
+    // Show loading indicator
+    const listContainer = document.getElementById('narrativeList');
+    if (listContainer) {
+        listContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #999;"><div style="display: inline-block; width: 30px; height: 30px; border: 3px solid #444; border-top-color: #888; border-radius: 50%; animation: spin 1s linear infinite;"></div><br><span style="margin-top: 10px; display: inline-block;">Loading narratives...</span></div>';
+    }
+
+    try {
+        const [data97530, data97535, data97110, data97112] = await Promise.all([
+            fetch('data/97530_MASTER_NARRATIVES.json').then(r => r.json()),
+            fetch('data/97535_MASTER_NARRATIVES.json').then(r => r.json()),
+            fetch('data/97110_MASTER_NARRATIVES.json').then(r => r.json()),
+            fetch('data/97112_MASTER_NARRATIVES.json').then(r => r.json())
+        ]);
+
+        data97530.forEach(n => n.cpt = 'CPT 97530');
+        data97535.forEach(n => n.cpt = 'CPT 97535');
+        data97110.forEach(n => n.cpt = 'CPT 97110');
+        data97112.forEach(n => n.cpt = 'CPT 97112');
+
+        narratives = [...data97530, ...data97535, ...data97110, ...data97112];
+
+        populateFilters();
+        displayNarratives();
+    } catch (error) {
+        console.error('Error loading narratives:', error);
+        if (listContainer) {
+            listContainer.innerHTML = '<p style="padding: 20px; color: #ff6b6b; text-align: center;">⚠ Error loading data<br><small style="color: #999;">Please refresh the page to try again</small></p>';
+        }
+    }
+}
+
+// === TEMPLATE SYSTEM ===
+let narrativeTemplates = {};
+let therapeuticActivitiesTemplates = {};
+let selfCareTemplates = {};
+let currentMode = 'narratives'; // 'narratives' or 'templates'
+let selectedTemplate = null;
+let templateValues = {};
+
+async function loadTemplates() {
+    try {
+        // Load narrative templates (JSON format)
+        const response = await fetch('data/narrative_templates.json');
+        narrativeTemplates = await response.json();
+
+        // Load therapeutic activities and self-care data (JS format)
+        await loadTherapeuticActivities();
+        await loadSelfCareData();
+
+        // Merge all templates
+        mergeAllTemplates();
+
+        populateTemplateCategorySelect();
+    } catch (error) {
+        console.error('Error loading templates:', error);
+    }
+}
+
+async function loadTherapeuticActivities() {
+    try {
+        // Load the JS file as a script
+        const script = document.createElement('script');
+        script.src = 'data/therapeutic_activities_data.js';
+        document.head.appendChild(script);
+
+        // Wait for script to load
+        await new Promise((resolve, reject) => {
+            script.onload = resolve;
+            script.onerror = reject;
+        });
+
+        // Convert to template format
+        if (typeof therapeuticActivitiesNotes !== 'undefined') {
+            therapeuticActivitiesTemplates = convertTherapeuticActivitiesToTemplates(therapeuticActivitiesNotes);
+        }
+    } catch (error) {
+        // File is optional - template system works without it
+        console.warn('Therapeutic activities templates not available:', error.message);
+    }
+}
+
+async function loadSelfCareData() {
+    try {
+        // Load the JS file as a script
+        const script = document.createElement('script');
+        script.src = 'data/self_care_data.js';
+        document.head.appendChild(script);
+
+        // Wait for script to load
+        await new Promise((resolve, reject) => {
+            script.onload = resolve;
+            script.onerror = reject;
+        });
+
+        // Convert to template format
+        if (typeof selfCareNotes !== 'undefined') {
+            selfCareTemplates = convertSelfCareToTemplates(selfCareNotes);
+        }
+    } catch (error) {
+        // File is optional - template system works without it
+        console.warn('Self-care templates not available:', error.message);
+    }
+}
+
+function convertTherapeuticActivitiesToTemplates(dataObject) {
+    const templates = {};
+
+    Object.keys(dataObject).forEach(mainCategory => {
+        const categoryData = dataObject[mainCategory];
+
+        Object.keys(categoryData).forEach(subCategory => {
+            const content = categoryData[subCategory];
+            const templateKey = `THERAPEUTIC_${mainCategory.replace(/[^A-Z0-9]/gi, '_').replace(/_+/g, '_')}_${subCategory.replace(/[^A-Z0-9]/gi, '_').replace(/_+/g, '_')}`;
+
+            if (typeof content === 'string') {
+                // Template format with [variable] placeholders
+                templates[templateKey] = {
+                    cpt: 'Therapeutic',
+                    category: mainCategory,
+                    subcategory: subCategory,
+                    variants: [createVariantFromTemplate(content, subCategory, mainCategory)]
+                };
+            }
+        });
+    });
+
+    return templates;
+}
+
+function convertSelfCareToTemplates(dataObject) {
+    const templates = {};
+
+    Object.keys(dataObject).forEach(mainCategory => {
+        const categoryData = dataObject[mainCategory];
+
+        Object.keys(categoryData).forEach(subCategory => {
+            const content = categoryData[subCategory];
+            const templateKey = `SELFCARE_${mainCategory.replace(/[^A-Z0-9]/gi, '_').replace(/_+/g, '_')}_${subCategory.replace(/[^A-Z0-9]/gi, '_').replace(/_+/g, '_')}`;
+
+            if (typeof content === 'object') {
+                // Note-based format with Note 1A, Note 1B, etc.
+                templates[templateKey] = {
+                    cpt: '97535',
+                    category: mainCategory,
+                    subcategory: subCategory,
+                    variants: Object.keys(content).map(noteKey =>
+                        createVariantFromNote(content[noteKey], noteKey, subCategory)
+                    )
+                };
+            }
+        });
+    });
+
+    return templates;
+}
+
+function createVariantFromTemplate(templateStr, name, categoryName) {
+    const variables = {};
+    const variablePattern = /\[([^\]]+?)\]/g;
+    let match;
+
+    // Extract all unique variables from template
+    const foundVars = new Set();
+    const tempStr = templateStr;
+    while ((match = variablePattern.exec(tempStr)) !== null) {
+        foundVars.add(match[1]);
+    }
+
+    // Create variable definitions
+    foundVars.forEach(varText => {
+        const varName = varText.replace(/[^A-Z0-9_]/gi, '_').toUpperCase().replace(/_+/g, '_');
+
+        // Detect if it's a selection from options
+        if (varText.includes('/')) {
+            const options = varText.split('/').map(opt => opt.trim());
+            variables[varName] = {
+                type: 'dropdown',
+                label: varText.split('/')[0].trim(),
+                options: options
+            };
+        } else if (varText.toLowerCase().includes('optional')) {
+            // Optional text field
+            variables[varName] = {
+                type: 'text',
+                label: varText.replace(/optional:/i, '').trim(),
+                placeholder: 'Optional'
+            };
+        } else {
+            // Generic text field or dropdown based on common patterns
+            variables[varName] = {
+                type: 'text',
+                label: varText,
+                placeholder: `Enter ${varText.toLowerCase()}`
+            };
+        }
+    });
+
+    // Convert [variable] to {{VARIABLE}} format
+    let structure = templateStr.replace(/\[([^\]]+?)\]/g, (match, varText) => {
+        const varName = varText.replace(/[^A-Z0-9_]/gi, '_').toUpperCase().replace(/_+/g, '_');
+        return `{{${varName}}}`;
+    });
+
+    return {
+        id: name.toLowerCase().replace(/[^a-z0-9]/g, '_'),
+        name: name,
+        description: `${categoryName} - ${name}`,
+        structure: structure,
+        variables: variables
+    };
+}
+
+function createVariantFromNote(noteText, noteId, categoryName) {
+    return {
+        id: noteId.toLowerCase().replace(/[^a-z0-9]/g, '_'),
+        name: noteId,
+        description: `${categoryName} - ${noteId}`,
+        structure: noteText,
+        variables: {}
+    };
+}
+
+function mergeAllTemplates() {
+    // Merge all template sources into narrativeTemplates
+    narrativeTemplates = {
+        ...narrativeTemplates,
+        ...therapeuticActivitiesTemplates,
+        ...selfCareTemplates
+    };
+}
+
+function populateTemplateCategorySelect() {
+    const select = document.getElementById('templateCategorySelect');
+    select.innerHTML = '<option value="">Select a category...</option>';
+
+    // Group templates by source
+    const grouped = {
+        'Narrative Templates': [],
+        'Therapeutic Activities': [],
+        'Self-Care Activities': []
+    };
+
+    Object.keys(narrativeTemplates).forEach(key => {
+        const template = narrativeTemplates[key];
+
+        // Group by CPT code or key prefix
+        if (key.startsWith('THERAPEUTIC_') || key.startsWith('97530_')) {
+            grouped['Therapeutic Activities'].push({ key, template });
+        } else if (key.startsWith('SELFCARE_') || key.startsWith('97535_')) {
+            grouped['Self-Care Activities'].push({ key, template });
+        } else {
+            // Everything else including 97110_, 97112_, etc.
+            grouped['Narrative Templates'].push({ key, template });
+        }
+    });
+
+    // Add options grouped by source
+    Object.keys(grouped).forEach(groupName => {
+        if (grouped[groupName].length > 0) {
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = groupName;
+
+            // Sort templates alphabetically within each group (case-insensitive)
+            grouped[groupName].sort((a, b) => {
+                const nameA = a.template.subcategory || a.template.category;
+                const nameB = b.template.subcategory || b.template.category;
+                return nameA.toLowerCase().localeCompare(nameB.toLowerCase());
+            });
+
+            grouped[groupName].forEach(({ key, template }) => {
+                const option = document.createElement('option');
+                option.value = key;
+
+                // Format display text
+                let displayText = '';
+                if (template.subcategory) {
+                    displayText = `${template.category} - ${template.subcategory}`;
+                } else if (template.cpt) {
+                    displayText = `CPT ${template.cpt} - ${template.category}`;
+                } else {
+                    displayText = template.category;
+                }
+
+                option.textContent = displayText;
+                optgroup.appendChild(option);
+            });
+
+            select.appendChild(optgroup);
+        }
+    });
+}
+
+function toggleMode() {
+    currentMode = currentMode === 'narratives' ? 'templates' : 'narratives';
+
+    const narrativeList = document.getElementById('narrativeList');
+    const templateBuilder = document.getElementById('templateBuilder');
+    const modeToggleText = document.getElementById('modeToggleText');
+    const narrativesPanelTitle = document.getElementById('narrativesPanelTitle');
+
+    if (currentMode === 'templates') {
+        narrativeList.style.display = 'none';
+        templateBuilder.style.display = 'block';
+        modeToggleText.textContent = '📋 Browse';
+        narrativesPanelTitle.textContent = 'Template Builder';
+    } else {
+        narrativeList.style.display = 'block';
+        templateBuilder.style.display = 'none';
+        modeToggleText.textContent = '📝 Templates';
+        narrativesPanelTitle.textContent = `Narratives (${narratives.length})`;
+    }
+}
+
+function loadTemplateVariants() {
+    const categoryKey = document.getElementById('templateCategorySelect').value;
+    const variantSelection = document.getElementById('variantSelection');
+    const variantSelect = document.getElementById('templateVariantSelect');
+    const templateForm = document.getElementById('templateForm');
+
+    if (!categoryKey) {
+        variantSelection.style.display = 'none';
+        templateForm.style.display = 'none';
+        return;
+    }
+
+    const template = narrativeTemplates[categoryKey];
+    variantSelect.innerHTML = '<option value="">Select a style...</option>';
+
+    // Create an array of variants with their original indices
+    const variantsWithIndices = template.variants.map((variant, index) => ({ variant, index }));
+
+    // Sort variants alphabetically by name (case-insensitive)
+    variantsWithIndices.sort((a, b) => {
+        return a.variant.name.toLowerCase().localeCompare(b.variant.name.toLowerCase());
+    });
+
+    variantsWithIndices.forEach(({ variant, index }) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = variant.name;
+        variantSelect.appendChild(option);
+    });
+
+    variantSelection.style.display = 'block';
+    templateForm.style.display = 'none';
+}
+
+function loadTemplateForm() {
+    const categoryKey = document.getElementById('templateCategorySelect').value;
+    const variantIndex = document.getElementById('templateVariantSelect').value;
+    const variantDescription = document.getElementById('variantDescription');
+    const templateForm = document.getElementById('templateForm');
+    const templateFormFields = document.getElementById('templateFormFields');
+
+    if (!categoryKey || variantIndex === '') {
+        templateForm.style.display = 'none';
+        return;
+    }
+
+    const template = narrativeTemplates[categoryKey];
+    const variant = template.variants[parseInt(variantIndex)];
+    selectedTemplate = variant;
+    templateValues = {};
+
+    // Show description
+    variantDescription.textContent = variant.description;
+
+    // Build form fields
+    let html = '';
+    Object.keys(variant.variables).forEach(varName => {
+        const varConfig = variant.variables[varName];
+        html += `<div style="margin-bottom: 15px;">`;
+        html += `<label style="display: block; margin-bottom: 5px; font-size: 12px; color: #ccc; font-weight: 500;">${varConfig.label}:</label>`;
+
+        if (varConfig.type === 'dropdown') {
+            html += `<select id="var_${varName}" onchange="updateTemplatePreview()" style="width: 100%; padding: 6px; background: #333; border: 1px solid #555; color: #e0e0e0; border-radius: 4px; font-size: 13px;">`;
+            html += `<option value="">-- Select --</option>`;
+            varConfig.options.forEach(opt => {
+                html += `<option value="${opt.replace(/"/g, '&quot;')}">${opt}</option>`;
+            });
+            html += `</select>`;
+        } else if (varConfig.type === 'text') {
+            html += `<input type="text" id="var_${varName}" oninput="updateTemplatePreview()" placeholder="${varConfig.placeholder || ''}" style="width: 100%; padding: 6px; background: #333; border: 1px solid #555; color: #e0e0e0; border-radius: 4px; font-size: 13px;">`;
+        }
+
+        html += `</div>`;
+    });
+
+    html += `<div style="margin-top: 20px; padding: 12px; background: #1a1a1a; border: 1px solid #444; border-radius: 4px;">`;
+    html += `<div style="font-size: 11px; color: #999; margin-bottom: 8px; font-weight: 500;">PREVIEW:</div>`;
+    html += `<div id="templatePreview" style="font-size: 13px; color: #e0e0e0; line-height: 1.6;"></div>`;
+    html += `</div>`;
+
+    templateFormFields.innerHTML = html;
+    templateForm.style.display = 'block';
+    updateTemplatePreview();
+}
+
+function updateTemplatePreview() {
+    if (!selectedTemplate) return;
+
+    let preview = selectedTemplate.structure;
+
+    // Collect values
+    Object.keys(selectedTemplate.variables).forEach(varName => {
+        const input = document.getElementById(`var_${varName}`);
+        if (input) {
+            const value = input.value || `{{${varName}}}`;
+            templateValues[varName] = value;
+            preview = preview.replace(new RegExp(`\\{\\{${varName}\\}\\}`, 'g'), value);
+        }
+    });
+
+    document.getElementById('templatePreview').textContent = preview;
+}
+
+function generateNarrativeFromTemplate() {
+    if (!selectedTemplate) return;
+
+    // Check if all required fields are filled
+    let allFilled = true;
+    Object.keys(selectedTemplate.variables).forEach(varName => {
+        const input = document.getElementById(`var_${varName}`);
+        if (input && !input.value) {
+            allFilled = false;
+        }
+    });
+
+    if (!allFilled) {
+        alert('Please fill in all fields before generating the narrative.');
+        return;
+    }
+
+    // Build final narrative
+    let narrative = selectedTemplate.structure;
+    Object.keys(templateValues).forEach(varName => {
+        narrative = narrative.replace(new RegExp(`\\{\\{${varName}\\}\\}`, 'g'), templateValues[varName]);
+    });
+
+    // Load into editor
+    const editorContent = document.getElementById('editorContent');
+    editorContent.innerHTML = renderNarrative(narrative);
+
+    // Save to history
+    clearHistory();
+    saveHistory();
+
+    // Switch back to narrative mode
+    toggleMode();
+
+    // Show success message
+    alert('Narrative generated! You can now edit it using the component replacement system.');
+}
+
+function updateSidebarCounts() {
+    // Update Favorites and Recent counts in sidebar
+    const sidebarItems = document.querySelectorAll('#cptSidebar .sidebar-item');
+    sidebarItems.forEach(item => {
+        const text = item.textContent;
+        if (text.startsWith('★')) {
+            item.querySelector('span').innerHTML = `★ Favorites<br><small style="font-weight: 400; font-size: 10px; color: #999;">${getFavorites().length} items</small>`;
+        } else if (text.startsWith('⌚')) {
+            item.querySelector('span').innerHTML = `⌚ Recent<br><small style="font-weight: 400; font-size: 10px; color: #999;">${getRecentNarratives().length} items</small>`;
+        }
+    });
+}
+
+function selectQuickAccessFilter(filter) {
+    currentQuickAccessFilter = currentQuickAccessFilter === filter ? null : filter;
+    currentCptFilter = 'ALL';
+    currentCategoryFilter = 'ALL';
+
+    // Collapse all CPT categories
+    document.querySelectorAll('.sidebar-categories').forEach(container => {
+        container.classList.remove('expanded');
+    });
+    document.querySelectorAll('.cpt-item').forEach(item => {
+        item.classList.remove('expanded');
+    });
+
+    // Update sidebar active states
+    document.querySelectorAll('#cptSidebar .sidebar-item').forEach(item => {
+        const text = item.textContent;
+        if (filter === 'FAVORITES') {
+            item.classList.toggle('active', text.startsWith('★') && currentQuickAccessFilter === filter);
+        } else if (filter === 'RECENT') {
+            item.classList.toggle('active', text.startsWith('⌚') && currentQuickAccessFilter === filter);
+        } else {
+            item.classList.toggle('active', text.trim() === 'ALL');
+        }
+    });
+
+    // Clear category active states
+    document.querySelectorAll('.sidebar-category-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    displayNarratives();
+}
+
+function populateFilters() {
+    // CPT code names
+    const cptNames = {
+        'CPT 97530': 'Therapeutic Activities',
+        'CPT 97535': 'Self-Care Training',
+        'CPT 97110': 'Therapeutic Exercises',
+        'CPT 97112': 'Neuromuscular Reeducation'
+    };
+
+    // Build CPT -> Categories map
+    const cptCategoriesMap = {};
+    narratives.forEach(n => {
+        if (n.cpt && n.category) {
+            if (!cptCategoriesMap[n.cpt]) {
+                cptCategoriesMap[n.cpt] = new Set();
+            }
+            cptCategoriesMap[n.cpt].add(n.category);
+        }
+    });
+
+    // Populate sidebar with hierarchical CPT codes and categories
+    const cptSidebar = document.getElementById('cptSidebar');
+    cptSidebar.innerHTML = '';
+
+    // Favorites section
+    const favoritesItem = document.createElement('div');
+    favoritesItem.className = 'sidebar-item';
+    const favText = document.createElement('span');
+    favText.innerHTML = `★ Favorites<br><small style="font-weight: 400; font-size: 10px; color: #999;">${getFavorites().length} items</small>`;
+    favoritesItem.appendChild(favText);
+    favoritesItem.onclick = () => selectQuickAccessFilter('FAVORITES');
+    cptSidebar.appendChild(favoritesItem);
+
+    // Recent section
+    const recentItem = document.createElement('div');
+    recentItem.className = 'sidebar-item';
+    const recentText = document.createElement('span');
+    recentText.innerHTML = `⌚ Recent<br><small style="font-weight: 400; font-size: 10px; color: #999;">${getRecentNarratives().length} items</small>`;
+    recentItem.appendChild(recentText);
+    recentItem.onclick = () => selectQuickAccessFilter('RECENT');
+    cptSidebar.appendChild(recentItem);
+
+    // Divider
+    const divider = document.createElement('div');
+    divider.style.borderBottom = '2px solid #555';
+    divider.style.margin = '8px 0';
+    cptSidebar.appendChild(divider);
+
+    // ALL button
+    const allItem = document.createElement('div');
+    allItem.className = 'sidebar-item active';
+    const allText = document.createElement('span');
+    allText.textContent = 'ALL';
+    allItem.appendChild(allText);
+    allItem.onclick = () => selectCptFilter('ALL');
+    cptSidebar.appendChild(allItem);
+
+    // Individual CPT items with nested categories
+    Object.keys(cptCategoriesMap).sort().forEach(cpt => {
+        const cptContainer = document.createElement('div');
+
+        // CPT header
+        const cptItem = document.createElement('div');
+        cptItem.className = 'sidebar-item cpt-item';
+        const cptText = document.createElement('span');
+        cptText.innerHTML = `${cpt}<br><small style="font-weight: 400; font-size: 10px; color: #999;">${cptNames[cpt] || ''}</small>`;
+        const arrow = document.createElement('span');
+        arrow.className = 'sidebar-arrow';
+        arrow.textContent = '▶';
+        cptItem.appendChild(cptText);
+        cptItem.appendChild(arrow);
+        cptItem.onclick = (e) => {
+            e.stopPropagation();
+            toggleCptExpansion(cpt, cptItem);
+        };
+        cptContainer.appendChild(cptItem);
+
+        // Categories container
+        const categoriesContainer = document.createElement('div');
+        categoriesContainer.className = 'sidebar-categories';
+        categoriesContainer.id = `categories-${cpt}`;
+
+        // Get CPT code without "CPT " prefix
+        const cptCode = cpt.replace('CPT ', '');
+        const hasConsolidated = consolidatedCategories[cptCode];
+
+        if (hasConsolidated) {
+            // Use consolidated hierarchical structure
+            Object.keys(consolidatedCategories[cptCode]).forEach(groupName => {
+                const group = consolidatedCategories[cptCode][groupName];
+
+                // Group container
+                const groupContainer = document.createElement('div');
+                groupContainer.style.marginBottom = '4px';
+
+                // Group item (clickable header)
+                const groupItem = document.createElement('div');
+                groupItem.className = 'sidebar-category-item';
+                groupItem.style.fontWeight = '500';
+                groupItem.style.paddingLeft = '12px';
+                groupItem.innerHTML = `<span class="sidebar-arrow" style="font-size: 10px; margin-right: 6px;">▶</span>${groupName}`;
+                groupItem.dataset.group = groupName;
+
+                // Subcategories container
+                const subContainer = document.createElement('div');
+                subContainer.className = 'sidebar-subcategories';
+                subContainer.id = `subcategories-${cptCode}-${groupName.replace(/\s+/g, '_')}`;
+                subContainer.style.display = 'none';
+                subContainer.style.paddingLeft = '24px';
+
+                // Add subcategories
+                group.subcategories.forEach(subcategory => {
+                    // Only show if this subcategory exists in actual narratives
+                    if (cptCategoriesMap[cpt].has(subcategory)) {
+                        const subcatItem = document.createElement('div');
+                        subcatItem.className = 'sidebar-category-item';
+                        subcatItem.style.fontSize = '12px';
+                        subcatItem.style.paddingLeft = '8px';
+                        subcatItem.style.paddingTop = '4px';
+                        subcatItem.style.paddingBottom = '4px';
+                        subcatItem.textContent = formatCategoryName(subcategory);
+                        subcatItem.dataset.category = subcategory;
+                        subcatItem.onclick = (e) => {
+                            e.stopPropagation();
+                            selectCategoryFromSidebar(cpt, subcategory);
+                        };
+                        subContainer.appendChild(subcatItem);
+                    }
+                });
+
+                // Toggle group expansion
+                groupItem.onclick = (e) => {
+                    e.stopPropagation();
+                    const isExpanded = subContainer.style.display === 'block';
+                    subContainer.style.display = isExpanded ? 'none' : 'block';
+                    const arrow = groupItem.querySelector('.sidebar-arrow');
+                    arrow.textContent = isExpanded ? '▶' : '▼';
+                };
+
+                groupContainer.appendChild(groupItem);
+                groupContainer.appendChild(subContainer);
+                categoriesContainer.appendChild(groupContainer);
+            });
+        } else {
+            // Use simple flat category list (for CPT 97535)
+            Array.from(cptCategoriesMap[cpt]).sort().forEach(category => {
+                const categoryItem = document.createElement('div');
+                categoryItem.className = 'sidebar-category-item';
+                categoryItem.textContent = formatCategoryName(category);
+                categoryItem.dataset.category = category;
+                categoryItem.onclick = (e) => {
+                    e.stopPropagation();
+                    selectCategoryFromSidebar(cpt, category);
+                };
+                categoriesContainer.appendChild(categoryItem);
+            });
+        }
+
+        cptContainer.appendChild(categoriesContainer);
+        cptSidebar.appendChild(cptContainer);
+    });
+}
+
+function toggleCptExpansion(cpt, cptElement) {
+    const categoriesContainer = document.getElementById(`categories-${cpt}`);
+    const isExpanded = categoriesContainer.classList.toggle('expanded');
+    cptElement.classList.toggle('expanded', isExpanded);
+
+    // Collapse all other CPT items
+    document.querySelectorAll('.sidebar-categories').forEach(container => {
+        if (container.id !== `categories-${cpt}`) {
+            container.classList.remove('expanded');
+        }
+    });
+    document.querySelectorAll('.cpt-item').forEach(item => {
+        if (item !== cptElement) {
+            item.classList.remove('expanded');
+        }
+    });
+
+    // Clear all active states when expanding
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    document.querySelectorAll('.sidebar-category-item').forEach(item => {
+        item.classList.remove('active');
+    });
+}
+
+function selectCptFilter(cpt) {
+    currentCptFilter = cpt;
+    currentCategoryFilter = 'ALL';
+    currentQuickAccessFilter = null;
+
+    // Collapse all CPT categories
+    document.querySelectorAll('.sidebar-categories').forEach(container => {
+        container.classList.remove('expanded');
+    });
+    document.querySelectorAll('.cpt-item').forEach(item => {
+        item.classList.remove('expanded');
+    });
+
+    // Update sidebar active state - only the ALL item
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        const itemText = item.querySelector('span') ? item.querySelector('span').textContent : item.textContent;
+        item.classList.toggle('active', itemText === cpt);
+    });
+
+    // Clear category active states
+    document.querySelectorAll('.sidebar-category-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // Update category tabs based on selected CPT
+    populateCategoryTabs();
+    displayNarratives();
+}
+
+function selectCategoryFromSidebar(cpt, category) {
+    currentCptFilter = cpt;
+    currentCategoryFilter = category;
+    currentQuickAccessFilter = null;
+
+    // Update category active state in sidebar
+    document.querySelectorAll('.sidebar-category-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.category === category);
+    });
+
+    // Clear main sidebar item active states
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // Display narratives for this category
+    displayNarratives();
+
+    // Auto-load first narrative
+    const firstNarrative = narratives.find(n => n.cpt === cpt && n.category === category);
+    if (firstNarrative) {
+        const firstItem = document.querySelector('.narrative-item');
+        if (firstItem) {
+            selectNarrative(firstNarrative, firstItem);
+        }
+    }
+}
+
+function populateCategoryTabs() {
+    const categorySection = document.getElementById('categorySection');
+    const categoryTabsContainer = document.getElementById('categoryTabs');
+
+    if (currentCptFilter === 'ALL') {
+        // Hide category section when ALL is selected
+        categorySection.style.display = 'none';
+        return;
+    }
+
+    // Get categories for selected CPT
+    const categories = new Set();
+    narratives.forEach(n => {
+        if (n.cpt === currentCptFilter && n.category) {
+            categories.add(n.category);
+        }
+    });
+
+    if (categories.size === 0) {
+        categorySection.style.display = 'none';
+        return;
+    }
+
+    // Show and populate category tabs
+    categorySection.style.display = 'block';
+    categoryTabsContainer.innerHTML = '';
+
+    // ALL button for categories
+    const allTab = document.createElement('button');
+    allTab.className = 'filter-tab active';
+    allTab.textContent = 'ALL';
+    allTab.onclick = () => selectCategoryFilter('ALL');
+    categoryTabsContainer.appendChild(allTab);
+
+    // Individual category tabs
+    Array.from(categories).sort().forEach(cat => {
+        const tab = document.createElement('button');
+        tab.className = 'filter-tab';
+        tab.textContent = cat;
+        tab.onclick = () => selectCategoryFilter(cat);
+        categoryTabsContainer.appendChild(tab);
+    });
+}
+
+function selectCategoryFilter(category) {
+    currentCategoryFilter = category;
+
+    // Update category tab active state
+    document.querySelectorAll('#categoryTabs .filter-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.textContent === category);
+    });
+
+    displayNarratives();
+
+    // Auto-load first narrative when a specific category is selected
+    if (category !== 'ALL') {
+        const firstNarrative = narratives.find(n => n.cpt === currentCptFilter && n.category === category);
+        if (firstNarrative) {
+            const firstItem = document.querySelector('.narrative-item');
+            if (firstItem) {
+                selectNarrative(firstNarrative, firstItem);
+            }
+        }
+    }
+}
+
+function getSmartTitle(narrative, currentCategory) {
+    // Get the intervention name, fallback to formatted category name
+    const fullTitle = narrative.intervention || formatCategoryName(narrative.category);
+
+    // If no specific category is selected (viewing ALL), show full title for context
+    if (!currentCategory || currentCategory === 'ALL') {
+        return fullTitle;
+    }
+
+    // Safety check: ensure we have valid inputs
+    if (!fullTitle || typeof fullTitle !== 'string') {
+        return fullTitle || '';
+    }
+
+    // Check if the intervention name starts with the category name
+    const categoryName = currentCategory.trim();
+    const titleTrimmed = fullTitle.trim();
+
+    // Case-insensitive check if title starts with category
+    if (titleTrimmed.toLowerCase().startsWith(categoryName.toLowerCase())) {
+        // Remove the category prefix
+        let smartTitle = titleTrimmed.substring(categoryName.length);
+
+        // Remove common connecting punctuation (-, :, etc.) and whitespace
+        smartTitle = smartTitle.replace(/^[\s\-:]+/, '').trim();
+
+        // If removal left nothing meaningful, return the full title
+        if (smartTitle.length === 0) {
+            return fullTitle;
+        }
+
+        return smartTitle;
+    }
+
+    // If the intervention doesn't start with category name, return full title
+    return fullTitle;
+}
+
+function determineNarrativeGroup(narrative) {
+    const intervention = (narrative.intervention || '').toLowerCase();
+    const category = (narrative.category || '').toLowerCase();
+
+    // 97110 - Therapeutic Exercise: Focus on impairment and body region, not condition
+
+    // Shoulder exercises
+    if (intervention.includes('shoulder')) {
+        if (intervention.includes('rom')) {
+            return 'Shoulder ROM';
+        } else if (intervention.includes('strengthen')) {
+            return 'Shoulder Strengthening';
+        }
+        return 'Shoulder';
+    }
+
+    // Elbow/Wrist/Forearm exercises
+    if (intervention.includes('elbow') || intervention.includes('wrist') || intervention.includes('forearm')) {
+        if (intervention.includes('strengthen')) {
+            return 'Elbow/Wrist Strengthening';
+        }
+        return 'Elbow/Wrist/Forearm ROM';
+    }
+
+    // Hand/Finger ROM and Function
+    if (intervention.includes('finger') || (intervention.includes('hand') && intervention.includes('rom'))) {
+        return 'Hand/Finger ROM';
+    }
+
+    // Grip and Hand Strengthening
+    if (intervention.includes('grip') || intervention.includes('hand intrinsic') ||
+        (intervention.includes('hand') && intervention.includes('strengthen'))) {
+        return 'Grip Strengthening';
+    }
+
+    // Hip/Knee ROM
+    if ((intervention.includes('hip') || intervention.includes('knee')) && intervention.includes('rom')) {
+        return 'Hip/Knee ROM';
+    }
+
+    // Ankle ROM
+    if (intervention.includes('ankle') && intervention.includes('rom')) {
+        return 'Ankle ROM';
+    }
+
+    // Lower Extremity Strengthening
+    if (intervention.includes('le strengthen')) {
+        return 'Lower Extremity Strengthening';
+    }
+
+    // Cervical ROM
+    if (intervention.includes('cervical')) {
+        return 'Cervical ROM';
+    }
+
+    // Trunk ROM
+    if (intervention.includes('trunk') && intervention.includes('rom')) {
+        return 'Trunk ROM';
+    }
+
+    // Core Strengthening
+    if (intervention.includes('core strengthen')) {
+        return 'Core Strengthening';
+    }
+
+    // Progressive Resistive Exercise (PRE)
+    if (intervention.includes('pre ') || intervention.includes('progressive resistive')) {
+        return 'Progressive Resistive Exercise';
+    }
+
+    // Stretching & Flexibility
+    if (intervention.includes('stretching') || intervention.includes('flexibility')) {
+        return 'Stretching & Flexibility';
+    }
+
+    // Generic ROM fallback
+    if (intervention.includes('rom') || intervention.includes('prom') || intervention.includes('arom')) {
+        return 'ROM';
+    }
+
+    // Generic Strengthening fallback
+    if (intervention.includes('strengthening') || intervention.includes('strength') || intervention.includes('resistance')) {
+        return 'Strengthening';
+    }
+
+    // Balance groups
+    if (intervention.includes('balance') || category.includes('balance')) {
+        if (intervention.includes('seated') || intervention.includes('sitting') || category.includes('sitting')) {
+            return 'Balance - Seated';
+        } else if (intervention.includes('standing') || intervention.includes('stand') || category.includes('standing')) {
+            return 'Balance - Standing';
+        } else if (intervention.includes('dynamic') || category.includes('dynamic')) {
+            return 'Balance - Dynamic';
+        }
+        return 'Balance';
+    }
+
+    // Posture & Trunk Control (97112)
+    if (intervention.includes('postur') || intervention.includes('trunk') ||
+        category.includes('posture') || category.includes('trunk')) {
+        return 'Posture & Trunk Control';
+    }
+
+    // Proprioception & Sensory (97112)
+    if (intervention.includes('proprioception') || intervention.includes('sensory') ||
+        category.includes('proprioception') || category.includes('sensory')) {
+        if (intervention.includes('ue') || intervention.includes('upper') || category.includes('_ue')) {
+            return 'Proprioception - Upper Extremity';
+        } else if (intervention.includes('le') || intervention.includes('lower') || category.includes('_le')) {
+            return 'Proprioception - Lower Extremity';
+        }
+        return 'Proprioception & Sensory';
+    }
+
+    // Coordination & Motor Planning (97112)
+    if (intervention.includes('coordination') || intervention.includes('motor planning') ||
+        category.includes('coordination') || category.includes('motor_planning')) {
+        return 'Coordination & Motor Planning';
+    }
+
+    // Vestibular Training (97112)
+    if (intervention.includes('vestibular') || category.includes('vestibular')) {
+        return 'Vestibular Training';
+    }
+
+    // Cognitive & Perceptual (97112)
+    if (intervention.includes('cognitive') || intervention.includes('perceptual') ||
+        intervention.includes('visual motor') || category.includes('cognitive') ||
+        category.includes('perceptual') || category.includes('visual_motor')) {
+        return 'Cognitive & Perceptual';
+    }
+
+    // Bed Mobility (97530)
+    if (intervention.includes('bed mobility') || category.includes('bed_mobility')) {
+        return 'Bed Mobility';
+    }
+
+    // Functional Mobility (97530)
+    if (intervention.includes('functional mobility') || category.includes('functional_mobility')) {
+        return 'Functional Mobility';
+    }
+
+    // Reaching & Bending (97530)
+    if (intervention.includes('reaching') || intervention.includes('bending') ||
+        intervention.includes('lifting') || intervention.includes('carrying') ||
+        intervention.includes('floor-level') || intervention.includes('overhead') ||
+        intervention.includes('placement of objects')) {
+        return 'Reaching & Bending';
+    }
+
+    // Fine Motor & Dexterity (97530)
+    if (intervention.includes('fine motor') || intervention.includes('dexterity') ||
+        intervention.includes('grasp') || intervention.includes('theraputty') ||
+        category.includes('fine_motor') || category.includes('dexterity')) {
+        return 'Fine Motor & Dexterity';
+    }
+
+    // Upper Extremity Function (97530)
+    if ((intervention.includes('ue ') || intervention.includes('upper extremity') ||
+        intervention.includes('bilateral') || category.includes('upper_extremity') ||
+        category.includes('ue_rom')) && !intervention.includes('proprioception')) {
+        return 'Upper Extremity Function';
+    }
+
+    // Dynamic Functional Activities (97530)
+    if (intervention.includes('throwing') || intervention.includes('catching') ||
+        intervention.includes('dynamic functional') || intervention.includes('weight shift') ||
+        intervention.includes('closed kinetic chain')) {
+        return 'Dynamic Functional Activities';
+    }
+
+    // Transfer groups (97530)
+    if (intervention.includes('transfer') || category.includes('transfer')) {
+        if (intervention.includes('sit to stand') || intervention.includes('sit-to-stand')) {
+            return 'Transfers - Sit-to-Stand';
+        } else if (intervention.includes('pivot')) {
+            return 'Transfers - Pivot';
+        } else if (intervention.includes('toilet')) {
+            return 'Transfers - Toilet';
+        } else if (intervention.includes('tub') || intervention.includes('shower')) {
+            return 'Transfers - Tub/Shower';
+        }
+        return 'Transfers';
+    }
+
+    // ADL groups (97535)
+    if (intervention.includes('adl') ||
+        intervention.includes('bathing') ||
+        intervention.includes('dressing') ||
+        intervention.includes('grooming') ||
+        intervention.includes('hygiene') ||
+        intervention.includes('toileting')) {
+        if (intervention.includes('bathing') || intervention.includes('shower')) {
+            return 'ADLs - Bathing';
+        } else if (intervention.includes('dressing')) {
+            return 'ADLs - Dressing';
+        } else if (intervention.includes('grooming')) {
+            return 'ADLs - Grooming';
+        } else if (intervention.includes('toileting')) {
+            return 'ADLs - Toileting';
+        }
+        return 'ADLs';
+    }
+
+    // Default: return category as group
+    return narrative.category || 'Other';
+}
+
+function displayNarratives() {
+    const listContainer = document.getElementById('narrativeList');
+    // Clear existing content and event listeners
+    while (listContainer.firstChild) {
+        listContainer.removeChild(listContainer.firstChild);
+    }
+
+    let filtered = narratives;
+
+    // Filter by Quick Access (Favorites or Recent)
+    if (currentQuickAccessFilter === 'FAVORITES') {
+        const favorites = getFavorites();
+        filtered = filtered.filter(n => favorites.includes(getNarrativeId(n)));
+    } else if (currentQuickAccessFilter === 'RECENT') {
+        const recent = getRecentNarratives();
+        filtered = filtered.filter(n => recent.includes(getNarrativeId(n)));
+
+        // Sort by recent order
+        filtered.sort((a, b) => {
+            return recent.indexOf(getNarrativeId(a)) - recent.indexOf(getNarrativeId(b));
+        });
+    } else {
+        // Filter by CPT
+        if (currentCptFilter !== 'ALL') {
+            filtered = filtered.filter(n => n.cpt === currentCptFilter);
+        }
+
+        // Filter by Category
+        if (currentCategoryFilter !== 'ALL') {
+            filtered = filtered.filter(n => n.category === currentCategoryFilter);
+        }
+    }
+
+    // Filter by search query
+    if (currentSearchQuery && currentSearchQuery.trim() !== '') {
+        filtered = filtered.filter(n => matchesSearch(n, currentSearchQuery));
+    }
+
+    document.querySelector('.panel-title').textContent = `Narratives (${filtered.length})`;
+    updateSearchResultsCount(filtered.length);
+
+    if (filtered.length === 0) {
+        listContainer.innerHTML = '<p style="padding: 10px; color: #666;">No narratives match the selected filters</p>';
+        return;
+    }
+
+    // Track previous group for header insertion
+    let previousGroup = null;
+
+    filtered.forEach(narrative => {
+        // Determine the group for this narrative
+        const currentGroup = determineNarrativeGroup(narrative);
+
+        // Insert group header if group has changed
+        if (currentGroup !== previousGroup) {
+            const groupHeader = document.createElement('div');
+            groupHeader.className = 'narrative-group-header';
+            groupHeader.textContent = currentGroup;
+            listContainer.appendChild(groupHeader);
+            previousGroup = currentGroup;
+        }
+
+        const narrativeId = getNarrativeId(narrative);
+        const item = document.createElement('div');
+        item.className = 'narrative-item';
+        item.setAttribute('tabindex', '0'); // Make focusable for keyboard navigation
+
+        if (isFavorite(narrativeId)) {
+            item.classList.add('favorited');
+        }
+
+        const starIcon = isFavorite(narrativeId) ? '★' : '☆';
+        const componentCount = countEditableComponents(narrative.narrative);
+
+        item.innerHTML = `
+            <span class="narrative-star" onclick="event.stopPropagation(); toggleFavoriteUI('${narrativeId.replace(/'/g, "\\'")}', this.parentElement);">${starIcon}</span>
+            <div class="narrative-item-title">${getSmartTitle(narrative, currentCategoryFilter)}</div>
+            <div class="narrative-item-preview">${narrative.narrative.substring(0, 150)}...</div>
+        `;
+        item.onclick = () => selectNarrative(narrative, item);
+        listContainer.appendChild(item);
+    });
+
+    // Reset keyboard navigation index when list is re-rendered
+    currentHighlightedIndex = -1;
+}
+
+// Search Functions
+function initializeNarrativeSearch() {
+    const searchInput = document.getElementById('narrativeSearch');
+    if (!searchInput) return;
+
+    let searchTimeout;
+
+    searchInput.addEventListener('input', (e) => {
+        currentSearchQuery = e.target.value;
+
+        // Show/hide clear button based on input
+        const clearBtn = document.getElementById('searchClearBtn');
+        if (clearBtn) {
+            clearBtn.style.display = e.target.value ? 'block' : 'none';
+        }
+
+        // Debounce search to improve performance
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            displayNarratives();
+        }, 150); // 150ms debounce
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            clearNarrativeSearch();
+        }
+    });
+}
+
+function clearNarrativeSearch() {
+    const searchInput = document.getElementById('narrativeSearch');
+    const clearBtn = document.getElementById('searchClearBtn');
+
+    if (searchInput) {
+        searchInput.value = '';
+        currentSearchQuery = '';
+
+        // Hide clear button
+        if (clearBtn) {
+            clearBtn.style.display = 'none';
+        }
+
+        displayNarratives();
+        searchInput.focus();
+    }
+}
+
+function matchesSearch(narrative, query) {
+    if (!query || query.trim() === '') return true;
+
+    const searchText = query.toLowerCase().trim();
+    const narrativeText = (narrative.narrative || '').toLowerCase();
+    const intervention = (narrative.intervention || '').toLowerCase();
+    const category = (narrative.category || '').toLowerCase();
+    const cpt = (narrative.cpt || '').toLowerCase();
+
+    return narrativeText.includes(searchText) ||
+           intervention.includes(searchText) ||
+           category.includes(searchText) ||
+           cpt.includes(searchText);
+}
+
+function updateSearchResultsCount(count) {
+    const countElement = document.getElementById('searchResultsCount');
+    if (!countElement) return;
+
+    if (currentSearchQuery && currentSearchQuery.trim() !== '') {
+        countElement.textContent = `${count} result${count !== 1 ? 's' : ''}`;
+        countElement.style.display = 'block';
+        countElement.classList.add('has-search');
+    } else {
+        countElement.style.display = 'none';
+        countElement.classList.remove('has-search');
+    }
+}
+
+function toggleFavoriteUI(narrativeId, itemElement) {
+    const isFav = toggleFavorite(narrativeId);
+
+    // Update star icon
+    const starElement = itemElement.querySelector('.narrative-star');
+    starElement.textContent = isFav ? '★' : '☆';
+
+    // Update item class
+    if (isFav) {
+        itemElement.classList.add('favorited');
+    } else {
+        itemElement.classList.remove('favorited');
+    }
+
+    // Refresh sidebar counts
+    updateSidebarCounts();
+
+    // If currently viewing favorites and unfavorited, remove from view
+    if (currentQuickAccessFilter === 'FAVORITES' && !isFav) {
+        displayNarratives();
+    }
+}
+
+function selectNarrative(narrative, itemElement) {
+    // Check for unsaved changes before switching narratives
+    const editorContent = document.getElementById('editorContent');
+    const currentText = editorContent.innerText;
+    const hasChanges = currentNarrative && currentText &&
+                       currentText !== currentNarrative.narrative &&
+                       currentText !== 'Select a narrative from the left to begin editing...';
+
+    if (hasChanges) {
+        if (!confirm('You have unsaved changes. Load new narrative anyway?')) {
+            return;
+        }
+    }
+
+    currentNarrative = narrative;
+    console.log('Selected narrative:', narrative);
+
+    // Track in recent narratives
+    addToRecent(getNarrativeId(narrative));
+    updateSidebarCounts(); // Refresh counts
+
+    document.querySelectorAll('.narrative-item').forEach(item => {
+        item.classList.remove('selected');
+    });
+    itemElement.classList.add('selected');
+
+    if (narrative && narrative.narrative) {
+        renderNarrative(narrative.narrative);
+    } else {
+        document.getElementById('editorContent').innerHTML = '<p style="color: red;">Error: Narrative text not found</p>';
+        console.error('Narrative object:', narrative);
+    }
+}
+
+function renderNarrative(text) {
+    const editorContent = document.getElementById('editorContent');
+    console.log('Rendering narrative, length:', text ? text.length : 0);
+
+    if (!text) {
+        editorContent.innerHTML = '<p style="color: red;">No narrative text provided</p>';
+        return;
+    }
+
+    // Clear history when loading new narrative
+    clearHistory();
+
+    let processedText = text;
+
+    // Process in order of specificity to avoid conflicts
+    // 1. Impairments (2/2...) - most specific pattern
+    processedText = processedText.replace(/2\/2 [^.]+/g,
+        match => `<span class="editable-component component-impairment" data-type="impairment" onclick="selectComponent(this)">${match}</span>`);
+
+    // 2. Assistance levels
+    processedText = processedText.replace(/\b(Min|Mod|Max|Contact guard|Standby) (assist|assistance|physical assist|tactile cues|verbal cues)(?!<\/span>)/gi,
+        match => `<span class="editable-component component-assistance" data-type="assistance" onclick="selectComponent(this)">${match}</span>`);
+    processedText = processedText.replace(/\b(CGA|SBA|Setup assist|Hand-over-hand assist|Visual cues|Gestural cues)(?!<\/span>)/gi,
+        match => `<span class="editable-component component-assistance" data-type="assistance" onclick="selectComponent(this)">${match}</span>`);
+
+    // 3. Intervention types (training, instruction, etc.)
+    processedText = processedText.replace(/\b(compensatory technique training|cueing hierarchy training|lower extremity dressing technique training|safety training for functional mobility|energy conservation training|assistive device instruction|upper extremity dressing techniques|fastener management|neuromuscular reeducation|strengthening activities|range of motion techniques|bed mobility training|transfer training)(?!<\/span>)/gi,
+        match => `<span class="editable-component component-intervention" data-type="intervention" onclick="selectComponent(this)">${match}</span>`);
+
+    // 4. Equipment/adaptive devices
+    processedText = processedText.replace(/\b(long-handled sponge|reacher|w\/c|shower chair|RW|grab bars|tub bench|sock aid|button hook|universal cuff|rocker knife|sliding board|bed rail|elevated toilet seat|dressing stick)(?!<\/span>)/gi,
+        match => `<span class="editable-component component-equipment" data-type="equipment" onclick="selectComponent(this)">${match}</span>`);
+
+    // 5. Body regions
+    processedText = processedText.replace(/\b(UB|LB|BLE|BUE|R shoulder|B shoulder|core|trunk|LUE|hips|face|back)(?!<\/span>)/g,
+        match => `<span class="editable-component component-body_region" data-type="body_region" onclick="selectComponent(this)">${match}</span>`);
+
+    // 6. Goals (to improve/promote/increase...)
+    processedText = processedText.replace(/to (promote independence and safety|increase independence|improve bathroom independence|improve dressing independence|improve household mobility|improve kitchen task performance|reduce fall risk|advance task performance)(?!<\/span>)/gi,
+        match => `<span class="editable-component component-goal" data-type="goal" onclick="selectComponent(this)">${match}</span>`);
+
+    // 7. Activities
+    processedText = processedText.replace(/\b(shower transfer|UB washing|bathing sequence|LB dressing|self-feeding|toileting routine|grooming tasks|light meal prep|oral care|Transfer training|Bed mobility training|Standing balance activities)(?!<\/span>)/gi,
+        match => `<span class="editable-component component-activity" data-type="activity" onclick="selectComponent(this)">${match}</span>`);
+
+    // 8. Patient performance
+    processedText = processedText.replace(/\b(Patient able to|Patient demonstrated|Demonstrated improved|Required increased time|Limited success|Completed task with|Patient tolerated|Showing progress)(?!<\/span>)/gi,
+        match => `<span class="editable-component component-performance" data-type="performance" onclick="selectComponent(this)">${match}</span>`);
+
+    // 9. Bracketed Placeholders - Process AFTER other components to avoid conflicts
+    // [Patient Goal]
+    processedText = processedText.replace(/\[Patient Goal\]/g,
+        match => `<span class="editable-component placeholder-component component-placeholder_goal" data-type="placeholder_goal" onclick="selectComponent(this)">${match}</span>`);
+
+    // [Body Part]
+    processedText = processedText.replace(/\[Body Part\]/g,
+        match => `<span class="editable-component placeholder-component component-placeholder_body_part" data-type="placeholder_body_part" onclick="selectComponent(this)">${match}</span>`);
+
+    // [Time, e.g., 10 minutes] - matches the full pattern
+    processedText = processedText.replace(/\[Time,?\s*e\.g\.,?\s*[^\]]+\]/gi,
+        match => `<span class="editable-component placeholder-component component-placeholder_time" data-type="placeholder_time" onclick="selectComponent(this)">${match}</span>`);
+
+    // [Task]
+    processedText = processedText.replace(/\[Task\]/g,
+        match => `<span class="editable-component placeholder-component component-placeholder_task" data-type="placeholder_task" onclick="selectComponent(this)">${match}</span>`);
+
+    console.log('Processed text length:', processedText.length);
+    editorContent.innerHTML = processedText;
+
+    // Save initial state to history
+    saveHistory();
+
+    // Auto-focus the editor content
+    editorContent.focus();
+}
+
+function selectComponent(element) {
+    // Remove previous selection
+    document.querySelectorAll('.editable-component').forEach(el => {
+        el.classList.remove('selected');
+    });
+
+    // Select this component
+    element.classList.add('selected');
+    selectedComponent = element;
+
+    // Show loading state in options panel IMMEDIATELY
+    const optionsPanel = document.getElementById('optionsPanel');
+    optionsPanel.innerHTML = '<div style="padding: 20px; text-align: center; color: #999;">Loading options...</div>';
+
+    const type = element.getAttribute('data-type');
+    showOptions(type, element.textContent);
+}
+
+function showOptions(type, currentValue) {
+    const optionsPanel = document.getElementById('optionsPanel');
+    const optionsHeader = document.getElementById('optionsHeader');
+
+    const headers = {
+        assistance: 'Replace Assistance Level',
+        impairment: 'Replace Impairment (2/2...)',
+        performance: 'Replace Performance Statement',
+        intervention: 'Replace Intervention Type',
+        equipment: 'Replace Equipment/Device',
+        body_region: 'Replace Body Region',
+        goal: 'Replace Goal/Purpose',
+        activity: 'Replace Activity',
+        placeholder_goal: 'Select Patient Goal',
+        placeholder_body_part: 'Select Body Part',
+        placeholder_time: 'Select Time Duration',
+        placeholder_task: 'Select Task/Activity'
+    };
+
+    optionsHeader.textContent = headers[type] || 'Select replacement';
+    optionsPanel.innerHTML = '';
+
+    // Special handling for assistance levels with two-step selection
+    if (type === 'assistance') {
+        showTwoStepAssistanceSelection();
+        return;
+    }
+
+    // Special handling for impairments with two-step selection
+    if (type === 'impairment') {
+        showTwoStepImpairmentSelection();
+        return;
+    }
+
+    // Get all options for this component type
+    let options = replacementOptions[type] || [];
+
+    // Define which component types should be filtered by context
+    const contextSpecificTypes = ['equipment', 'goal', 'activity', 'intervention', 'body_region'];
+
+    // Apply context-aware filtering for context-specific components
+    if (contextSpecificTypes.includes(type) && currentNarrative && currentNarrative.category) {
+        const category = currentNarrative.category.toUpperCase();
+
+        // Check if we have mappings for this category
+        if (categoryMappings[category] && categoryMappings[category][type]) {
+            const contextOptions = categoryMappings[category][type];
+
+            // Filter options to only show those relevant to this category
+            options = options.filter(opt => {
+                // Case-insensitive matching
+                return contextOptions.some(contextOpt =>
+                    contextOpt.toLowerCase() === opt.toLowerCase()
+                );
+            });
+
+            console.log(`Filtered ${type} options for ${category}:`, options.length, 'options');
+        } else {
+            console.log(`No category mappings found for ${category} - ${type}, showing all options`);
+        }
+    }
+
+    // Display filtered (or all) options
+    if (options.length === 0) {
+        optionsPanel.innerHTML = '<p style="padding: 10px; color: #666;">No relevant options available</p>';
+    } else {
+        options.forEach(option => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.textContent = option;
+            btn.onclick = () => replaceComponent(option);
+            optionsPanel.appendChild(btn);
+        });
+    }
+}
+
+// Two-step assistance type selection (TYPE → LEVEL)
+function showTwoStepAssistanceSelection() {
+    const optionsPanel = document.getElementById('optionsPanel');
+
+    // Reorganized: TYPE first, then LEVEL
+    const assistanceMap = {
+        verbal: ['Min verbal cues', 'Mod verbal cues', 'Max verbal cues'],
+        visual: ['Visual cues', 'Gestural cues'],  // No min/mod/max for visual/demonstrations
+        physical: ['Min physical assist', 'Mod physical assist', 'Max physical assist'],
+        tactile: ['Min tactile cues', 'Mod tactile cues', 'Max tactile cues'],
+        other: ['CGA', 'SBA', 'Setup assist', 'Hand-over-hand assist', 'Min assist', 'Mod assist', 'Max assist']
+    };
+
+    // Create container
+    const container = document.createElement('div');
+    container.className = 'two-step-container';
+
+    // Step 1: Type selection
+    const step1Label = document.createElement('div');
+    step1Label.className = 'step-label';
+    step1Label.textContent = 'Step 1: Select Assistance Type';
+    container.appendChild(step1Label);
+
+    const typeRow = document.createElement('div');
+    typeRow.className = 'level-button-row';
+    typeRow.id = 'typeButtonRow';
+
+    [
+        { key: 'verbal', label: 'Verbal' },
+        { key: 'visual', label: 'Visual' },
+        { key: 'physical', label: 'Physical' },
+        { key: 'tactile', label: 'Tactile' },
+        { key: 'other', label: 'Other' }
+    ].forEach(item => {
+        const btn = document.createElement('button');
+        btn.className = 'level-btn';
+        btn.textContent = item.label;
+        btn.dataset.type = item.key;
+        btn.onclick = () => selectAssistanceType(item.key, assistanceMap);
+        typeRow.appendChild(btn);
+    });
+
+    container.appendChild(typeRow);
+
+    // Step 2: Level/Option selection (initially hidden)
+    const hr = document.createElement('hr');
+    hr.className = 'divider hidden';
+    hr.id = 'stepDivider';
+    container.appendChild(hr);
+
+    const step2Label = document.createElement('div');
+    step2Label.className = 'step-label hidden';
+    step2Label.id = 'step2Label';
+    step2Label.textContent = 'Step 2: Select Level';
+    container.appendChild(step2Label);
+
+    const optionGrid = document.createElement('div');
+    optionGrid.className = 'type-button-grid hidden';
+    optionGrid.id = 'optionButtonGrid';
+    container.appendChild(optionGrid);
+
+    optionsPanel.appendChild(container);
+}
+
+function selectAssistanceType(type, assistanceMap) {
+    // Update active button style
+    document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const options = assistanceMap[type];
+    const optionGrid = document.getElementById('optionButtonGrid');
+    const step2Label = document.getElementById('step2Label');
+    const stepDivider = document.getElementById('stepDivider');
+
+    // Clear previous option buttons
+    optionGrid.innerHTML = '';
+
+    // Update step 2 label based on type
+    if (type === 'visual' || type === 'other') {
+        step2Label.textContent = 'Step 2: Select Option';
+    } else {
+        step2Label.textContent = 'Step 2: Select Level';
+    }
+
+    // Create option buttons
+    options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.className = 'type-btn';
+        btn.textContent = option;
+        btn.onclick = () => replaceComponent(option);
+        optionGrid.appendChild(btn);
+    });
+
+    // Show step 2
+    optionGrid.classList.remove('hidden');
+    step2Label.classList.remove('hidden');
+    stepDivider.classList.remove('hidden');
+}
+
+// Two-step impairment selection
+function showTwoStepImpairmentSelection() {
+    const optionsPanel = document.getElementById('optionsPanel');
+
+    // Organize impairments by body system/condition
+    const impairmentMap = {
+        'Upper Extremity': [
+            '2/2 adhesive capsulitis',
+            '2/2 rotator cuff weakness',
+            '2/2 rotator cuff repair',
+            '2/2 shoulder pain',
+            '2/2 elbow contractures',
+            '2/2 wrist arthritis',
+            '2/2 hand weakness post-CVA'
+        ],
+        'Lower Extremity': [
+            '2/2 BLE weakness',
+            '2/2 hip precautions',
+            '2/2 total hip arthroplasty',
+            '2/2 knee osteoarthritis',
+            '2/2 total knee replacement',
+            '2/2 ankle fracture',
+            '2/2 prolonged immobilization'
+        ],
+        'Balance & Mobility': [
+            '2/2 balance deficits',
+            '2/2 fall risk',
+            '2/2 impaired balance reactions',
+            '2/2 decreased standing tolerance',
+            '2/2 vestibular deficits',
+            '2/2 chronic ankle instability'
+        ],
+        'Trunk & Core': [
+            '2/2 trunk weakness',
+            '2/2 trunk weakness post-CVA',
+            '2/2 decreased trunk control',
+            '2/2 poor postural control',
+            '2/2 decreased core strength',
+            '2/2 lumbar stiffness',
+            '2/2 chronic back pain'
+        ],
+        'Neurological': [
+            '2/2 CVA',
+            '2/2 hemiparesis',
+            '2/2 peripheral neuropathy',
+            '2/2 diabetic neuropathy',
+            '2/2 cerebellar dysfunction',
+            '2/2 ataxia',
+            '2/2 apraxia',
+            '2/2 Parkinson\'s disease'
+        ],
+        'Functional Deficits': [
+            '2/2 decreased endurance',
+            '2/2 deconditioning',
+            '2/2 generalized weakness',
+            '2/2 decreased pincer strength',
+            '2/2 poor coordination',
+            '2/2 ROM limitations'
+        ],
+        'Pain & Inflammation': [
+            '2/2 pain',
+            '2/2 arthritis',
+            '2/2 bilateral hand arthritis',
+            '2/2 inflammation',
+            '2/2 edema',
+            '2/2 lymphedema'
+        ],
+        'Post-Surgical': [
+            '2/2 post-surgical protocol',
+            '2/2 post-mastectomy',
+            '2/2 post-op restrictions',
+            '2/2 surgical repair'
+        ]
+    };
+
+    // Create HTML structure
+    let html = '<div class="two-step-container">';
+    html += '<div class="step-label">Step 1: Select Body System / Condition</div>';
+    html += '<div class="level-button-row" style="flex-wrap: wrap;">';
+
+    Object.keys(impairmentMap).forEach(category => {
+        html += `<button class="level-btn" style="flex: 1 1 45%; min-width: 140px;" onclick="selectImpairmentCategory('${category}', ${JSON.stringify(impairmentMap).replace(/'/g, "\\'")})">${category}</button>`;
+    });
+
+    html += '</div>';
+    html += '<hr class="divider hidden" id="stepDivider">';
+    html += '<div class="step-label hidden" id="step2Label">Step 2: Select Specific Impairment</div>';
+    html += '<div class="type-button-grid hidden" id="optionButtonGrid"></div>';
+    html += '</div>';
+
+    optionsPanel.innerHTML = html;
+}
+
+function selectImpairmentCategory(category, impairmentMapString) {
+    // Parse the map from string
+    const impairmentMap = typeof impairmentMapString === 'string' ? JSON.parse(impairmentMapString) : impairmentMapString;
+
+    // Update active button style
+    document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const options = impairmentMap[category];
+    const optionGrid = document.getElementById('optionButtonGrid');
+    const step2Label = document.getElementById('step2Label');
+    const stepDivider = document.getElementById('stepDivider');
+
+    // Clear previous option buttons
+    optionGrid.innerHTML = '';
+
+    // Update step 2 label
+    step2Label.textContent = `Step 2: Select ${category} Impairment`;
+
+    // Create option buttons
+    options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.className = 'type-btn';
+        btn.textContent = option;
+        btn.onclick = () => replaceComponent(option);
+        optionGrid.appendChild(btn);
+    });
+
+    // Show step 2
+    optionGrid.classList.remove('hidden');
+    step2Label.classList.remove('hidden');
+    stepDivider.classList.remove('hidden');
+}
+
+function replaceComponent(newText) {
+    // Validate newText before replacing
+    if (!newText || newText.trim() === '') {
+        alert('Please select a valid replacement option.');
+        return;
+    }
+
+    if (!selectedComponent) {
+        console.error('No component selected');
+        return;
+    }
+
+    // Save state before making changes
+    saveHistory();
+
+    // Get component type from data attribute
+    const componentType = selectedComponent.getAttribute('data-type');
+
+    // Replace text
+    selectedComponent.textContent = newText;
+    selectedComponent.classList.remove('selected');
+
+    // Get and display suggestions
+    const suggestions = getSuggestions(componentType, newText);
+    displaySuggestions(suggestions);
+
+    // Auto-advance to next editable component
+    const allComponents = Array.from(document.querySelectorAll('.editable-component'));
+    const currentIndex = allComponents.indexOf(selectedComponent);
+
+    selectedComponent = null;
+
+    if (currentIndex >= 0 && currentIndex < allComponents.length - 1) {
+        // Move to next component
+        const nextComponent = allComponents[currentIndex + 1];
+        setTimeout(() => {
+            selectComponent(nextComponent);
+            nextComponent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    }
+}
+
+function copyToClipboard() {
+    const editorContent = document.getElementById('editorContent');
+    const text = editorContent.innerText;
+
+    // Improved user feedback with visual confirmation
+    navigator.clipboard.writeText(text).then(() => {
+        // Create temporary success message instead of alert
+        const msg = document.createElement('div');
+        msg.textContent = '✓ Copied to clipboard!';
+        msg.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 10px 20px; border-radius: 4px; z-index: 9999; animation: fadeOut 3s forwards;';
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+    }).catch(err => {
+        console.error('Copy failed:', err);
+        // Fallback method for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            const msg = document.createElement('div');
+            msg.textContent = '✓ Copied to clipboard!';
+            msg.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 10px 20px; border-radius: 4px; z-index: 9999; animation: fadeOut 3s forwards;';
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
+        } catch (e) {
+            alert('Unable to copy. Please select the text manually and press Ctrl+C.');
+        }
+        document.body.removeChild(textArea);
+    });
+}
+
+// Count editable components in narrative text
+function countEditableComponents(text) {
+    const regex = /\[([^\]]+)\]\{([^}]+)\}/g;
+    return (text.match(regex) || []).length;
+}
+
+// Complete Documentation Modal Functions
+function showCompleteDocumentationModal() {
+    const editorContent = document.getElementById('editorContent');
+    const narrativeText = editorContent.innerText;
+
+    if (!narrativeText || narrativeText === 'Select a narrative from the left to begin editing...') {
+        alert('Please select a narrative first');
+        return;
+    }
+
+    // Auto-detect placeholders in the narrative
+    const placeholders = detectPlaceholders(narrativeText);
+
+    // Detect missing documentation elements
+    const gaps = detectDocumentationGaps(narrativeText);
+
+    // Build modal content
+    const modalContent = document.getElementById('completeDocContent');
+    let html = '<div style="color: #e0e0e0;">';
+
+    // Show placeholder section if any found
+    if (placeholders.length > 0) {
+        html += '<div style="background: #1a4d4d; padding: 15px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #17a2b8;">';
+        html += '<strong style="color: #17a2b8;">📝 ' + placeholders.length + ' Placeholder(s) Detected</strong><br>';
+        html += '<span style="color: #ccc; font-size: 13px;">Fill in the missing information below to complete your narrative.</span>';
+        html += '</div>';
+
+        // Create form fields for each unique placeholder
+        placeholders.forEach((placeholder, idx) => {
+            html += '<div style="margin-bottom: 20px;">';
+            html += '<label style="display: block; margin-bottom: 8px; font-weight: 600; color: #fff;">' + escapeHtml(placeholder.display) + '</label>';
+
+            // Determine if we should use dropdown or text input
+            const smartOptions = getSmartOptionsForPlaceholder(placeholder.text, narrativeText);
+
+            if (smartOptions && smartOptions.length > 0) {
+                // Use dropdown with smart options
+                html += '<select id="placeholder_' + idx + '" data-placeholder="' + escapeHtml(placeholder.text) + '" style="width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #555; border-radius: 4px; color: #fff; font-size: 14px;">';
+                html += '<option value="">-- Select --</option>';
+                smartOptions.forEach(opt => {
+                    html += '<option value="' + escapeHtml(opt) + '">' + escapeHtml(opt) + '</option>';
+                });
+                html += '<option value="__custom__">Custom (type your own)...</option>';
+                html += '</select>';
+                html += '<input type="text" id="placeholder_' + idx + '_custom" data-placeholder="' + escapeHtml(placeholder.text) + '" placeholder="Enter custom value..." style="width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #555; border-radius: 4px; color: #fff; font-size: 14px; margin-top: 8px; display: none;">';
+            } else {
+                // Use text input
+                html += '<input type="text" id="placeholder_' + idx + '" data-placeholder="' + escapeHtml(placeholder.text) + '" placeholder="Enter value..." style="width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #555; border-radius: 4px; color: #fff; font-size: 14px;">';
+            }
+            html += '</div>';
+        });
+
+        // Add Fill All Placeholders button
+        html += '<div style="margin-bottom: 25px; padding-top: 10px; border-top: 1px solid #444;">';
+        html += '<button class="btn" onclick="fillAllPlaceholders()" style="background: #17a2b8; width: 100%; margin-top: 10px;">✓ Fill All Placeholders</button>';
+        html += '</div>';
+    }
+
+    // Documentation completeness check
+    if (gaps.complete && placeholders.length === 0) {
+        html += '<div style="background: #1a4d1a; padding: 15px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #28a745;">';
+        html += '<strong style="color: #28a745;">✓ Documentation appears complete!</strong><br>';
+        html += '<span style="color: #ccc; font-size: 13px;">All key elements are present. You can still add optional details below.</span>';
+        html += '</div>';
+    } else if (!gaps.complete) {
+        html += '<div style="background: #4d3d1a; padding: 15px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #ffc107;">';
+        html += '<strong style="color: #ffc107;">⚠ Missing ' + gaps.missing.length + ' element(s)</strong><br>';
+        html += '<span style="color: #ccc; font-size: 13px;">Add these to improve documentation quality and reduce audit risk.</span>';
+        html += '</div>';
+    }
+
+    // Treatment Duration
+    if (!gaps.has.duration) {
+        html += '<div style="margin-bottom: 20px;">';
+        html += '<label style="display: block; margin-bottom: 8px; font-weight: 600; color: #fff;">Treatment Duration (Required for billing)</label>';
+        html += '<div style="display: flex; gap: 10px; align-items: center;">';
+        html += '<input type="number" id="doc_duration" min="1" max="120" value="30" style="width: 80px; padding: 8px; background: #1a1a1a; border: 1px solid #555; border-radius: 4px; color: #fff; font-size: 14px;"> minutes';
+        html += '</div>';
+        html += '</div>';
+    }
+
+    // Patient Response
+    if (!gaps.has.patientResponse) {
+        html += '<div style="margin-bottom: 20px;">';
+        html += '<label style="display: block; margin-bottom: 8px; font-weight: 600; color: #fff;">Patient Response</label>';
+        html += '<select id="doc_response" style="width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #555; border-radius: 4px; color: #fff; font-size: 14px;">';
+        html += '<option value="">-- Select --</option>';
+        html += '<option value="Pt tolerated intervention well without complaints.">Tolerated well without complaints</option>';
+        html += '<option value="Pt required 2 min rest break 2/2 fatigue.">Required rest breaks due to fatigue</option>';
+        html += '<option value="Pt demonstrated improved confidence with activity.">Improved confidence with activity</option>';
+        html += '<option value="Pt expressed understanding of safety techniques.">Expressed understanding of techniques</option>';
+        html += '<option value="Pt reports pain 4/10 during activity, decreased to 2/10 at rest.">Reported pain during activity</option>';
+        html += '</select>';
+        html += '</div>';
+    }
+
+    // Progress Comparison
+    if (!gaps.has.progress) {
+        html += '<div style="margin-bottom: 20px;">';
+        html += '<label style="display: block; margin-bottom: 8px; font-weight: 600; color: #fff;">Progress Comparison (Recommended)</label>';
+        html += '<select id="doc_progress_type" onchange="toggleProgressDetails()" style="width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #555; border-radius: 4px; color: #fff; font-size: 14px; margin-bottom: 10px;">';
+        html += '<option value="">-- Select progress type --</option>';
+        html += '<option value="improved">Improved from last session</option>';
+        html += '<option value="maintained">Maintained baseline performance</option>';
+        html += '<option value="declined">Declined from previous level</option>';
+        html += '<option value="new_skill">New skill acquired</option>';
+        html += '</select>';
+        html += '<div id="progress_details" style="display: none; margin-top: 10px;">';
+        html += '<input type="text" id="doc_progress_text" placeholder="e.g., Improved from 3 reps to 8 reps" style="width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #555; border-radius: 4px; color: #fff; font-size: 14px;">';
+        html += '</div>';
+        html += '</div>';
+    }
+
+    // Safety/Precautions
+    if (!gaps.has.safety) {
+        html += '<div style="margin-bottom: 20px;">';
+        html += '<label style="display: block; margin-bottom: 8px; font-weight: 600; color: #fff;">Safety & Precautions</label>';
+        html += '<div style="display: flex; flex-direction: column; gap: 8px;">';
+        html += '<label style="display: flex; align-items: center; color: #ccc;"><input type="checkbox" value="Fall risk precautions maintained throughout intervention." style="margin-right: 8px;"> Fall risk precautions</label>';
+        html += '<label style="display: flex; align-items: center; color: #ccc;"><input type="checkbox" value="Hip precautions (no >90° flexion, no adduction, no IR) followed during all transfers." style="margin-right: 8px;"> Hip precautions (THA)</label>';
+        html += '<label style="display: flex; align-items: center; color: #ccc;"><input type="checkbox" value="Cardiac precautions observed, HR monitored, stayed within target range." style="margin-right: 8px;"> Cardiac precautions</label>';
+        html += '<label style="display: flex; align-items: center; color: #ccc;"><input type="checkbox" value="Weight-bearing restrictions respected during mobility." style="margin-right: 8px;"> Weight-bearing restrictions</label>';
+        html += '</div>';
+        html += '</div>';
+    }
+
+    // Patient Education
+    if (!gaps.has.education) {
+        html += '<div style="margin-bottom: 20px;">';
+        html += '<label style="display: block; margin-bottom: 8px; font-weight: 600; color: #fff;">Patient/Caregiver Education</label>';
+        html += '<div style="display: flex; flex-direction: column; gap: 8px;">';
+        html += '<label style="display: flex; align-items: center; color: #ccc;"><input type="checkbox" value="Pt educated on proper body mechanics for transfers." style="margin-right: 8px;"> Body mechanics education</label>';
+        html += '<label style="display: flex; align-items: center; color: #ccc;"><input type="checkbox" value="Home exercise program provided and demonstrated; pt able to return demonstrate." style="margin-right: 8px;"> Home exercise program</label>';
+        html += '<label style="display: flex; align-items: center; color: #ccc;"><input type="checkbox" value="Safety techniques reviewed with pt; verbalized understanding." style="margin-right: 8px;"> Safety techniques review</label>';
+        html += '<label style="display: flex; align-items: center; color: #ccc;"><input type="checkbox" value="Caregiver instructed in cueing strategies for ADL tasks." style="margin-right: 8px;"> Caregiver training</label>';
+        html += '</div>';
+        html += '</div>';
+    }
+
+    html += '</div>';
+
+    modalContent.innerHTML = html;
+
+    // Add event listeners for dropdown custom option
+    placeholders.forEach((placeholder, idx) => {
+        const select = document.getElementById('placeholder_' + idx);
+        const customInput = document.getElementById('placeholder_' + idx + '_custom');
+        if (select && customInput) {
+            select.addEventListener('change', function() {
+                if (this.value === '__custom__') {
+                    customInput.style.display = 'block';
+                    customInput.focus();
+                } else {
+                    customInput.style.display = 'none';
+                }
+            });
+        }
+    });
+
+    // Show modal with slide-in animation
+    const modal = document.getElementById('completeDocModal');
+    const backdrop = document.getElementById('completeDocBackdrop');
+    modal.style.display = 'block';
+    backdrop.style.display = 'block';
+
+    // Trigger animation after display is set
+    setTimeout(() => {
+        modal.style.transform = 'translateX(0)';
+    }, 10);
+}
+
+function toggleProgressDetails() {
+    const progressType = document.getElementById('doc_progress_type').value;
+    const detailsDiv = document.getElementById('progress_details');
+
+    if (progressType) {
+        detailsDiv.style.display = 'block';
+        const textInput = document.getElementById('doc_progress_text');
+
+        // Set placeholder based on type
+        switch (progressType) {
+            case 'improved':
+                textInput.placeholder = 'e.g., Improved from 3 reps to 8 reps, or min assist to SBA';
+                break;
+            case 'maintained':
+                textInput.placeholder = 'e.g., Maintained baseline level of independence with transfers';
+                break;
+            case 'declined':
+                textInput.placeholder = 'e.g., Declined from SBA to mod assist 2/2 increased pain';
+                break;
+            case 'new_skill':
+                textInput.placeholder = 'e.g., Pt now verbalizes hip precautions independently vs. max cues last session';
+                break;
+        }
+    } else {
+        detailsDiv.style.display = 'none';
+    }
+}
+
+function detectDocumentationGaps(text) {
+    const textLower = text.toLowerCase();
+
+    const gaps = {
+        complete: true,
+        missing: [],
+        has: {
+            duration: /\d+\s*(min|minute|minutes)/.test(textLower),
+            patientResponse: /(tolerated|required.*break|demonstrated|expressed|reports? pain|fatigued)/.test(textLower),
+            progress: /(improved from|increased from|decreased from|maintained.*baseline|declined from|vs\.|compared to|now able to)/.test(textLower),
+            safety: /(precaution|fall risk|cardiac|weight.?bearing|restrictions?|safety)/.test(textLower),
+            education: /(educated|instructed|home.*program|demonstrated|trained|reviewed)/.test(textLower)
+        }
+    };
+
+    // Check what's missing
+    Object.keys(gaps.has).forEach(key => {
+        if (!gaps.has[key]) {
+            gaps.missing.push(key);
+            gaps.complete = false;
+        }
+    });
+
+    return gaps;
+}
+
+function applyDocumentationCompletions() {
+    const editorContent = document.getElementById('editorContent');
+    let additions = [];
+
+    // Get duration
+    const duration = document.getElementById('doc_duration');
+    if (duration) {
+        const mins = duration.value;
+        if (mins) {
+            additions.push(`Intervention duration: ${mins} minutes.`);
+        }
+    }
+
+    // Get patient response
+    const response = document.getElementById('doc_response');
+    if (response && response.value) {
+        additions.push(response.value);
+    }
+
+    // Get progress
+    const progressType = document.getElementById('doc_progress_type');
+    const progressText = document.getElementById('doc_progress_text');
+    if (progressType && progressType.value && progressText && progressText.value) {
+        let progressStatement = '';
+        switch (progressType.value) {
+            case 'improved':
+                progressStatement = `Improved from ${progressText.value} compared to last session.`;
+                break;
+            case 'maintained':
+                progressStatement = `Pt maintained ${progressText.value}.`;
+                break;
+            case 'declined':
+                progressStatement = `Declined from ${progressText.value}.`;
+                break;
+            case 'new_skill':
+                progressStatement = progressText.value;
+                break;
+        }
+        if (progressStatement) additions.push(progressStatement);
+    }
+
+    // Get safety checkboxes
+    const safetyBoxes = document.querySelectorAll('#completeDocContent input[type="checkbox"]:checked');
+    safetyBoxes.forEach(box => {
+        additions.push(box.value);
+    });
+
+    if (additions.length > 0) {
+        // Save state before making changes
+        saveHistory();
+
+        // Add all additions to the end of the narrative
+        const currentText = editorContent.innerHTML;
+        const newText = currentText + ' ' + additions.join(' ');
+        editorContent.innerHTML = newText;
+
+        // Close modal
+        closeCompleteDocModal();
+
+        alert(`Added ${additions.length} element(s) to your documentation!`);
+    } else {
+        alert('No items selected. Please fill out at least one field.');
+    }
+}
+
+function closeCompleteDocModal() {
+    // Check if any fields have values
+    const hasData = Array.from(document.querySelectorAll('#completeDocContent input, #completeDocContent select'))
+        .some(field => field.value && field.value !== '__custom__' && field.value !== '');
+
+    if (hasData) {
+        if (!confirm('You have unsaved changes in this form. Close anyway?')) {
+            return;
+        }
+    }
+
+    const modal = document.getElementById('completeDocModal');
+    const backdrop = document.getElementById('completeDocBackdrop');
+
+    // Slide out animation
+    modal.style.transform = 'translateX(100%)';
+
+    // Hide after animation completes
+    setTimeout(() => {
+        modal.style.display = 'none';
+        backdrop.style.display = 'none';
+    }, 300);
+}
+
+// Detect all bracketed placeholders in the narrative
+function detectPlaceholders(text) {
+    const regex = /\[([^\]]+)\]/g;
+    const found = [];
+    const seen = new Set();
+    let match;
+
+    while ((match = regex.exec(text)) !== null) {
+        const placeholderText = match[1];
+        // Only add unique placeholders
+        if (!seen.has(placeholderText)) {
+            seen.add(placeholderText);
+            found.push({
+                text: placeholderText,
+                display: placeholderText,
+                fullMatch: match[0]
+            });
+        }
+    }
+
+    return found;
+}
+
+// Get smart dropdown options based on placeholder type and narrative context
+function getSmartOptionsForPlaceholder(placeholderText, narrativeText) {
+    const lowerPlaceholder = placeholderText.toLowerCase();
+
+    // Detect narrative category from text
+    const categoryFromNarrative = detectNarrativeCategory(narrativeText);
+
+    // Patient Goal - use category-specific goals from category_mappings
+    if (lowerPlaceholder.includes('goal')) {
+        if (categoryFromNarrative && categoryMappings && categoryMappings[categoryFromNarrative]) {
+            return categoryMappings[categoryFromNarrative].goal || [];
+        }
+        // Fallback to generic goals
+        return [
+            'to promote independence and safety',
+            'to increase independence',
+            'to improve functional mobility',
+            'to advance task performance',
+            'to reduce fall risk',
+            'to improve ADL performance'
+        ];
+    }
+
+    // Body Part / Body Region
+    if (lowerPlaceholder.includes('body part') || lowerPlaceholder.includes('body region')) {
+        if (categoryFromNarrative && categoryMappings && categoryMappings[categoryFromNarrative]) {
+            return categoryMappings[categoryFromNarrative].body_region || [];
+        }
+        // Fallback to common body regions
+        return ['UB', 'LB', 'BUE', 'BLE', 'R shoulder', 'L shoulder', 'trunk', 'core', 'hips', 'R knee', 'L knee'];
+    }
+
+    // Time duration
+    if (lowerPlaceholder.includes('time') || lowerPlaceholder.includes('minute')) {
+        return ['5 minutes', '10 minutes', '15 minutes', '20 minutes', '30 minutes', '45 minutes'];
+    }
+
+    // Joint
+    if (lowerPlaceholder.includes('joint')) {
+        return ['shoulder', 'elbow', 'wrist', 'hip', 'knee', 'ankle', 'R shoulder', 'L shoulder', 'R knee', 'L knee', 'R ankle', 'L ankle'];
+    }
+
+    // Task
+    if (lowerPlaceholder.includes('task')) {
+        if (categoryFromNarrative && categoryMappings && categoryMappings[categoryFromNarrative]) {
+            return categoryMappings[categoryFromNarrative].activity || [];
+        }
+        return ['dressing tasks', 'bathing tasks', 'transfer tasks', 'grooming tasks', 'meal preparation', 'household tasks'];
+    }
+
+    // Equipment
+    if (lowerPlaceholder.includes('equipment')) {
+        if (categoryFromNarrative && categoryMappings && categoryMappings[categoryFromNarrative]) {
+            return categoryMappings[categoryFromNarrative].equipment || [];
+        }
+        return ['grab bars', 'RW', 'shower chair', 'reacher', 'sock aid', 'long-handled sponge'];
+    }
+
+    // No smart options available - return null for text input
+    return null;
+}
+
+// Detect category from narrative text keywords
+function detectNarrativeCategory(text) {
+    const textLower = text.toLowerCase();
+
+    // Check for category keywords
+    const categoryKeywords = {
+        'BATHING': ['bathing', 'shower', 'washing', 'hygiene'],
+        'DRESSING': ['dressing', 'donning', 'doffing', 'clothing'],
+        'GROOMING': ['grooming', 'oral care', 'shaving'],
+        'TOILETING': ['toileting', 'toilet', 'bathroom'],
+        'TRANSFERS': ['transfer', 'bed mobility', 'sit to stand'],
+        'BALANCE': ['balance', 'standing balance', 'sitting balance'],
+        'STRENGTHENING': ['strengthening', 'strength', 'resistive'],
+        'SHOULDER_ROM': ['shoulder rom', 'shoulder flexion', 'shoulder abduction'],
+        'SHOULDER_STRENGTHENING': ['shoulder strengthening', 'rotator cuff'],
+        'BLE_STRENGTHENING': ['lower extremity strengthening', 'leg strengthening', 'ble strengthening'],
+        'BUE_STRENGTHENING': ['upper extremity strengthening', 'arm strengthening', 'bue strengthening']
+    };
+
+    for (const [category, keywords] of Object.entries(categoryKeywords)) {
+        if (keywords.some(keyword => textLower.includes(keyword))) {
+            return category;
+        }
+    }
+
+    return null;
+}
+
+// Fill all placeholders at once
+function fillAllPlaceholders() {
+    const editorContent = document.getElementById('editorContent');
+    let narrativeHTML = editorContent.innerHTML;
+    let narrativeText = editorContent.innerText;
+
+    const placeholderInputs = document.querySelectorAll('[data-placeholder]');
+    let replacements = {};
+    let allFilled = true;
+
+    // Collect all values
+    placeholderInputs.forEach(input => {
+        const placeholder = input.getAttribute('data-placeholder');
+        let value = '';
+
+        if (input.tagName === 'SELECT') {
+            if (input.value === '__custom__') {
+                const customInput = document.getElementById(input.id + '_custom');
+                value = customInput ? customInput.value.trim() : '';
+            } else {
+                value = input.value;
+            }
+        } else if (input.tagName === 'INPUT') {
+            value = input.value.trim();
+        }
+
+        if (!value) {
+            allFilled = false;
+        } else {
+            replacements[placeholder] = value;
+        }
+    });
+
+    if (!allFilled) {
+        alert('Please fill in all placeholder fields before applying.');
+        return;
+    }
+
+    // Save history before making changes
+    saveHistory();
+
+    // Replace all placeholders in the HTML
+    for (const [placeholder, value] of Object.entries(replacements)) {
+        const regex = new RegExp('\\[' + escapeRegExp(placeholder) + '\\]', 'g');
+        narrativeHTML = narrativeHTML.replace(regex, value);
+    }
+
+    editorContent.innerHTML = narrativeHTML;
+
+    // Close modal
+    closeCompleteDocModal();
+
+    alert(`Successfully filled ${Object.keys(replacements).length} placeholder(s)!`);
+}
+
+// Escape HTML for safe insertion
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Escape special regex characters
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Calculate flexibility score (0-100)
+function calculateFlexibilityScore(componentCount) {
+    const maxComponentsObserved = 15;
+    return Math.min(100, Math.round((componentCount / maxComponentsObserved) * 100));
+}
+
+// Get suggestions based on component type and new value
+const suggestionMap = {
+    'assistance': {
+        'Max assist': [{type: 'performance', value: 'Limited success'}],
+        'Max physical assist': [{type: 'performance', value: 'Limited success'}],
+        'Min assist': [{type: 'performance', value: 'Showing progress'}],
+        'Min physical assist': [{type: 'performance', value: 'Showing progress'}],
+        'CGA': [{type: 'performance', value: 'Patient able to'}],
+        'SBA': [{type: 'performance', value: 'Patient demonstrated'}]
+    },
+    'equipment': {
+        'sock aid': [{type: 'activity', value: 'LB dressing'}],
+        'reacher': [{type: 'activity', value: 'LB dressing'}],
+        'long-handled sponge': [{type: 'activity', value: 'UB washing'}],
+        'shower chair': [{type: 'activity', value: 'shower transfer'}]
+    }
+};
+
+function getSuggestions(componentType, newValue) {
+    return suggestionMap[componentType]?.[newValue] || [];
+}
+
+// Display suggestions in panel
+function displaySuggestions(suggestions) {
+    const suggestionsPanel = document.getElementById('suggestionsPanel');
+
+    if (suggestions.length === 0) {
+        suggestionsPanel.style.display = 'none';
+        return;
+    }
+
+    suggestionsPanel.style.display = 'block';
+    suggestionsPanel.innerHTML = '<div class="suggestions-header">💡 Related Changes</div>';
+
+    suggestions.forEach(sug => {
+        const chip = document.createElement('button');
+        chip.className = 'suggestion-chip';
+        chip.textContent = `Also update ${sug.type}: "${sug.value}"`;
+        chip.onclick = () => {
+            replaceComponent(sug.value);
+            displaySuggestions([]);
+        };
+        suggestionsPanel.appendChild(chip);
+    });
+}
+
+// Enhanced keyboard shortcuts for better accessibility
+document.addEventListener('keydown', (e) => {
+    // Check if user is typing in an input field
+    const activeElement = document.activeElement;
+    const isTyping = activeElement.tagName === 'INPUT' ||
+                     activeElement.tagName === 'TEXTAREA' ||
+                     activeElement.isContentEditable;
+
+    // Ctrl+Z or Cmd+Z for undo
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+        e.preventDefault();
+        undo();
+    }
+    // Ctrl+Y or Cmd+Y or Ctrl+Shift+Z for redo
+    else if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) {
+        e.preventDefault();
+        redo();
+    }
+    // Ctrl+Shift+C for copy
+    else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'C') {
+        e.preventDefault();
+        copyToClipboard();
+    }
+    // Arrow Up/Down: Navigate narrative list
+    else if ((e.key === 'ArrowUp' || e.key === 'ArrowDown') && !isTyping) {
+        const narrativeItems = Array.from(document.querySelectorAll('#narrativeList .narrative-item'));
+        if (narrativeItems.length === 0) return;
+
+        e.preventDefault();
+
+        // Remove highlight from previously highlighted item
+        if (currentHighlightedIndex !== -1) {
+            narrativeItems[currentHighlightedIndex]?.classList.remove('highlighted');
+        }
+
+        // Calculate next index
+        if (e.key === 'ArrowUp') {
+            currentHighlightedIndex = (currentHighlightedIndex <= 0) ? narrativeItems.length - 1 : currentHighlightedIndex - 1;
+        } else {
+            currentHighlightedIndex = (currentHighlightedIndex >= narrativeItems.length - 1) ? 0 : currentHighlightedIndex + 1;
+        }
+
+        // Highlight new item and scroll into view
+        const newItem = narrativeItems[currentHighlightedIndex];
+        if (newItem) {
+            newItem.classList.add('highlighted');
+            newItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }
+    // Enter: Load selected narrative into editor
+    else if (e.key === 'Enter' && !isTyping) {
+        const highlightedItem = document.querySelector('.narrative-item.highlighted');
+        if (highlightedItem) {
+            e.preventDefault();
+            highlightedItem.click();
+        }
+    }
+    // Tab/Shift+Tab: Move between editable components in editor
+    else if (e.key === 'Tab' && !isTyping) {
+        const editableComponents = Array.from(document.querySelectorAll('#editorContent .editable-component'));
+        if (editableComponents.length === 0) return;
+
+        e.preventDefault();
+
+        // Find index of currently selected component
+        const currentIndex = editableComponents.findIndex(comp => comp.classList.contains('selected'));
+
+        // Calculate next index
+        let nextIndex;
+        if (e.shiftKey) { // Shift+Tab for backward
+            nextIndex = (currentIndex <= 0) ? editableComponents.length - 1 : currentIndex - 1;
+        } else { // Tab for forward
+            nextIndex = (currentIndex >= editableComponents.length - 1) ? 0 : currentIndex + 1;
+        }
+
+        // Select next component
+        const nextComponent = editableComponents[nextIndex];
+        if (nextComponent) {
+            nextComponent.click();
+            nextComponent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+    // Number keys 1-9: Quick-select replacement options
+    else if (e.key >= '1' && e.key <= '9' && !isTyping) {
+        const optionButtons = document.querySelectorAll('#optionsPanel .option-btn, #optionsPanel .type-btn, #optionsPanel .level-btn');
+        const optionIndex = parseInt(e.key) - 1;
+
+        if (optionButtons.length > optionIndex) {
+            e.preventDefault();
+            optionButtons[optionIndex].click();
+        }
+    }
+    // Alt+F: Toggle favorite for selected narrative
+    else if (e.altKey && e.key.toLowerCase() === 'f' && !isTyping) {
+        e.preventDefault();
+
+        const targetItem = document.querySelector('.narrative-item.highlighted') || document.querySelector('.narrative-item.selected');
+        if (targetItem) {
+            const starIcon = targetItem.querySelector('.narrative-star');
+            if (starIcon) {
+                starIcon.click();
+                // Visual feedback
+                targetItem.style.transition = 'transform 0.1s ease';
+                targetItem.style.transform = 'scale(0.98)';
+                setTimeout(() => targetItem.style.transform = 'scale(1)', 100);
+            }
+        }
+    }
+    // Alt+S to toggle sidebar
+    else if (e.altKey && e.key === 's') {
+        e.preventDefault();
+        toggleSidebar();
+    }
+    // Alt+T to toggle template mode
+    else if (e.altKey && e.key === 't') {
+        e.preventDefault();
+        const toggleBtn = document.querySelector('button[onclick="toggleMode()"]');
+        if (toggleBtn) toggleMode();
+    }
+    // Escape to close modals
+    else if (e.key === 'Escape') {
+        const modal = document.getElementById('completeDocModal');
+        if (modal && modal.style.display !== 'none') {
+            closeCompleteDocModal();
+        }
+        // Deselect component if selected
+        if (selectedComponent) {
+            selectedComponent.classList.remove('selected');
+            selectedComponent = null;
+            document.getElementById('optionsPanel').style.display = 'none';
+        }
+    }
+});
+
+// Save direct text edits to history
+let editTimeout;
+document.getElementById('editorContent').addEventListener('input', () => {
+    // Debounce to avoid saving on every keystroke
+    clearTimeout(editTimeout);
+    editTimeout = setTimeout(() => {
+        saveHistory();
+    }, 500); // Save after 500ms of no typing
+});
+
+// Initialize
+loadCategoryMappings();
+loadConsolidatedCategories();
+loadNarratives();
+loadTemplates();
+initializeNarrativeSearch();
+
+// Resizable panels functionality
+(function initResizablePanels() {
+    const container = document.getElementById('container');
+    if (!container) return;
+
+    const panels = [
+        document.getElementById('narratives-panel'),
+        document.getElementById('middle-panel'),
+        document.getElementById('right-panel')
+    ];
+    const resizers = Array.from(document.querySelectorAll('.resizer'));
+
+    // Min widths in pixels
+    const minWidths = {
+        'narratives-panel': 300,
+        'middle-panel': 250,
+        'right-panel': 120
+    };
+
+    let activeResizer = null;
+    let initialMouseX = 0;
+    let initialGridFractions = [];
+    let currentMouseX = 0;
+    let rafId = null;
+
+    resizers.forEach(resizer => {
+        resizer.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            activeResizer = resizer;
+            initialMouseX = e.clientX;
+            currentMouseX = e.clientX;
+
+            const gridTemplateColumns = window.getComputedStyle(container).gridTemplateColumns;
+            const columnValues = gridTemplateColumns.split(' ');
+            initialGridFractions = [
+                parseFloat(columnValues[0]),
+                parseFloat(columnValues[2]),
+                parseFloat(columnValues[4])
+            ];
+
+            document.body.style.cursor = 'col-resize';
+            container.style.userSelect = 'none';
+
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+
+            // Start the animation loop
+            rafId = requestAnimationFrame(updateResize);
+        });
+    });
+
+    function handleMouseMove(e) {
+        if (!activeResizer) return;
+        // Just store the current mouse position, don't update DOM
+        currentMouseX = e.clientX;
+    }
+
+    function updateResize() {
+        if (!activeResizer) return;
+
+        const deltaX = currentMouseX - initialMouseX;
+        const resizerIndex = parseInt(activeResizer.dataset.resizerIndex);
+
+        const leftPanelIndex = resizerIndex;
+        const rightPanelIndex = resizerIndex + 1;
+
+        const leftPanel = panels[leftPanelIndex];
+        const rightPanel = panels[rightPanelIndex];
+
+        const leftPanelWidth = leftPanel.offsetWidth;
+        const rightPanelWidth = rightPanel.offsetWidth;
+
+        let newLeftWidth = leftPanelWidth + deltaX;
+        let newRightWidth = rightPanelWidth - deltaX;
+
+        const minLeft = minWidths[leftPanel.id] || 0;
+        const minRight = minWidths[rightPanel.id] || 0;
+
+        // Enforce min-width constraints
+        if (newLeftWidth < minLeft) {
+            newLeftWidth = minLeft;
+            newRightWidth = leftPanelWidth + rightPanelWidth - newLeftWidth;
+        }
+        if (newRightWidth < minRight) {
+            newRightWidth = minRight;
+            newLeftWidth = leftPanelWidth + rightPanelWidth - newRightWidth;
+        }
+
+        const totalWidth = leftPanelWidth + rightPanelWidth;
+        const newLeftFr = (newLeftWidth / totalWidth) * (initialGridFractions[leftPanelIndex] + initialGridFractions[rightPanelIndex]);
+        const newRightFr = (newRightWidth / totalWidth) * (initialGridFractions[leftPanelIndex] + initialGridFractions[rightPanelIndex]);
+
+        const newFractions = [...initialGridFractions];
+        newFractions[leftPanelIndex] = newLeftFr;
+        newFractions[rightPanelIndex] = newRightFr;
+
+        // Update grid-template-columns
+        const resizerWidth = 10; // Fixed resizer width from CSS
+        container.style.gridTemplateColumns =
+            `${newFractions[0]}fr ${resizerWidth}px ${newFractions[1]}fr ${resizerWidth}px ${newFractions[2]}fr`;
+
+        // Update initial position for next frame
+        initialMouseX = currentMouseX;
+        initialGridFractions = newFractions;
+
+        // Continue animation loop
+        rafId = requestAnimationFrame(updateResize);
+    }
+
+    function handleMouseUp() {
+        if (!activeResizer) return;
+
+        // Stop the animation loop
+        if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
+
+        // Recalculate final fractions
+        const gridTemplateColumns = window.getComputedStyle(container).gridTemplateColumns;
+        const columnValues = gridTemplateColumns.split(' ');
+        initialGridFractions = [
+            parseFloat(columnValues[0]),
+            parseFloat(columnValues[2]),
+            parseFloat(columnValues[4])
+        ];
+
+        activeResizer = null;
+        document.body.style.cursor = '';
+        container.style.userSelect = '';
+
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+    }
+})();
+
+// ============================================================================
+// COMPREHENSIVE KEYBOARD SHORTCUTS FOR NARRATIVE NAVIGATION
+// ============================================================================
+
+// Track current highlighted narrative index for keyboard navigation
+let currentHighlightedIndex = -1;
+
+// Add CSS for highlighted state (if not already present)
+const style = document.createElement('style');
+style.textContent = `
+    .narrative-item.highlighted {
+        border-color: #888 !important;
+        box-shadow: 0 0 8px rgba(100, 149, 237, 0.5) !important;
+        background: #383838 !important;
+    }
+`;
+document.head.appendChild(style);
+
+// Main keyboard navigation event listener
+document.addEventListener('keydown', (e) => {
+    const narrativeList = document.getElementById('narrativeList');
+    const narrativeItems = Array.from(document.querySelectorAll('.narrative-item'));
+
+    // Only process these shortcuts when not typing in an input/textarea
+    const activeElement = document.activeElement;
+    const isTyping = activeElement.tagName === 'INPUT' ||
+                     activeElement.tagName === 'TEXTAREA' ||
+                     activeElement.isContentEditable;
+
+    // ========================================================================
+    // 1. ARROW UP - Navigate to previous narrative in list
+    // ========================================================================
+    if (e.key === 'ArrowUp' && !isTyping && narrativeItems.length > 0) {
+        e.preventDefault();
+
+        // Move to previous item (or wrap to last if at beginning)
+        if (currentHighlightedIndex <= 0) {
+            currentHighlightedIndex = narrativeItems.length - 1;
+        } else {
+            currentHighlightedIndex--;
+        }
+
+        // Update visual highlight
+        narrativeItems.forEach(item => item.classList.remove('highlighted'));
+        const highlightedItem = narrativeItems[currentHighlightedIndex];
+        highlightedItem.classList.add('highlighted');
+
+        // Scroll into view smoothly
+        highlightedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ========================================================================
+    // 2. ARROW DOWN - Navigate to next narrative in list
+    // ========================================================================
+    else if (e.key === 'ArrowDown' && !isTyping && narrativeItems.length > 0) {
+        e.preventDefault();
+
+        // Move to next item (or wrap to first if at end)
+        if (currentHighlightedIndex >= narrativeItems.length - 1) {
+            currentHighlightedIndex = 0;
+        } else {
+            currentHighlightedIndex++;
+        }
+
+        // Update visual highlight
+        narrativeItems.forEach(item => item.classList.remove('highlighted'));
+        const highlightedItem = narrativeItems[currentHighlightedIndex];
+        highlightedItem.classList.add('highlighted');
+
+        // Scroll into view smoothly
+        highlightedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ========================================================================
+    // 3. ENTER - Load the currently highlighted narrative into editor
+    // ========================================================================
+    else if (e.key === 'Enter' && !isTyping && currentHighlightedIndex >= 0 && narrativeItems.length > 0) {
+        e.preventDefault();
+
+        const highlightedItem = narrativeItems[currentHighlightedIndex];
+        if (highlightedItem) {
+            // Trigger click on the highlighted item to load it
+            highlightedItem.click();
+        }
+    }
+
+    // ========================================================================
+    // 4. TAB / SHIFT+TAB - Navigate between editable components in editor
+    // ========================================================================
+    else if (e.key === 'Tab' && !isTyping) {
+        const editableComponents = Array.from(document.querySelectorAll('.editable-component'));
+
+        if (editableComponents.length > 0) {
+            e.preventDefault();
+
+            // Find currently selected component index
+            let currentIndex = editableComponents.findIndex(comp => comp.classList.contains('selected'));
+
+            // Calculate next index based on Shift key (backward) or not (forward)
+            let nextIndex;
+            if (e.shiftKey) {
+                // Shift+Tab: Move backward
+                nextIndex = currentIndex <= 0 ? editableComponents.length - 1 : currentIndex - 1;
+            } else {
+                // Tab: Move forward
+                nextIndex = currentIndex >= editableComponents.length - 1 ? 0 : currentIndex + 1;
+            }
+
+            // Click the next component to select it
+            editableComponents[nextIndex].click();
+
+            // Scroll into view
+            editableComponents[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    // ========================================================================
+    // 5. NUMBER KEYS 1-9 - Quick-select replacement options from right panel
+    // ========================================================================
+    else if (e.key >= '1' && e.key <= '9' && !isTyping) {
+        e.preventDefault();
+
+        const optionNumber = parseInt(e.key);
+
+        // Try to find option buttons in the right panel
+        const optionButtons = document.querySelectorAll('.option-btn, .type-btn');
+
+        if (optionButtons.length >= optionNumber) {
+            // Click the corresponding option (1-based index, so subtract 1)
+            optionButtons[optionNumber - 1].click();
+        }
+    }
+
+    // ========================================================================
+    // 6. ALT+F - Toggle favorite for currently selected narrative
+    // ========================================================================
+    else if (e.altKey && e.key === 'f') {
+        e.preventDefault();
+
+        // Find the currently selected narrative item
+        const selectedItem = document.querySelector('.narrative-item.selected');
+
+        if (selectedItem) {
+            // Find and click the star icon within the selected item
+            const starIcon = selectedItem.querySelector('.narrative-star');
+            if (starIcon) {
+                starIcon.click();
+            }
+        }
+    }
+});
+
+// ============================================================================
+// HELPER: Reset highlighted index when narratives list changes
+// ============================================================================
+const originalDisplayNarratives = window.displayNarratives;
+if (typeof originalDisplayNarratives === 'function') {
+    window.displayNarratives = function() {
+        originalDisplayNarratives.apply(this, arguments);
+        currentHighlightedIndex = -1; // Reset highlight when list refreshes
+    };
+}
+
+// ============================================================================
+// PRIORITY 2 FIX #4: Restore sidebar collapse state on page load
+// ============================================================================
+(function() {
+    const isCollapsed = localStorage.getItem('ot_sidebar_collapsed') === 'true';
+    if (isCollapsed) {
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (sidebar && backdrop) {
+            sidebar.classList.add('collapsed');
+            backdrop.classList.remove('visible');
+        }
+    }
+})();
+
+</script>
+
+</body>
+</html>

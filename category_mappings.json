@@ -1,0 +1,275 @@
+{
+  "BATHING": {
+    "equipment": ["shower chair", "tub bench", "long-handled sponge", "grab bars", "long-handled brush"],
+    "body_region": ["UB", "LB", "back", "face"],
+    "goal": ["to promote independence and safety", "to increase independence", "to improve bathroom independence", "to increase bathing safety"],
+    "activity": ["shower transfer", "UB washing", "bathing sequence", "Shower transfer training"],
+    "intervention": ["compensatory technique training", "cueing hierarchy training", "safety training for functional mobility", "energy conservation training", "assistive device instruction"]
+  },
+  "DRESSING": {
+    "equipment": ["sock aid", "button hook", "dressing stick", "reacher", "long-handled sponge"],
+    "body_region": ["UB", "LB", "BUE", "BLE", "hips"],
+    "goal": ["to promote independence and safety", "to increase independence", "to improve dressing independence", "to increase independence with morning routine"],
+    "activity": ["LB dressing", "grooming tasks", "Button-up shirt donning/doffing"],
+    "intervention": ["lower extremity dressing technique training", "upper extremity dressing techniques", "fastener management", "energy conservation training", "cueing hierarchy training"]
+  },
+  "GROOMING": {
+    "equipment": ["universal cuff", "rocker knife", "button hook", "long-handled brush", "grab bars"],
+    "body_region": ["UB", "BUE", "face", "trunk"],
+    "goal": ["to promote independence and safety", "to increase independence", "to increase independence with morning routine", "to improve household independence"],
+    "activity": ["grooming tasks", "oral care", "self-feeding"],
+    "intervention": ["compensatory technique training", "assistive device instruction", "fastener management", "energy conservation training", "cueing hierarchy training"]
+  },
+  "TOILETING": {
+    "equipment": ["grab bars", "elevated toilet seat", "shower chair", "reacher"],
+    "body_region": ["UB", "LB", "hips", "trunk"],
+    "goal": ["to promote independence and safety", "to increase independence", "to improve bathroom independence", "to reduce fall risk"],
+    "activity": ["toileting routine", "Transfer training"],
+    "intervention": ["compensatory technique training", "transfer training", "safety training for functional mobility", "energy conservation training"]
+  },
+  "TRANSFERS": {
+    "equipment": ["sliding board", "grab bars", "RW", "w/c", "bed rail"],
+    "body_region": ["UB", "LB", "trunk", "core", "hips"],
+    "goal": ["to promote independence and safety", "to improve household mobility", "to improve bed mobility", "to reduce fall risk"],
+    "activity": ["Transfer training", "Bed mobility training", "Standing balance activities", "Sit<>stand transfer training"],
+    "intervention": ["transfer training", "bed mobility training", "safety training for functional mobility", "neuromuscular reeducation", "strengthening activities"]
+  },
+  "BALANCE": {
+    "equipment": ["grab bars", "RW"],
+    "body_region": ["core", "trunk", "LB", "BLE", "hips"],
+    "goal": ["to promote independence and safety", "to improve household mobility", "to reduce fall risk", "to advance task performance"],
+    "activity": ["Standing balance activities", "Bed mobility training", "Transfer training", "Dynamic balance activities"],
+    "intervention": ["neuromuscular reeducation", "strengthening activities", "range of motion techniques", "safety training for functional mobility", "cueing hierarchy training"]
+  },
+  "STRENGTHENING": {
+    "equipment": ["grab bars", "RW"],
+    "body_region": ["UB", "LB", "BUE", "BLE", "core", "trunk"],
+    "goal": ["to promote independence and safety", "to improve household mobility", "to improve kitchen task performance", "to advance task performance"],
+    "activity": ["Transfer training", "Standing balance activities", "Bed mobility training"],
+    "intervention": ["strengthening activities", "range of motion techniques", "neuromuscular reeducation"]
+  },
+  "MEAL_PREP": {
+    "equipment": ["universal cuff", "rocker knife", "grab bars", "reacher"],
+    "body_region": ["UB", "BUE", "trunk", "hips"],
+    "goal": ["to improve kitchen task performance", "to improve kitchen independence", "to improve household independence"],
+    "activity": ["light meal prep", "self-feeding", "grooming tasks"],
+    "intervention": ["compensatory technique training", "assistive device instruction", "energy conservation training", "safety training for functional mobility"]
+  },
+  "SHOULDER_ROM": {
+    "equipment": ["pulley system", "wand", "resistance bands"],
+    "body_region": ["R shoulder", "L shoulder", "B shoulder", "BUE"],
+    "goal": ["to promote overhead reach", "to improve dressing independence", "to increase functional ROM"],
+    "activity": ["overhead reaching", "wall walks", "pulley exercises"],
+    "intervention": ["range of motion techniques", "AROM/PROM", "therapeutic exercise"]
+  },
+  "SHOULDER_STRENGTHENING": {
+    "equipment": ["resistance bands", "dumbbells", "therapy putty"],
+    "body_region": ["R shoulder", "L shoulder", "B shoulder", "BUE"],
+    "goal": ["to promote functional strength", "to improve lifting capacity", "to increase ADL independence"],
+    "activity": ["resistive exercises", "rotator cuff strengthening", "scaption"],
+    "intervention": ["strengthening activities", "progressive resistive exercise", "therapeutic exercise"]
+  },
+  "ELBOW_WRIST_ROM": {
+    "equipment": ["dowel", "wrist weights", "resistance bands"],
+    "body_region": ["R elbow", "L elbow", "R wrist", "L wrist", "BUE"],
+    "goal": ["to promote functional ROM", "to improve self-feeding", "to increase hand-to-mouth tasks"],
+    "activity": ["elbow flexion/extension", "forearm supination/pronation", "wrist ROM"],
+    "intervention": ["range of motion techniques", "AROM exercises", "stretching"]
+  },
+  "GRIP_STRENGTHENING": {
+    "equipment": ["therapy putty", "hand gripper", "resistance bands"],
+    "body_region": ["R hand", "L hand", "B hands", "fingers"],
+    "goal": ["to promote functional grasp", "to improve object manipulation", "to increase grip strength"],
+    "activity": ["grip exercises", "pinch strengthening", "functional grasp activities"],
+    "intervention": ["strengthening activities", "grip training", "pinch exercises"]
+  },
+  "HIP_KNEE_ROM": {
+    "equipment": ["therapy mat", "RW", "parallel bars"],
+    "body_region": ["R hip", "L hip", "R knee", "L knee", "BLE"],
+    "goal": ["to promote functional mobility", "to improve stair negotiation", "to increase transfer safety"],
+    "activity": ["heel slides", "SLR", "knee flexion/extension"],
+    "intervention": ["range of motion techniques", "AROM/PROM", "therapeutic exercise"]
+  },
+  "ANKLE_ROM": {
+    "equipment": ["towel", "resistance bands", "rocker board"],
+    "body_region": ["R ankle", "L ankle", "B ankles", "feet"],
+    "goal": ["to promote heel-toe gait", "to improve balance", "to increase mobility"],
+    "activity": ["ankle pumps", "calf stretches", "dorsiflexion exercises"],
+    "intervention": ["range of motion techniques", "AROM/PROM", "stretching"]
+  },
+  "CORE_STRENGTHENING": {
+    "equipment": ["therapy ball", "mat table", "resistance bands"],
+    "body_region": ["core", "trunk", "abdomen"],
+    "goal": ["to promote trunk stability", "to improve balance", "to increase ADL performance"],
+    "activity": ["bridging", "trunk rotation", "seated marching"],
+    "intervention": ["strengthening activities", "core stabilization", "therapeutic exercise"]
+  },
+  "BLE_STRENGTHENING": {
+    "equipment": ["resistance bands", "ankle weights", "parallel bars"],
+    "body_region": ["BLE", "R leg", "L leg", "hips", "knees", "ankles"],
+    "goal": ["to promote functional mobility", "to improve gait", "to increase transfer safety"],
+    "activity": ["STS", "mini squats", "heel/toe raises"],
+    "intervention": ["strengthening activities", "progressive resistive exercise", "therapeutic exercise"]
+  },
+  "BUE_STRENGTHENING": {
+    "equipment": ["dumbbells", "resistance bands", "therapy putty"],
+    "body_region": ["BUE", "R arm", "L arm", "shoulders"],
+    "goal": ["to promote functional strength", "to improve ADL independence", "to increase lifting capacity"],
+    "activity": ["resistive exercises", "overhead lifting", "reaching activities"],
+    "intervention": ["strengthening activities", "progressive resistive exercise", "therapeutic exercise"]
+  },
+  "HAND_FINGER_EXERCISE": {
+    "equipment": ["therapy putty", "pegboard", "resistance bands"],
+    "body_region": ["R hand", "L hand", "fingers"],
+    "goal": ["to promote fine motor function", "to improve dexterity", "to increase grasp strength"],
+    "activity": ["finger exercises", "intrinsic strengthening", "ROM activities"],
+    "intervention": ["strengthening activities", "ROM techniques", "therapeutic exercise"]
+  },
+  "STATIC_SITTING_BALANCE": {
+    "equipment": ["mat table", "therapy ball", "EOB"],
+    "body_region": ["trunk", "core"],
+    "goal": ["to promote sitting tolerance", "to improve postural stability", "to increase ADL safety"],
+    "activity": ["unsupported sitting", "static holds", "weight shift activities"],
+    "intervention": ["neuromuscular reeducation", "balance training", "postural control"]
+  },
+  "DYNAMIC_SITTING_BALANCE": {
+    "equipment": ["mat table", "therapy ball", "reaching objects"],
+    "body_region": ["trunk", "core", "BUE"],
+    "goal": ["to promote dynamic stability", "to improve transfer safety", "to increase ADL performance"],
+    "activity": ["seated reaching", "weight shifting", "functional tasks"],
+    "intervention": ["neuromuscular reeducation", "balance training", "functional activities"]
+  },
+  "STATIC_STANDING_BALANCE": {
+    "equipment": ["RW", "parallel bars", "counter"],
+    "body_region": ["BLE", "trunk", "core"],
+    "goal": ["to promote standing tolerance", "to improve balance", "to increase ADL safety"],
+    "activity": ["tandem stance", "single leg stance", "static holds"],
+    "intervention": ["neuromuscular reeducation", "balance training", "postural control"]
+  },
+  "DYNAMIC_STANDING_BALANCE": {
+    "equipment": ["RW", "foam surface", "obstacles"],
+    "body_region": ["BLE", "trunk", "core"],
+    "goal": ["to promote safe ambulation", "to improve fall prevention", "to increase community mobility"],
+    "activity": ["weight shifting", "reaching activities", "stepping patterns"],
+    "intervention": ["neuromuscular reeducation", "balance training", "gait training"]
+  },
+  "POSTURAL_CONTROL": {
+    "equipment": ["mirror", "biofeedback device", "mat table"],
+    "body_region": ["trunk", "core", "spine"],
+    "goal": ["to promote proper alignment", "to improve body mechanics", "to reduce pain"],
+    "activity": ["postural awareness training", "core activation", "stabilization exercises"],
+    "intervention": ["neuromuscular reeducation", "postural training", "ergonomic education"]
+  },
+  "PROPRIOCEPTION_UE": {
+    "equipment": ["therapy mat", "varied surfaces", "weights"],
+    "body_region": ["R UE", "L UE", "BUE"],
+    "goal": ["to promote accurate reaching", "to improve body awareness", "to increase functional use"],
+    "activity": ["joint position matching", "weight-bearing activities", "eyes closed exercises"],
+    "intervention": ["neuromuscular reeducation", "proprioceptive training", "sensory integration"]
+  },
+  "PROPRIOCEPTION_LE": {
+    "equipment": ["foam surface", "balance pad", "unstable surfaces"],
+    "body_region": ["BLE", "R leg", "L leg", "ankles"],
+    "goal": ["to promote gait safety", "to improve balance", "to increase fall prevention"],
+    "activity": ["weight-bearing activities", "joint repositioning", "balance exercises"],
+    "intervention": ["neuromuscular reeducation", "proprioceptive training", "balance training"]
+  },
+  "COORDINATION_TRAINING": {
+    "equipment": ["therapy objects", "timing devices", "bilateral tools"],
+    "body_region": ["BUE", "BLE", "trunk"],
+    "goal": ["to promote coordinated movement", "to improve functional tasks", "to increase ADL performance"],
+    "activity": ["reciprocal movements", "timing drills", "bilateral activities"],
+    "intervention": ["neuromuscular reeducation", "coordination training", "functional activities"]
+  },
+  "TRUNK_CONTROL": {
+    "equipment": ["mat table", "therapy ball", "bed"],
+    "body_region": ["trunk", "core", "abdomen"],
+    "goal": ["to promote bed mobility", "to improve transfer safety", "to increase ADL independence"],
+    "activity": ["segmental rolling", "bridging", "sit-to-supine transitions"],
+    "intervention": ["neuromuscular reeducation", "trunk stabilization", "bed mobility training"]
+  },
+  "MOTOR_PLANNING": {
+    "equipment": ["ADL objects", "dressing items", "tools"],
+    "body_region": ["BUE", "trunk", "whole body"],
+    "goal": ["to promote task sequencing", "to improve ADL independence", "to increase functional performance"],
+    "activity": ["multi-step sequences", "demonstration/imitation", "ADL tasks"],
+    "intervention": ["neuromuscular reeducation", "motor planning training", "task-specific training"]
+  },
+  "WEIGHT_SHIFT_TRAINING": {
+    "equipment": ["RW", "parallel bars", "mat table"],
+    "body_region": ["trunk", "hips", "BLE"],
+    "goal": ["to promote transfer safety", "to improve balance", "to increase gait mechanics"],
+    "activity": ["lateral weight shifts", "A-P weight shifts", "controlled movements"],
+    "intervention": ["neuromuscular reeducation", "weight shift training", "balance training"]
+  },
+  "SENSORY_RETRAINING": {
+    "equipment": ["texture materials", "monofilaments", "temperature items"],
+    "body_region": ["R hand", "L hand", "feet"],
+    "goal": ["to promote safe object handling", "to improve sensory awareness", "to increase functional use"],
+    "activity": ["texture discrimination", "temperature awareness", "two-point discrimination"],
+    "intervention": ["neuromuscular reeducation", "sensory retraining", "safety education"]
+  },
+  "VESTIBULAR_TRAINING": {
+    "equipment": ["target objects", "head movement guides"],
+    "body_region": ["head", "neck", "whole body"],
+    "goal": ["to promote balance", "to improve mobility safety", "to reduce dizziness"],
+    "activity": ["gaze stabilization", "head movement exercises", "VOR training"],
+    "intervention": ["neuromuscular reeducation", "vestibular rehabilitation", "habituation exercises"]
+  },
+  "MOVEMENT_PATTERNS": {
+    "equipment": ["resistance bands", "therapy objects"],
+    "body_region": ["BUE", "BLE", "trunk"],
+    "goal": ["to promote movement quality", "to improve energy efficiency", "to increase functional performance"],
+    "activity": ["PNF patterns", "diagonal movements", "functional reaching"],
+    "intervention": ["neuromuscular reeducation", "movement pattern training", "functional training"]
+  },
+  "BED_MOBILITY": {
+    "equipment": ["bed rail", "trapeze", "sliding sheet"],
+    "body_region": ["trunk", "BUE", "BLE"],
+    "goal": ["to promote independence", "to improve repositioning", "to increase safety"],
+    "activity": ["rolling", "scooting", "supine-to-sit transitions"],
+    "intervention": ["bed mobility training", "task training", "functional activities"]
+  },
+  "DYNAMIC_BALANCE": {
+    "equipment": ["ball", "cones", "rings", "RW"],
+    "body_region": ["BLE", "trunk", "core"],
+    "goal": ["to promote dynamic stability", "to improve functional mobility", "to increase balance"],
+    "activity": ["throwing/catching", "weight shifting", "reaching beyond base of support"],
+    "intervention": ["dynamic balance training", "functional activities", "therapeutic activities"]
+  },
+  "UPPER_EXTREMITY": {
+    "equipment": ["therapy objects", "overhead equipment", "bilateral tools"],
+    "body_region": ["BUE", "R shoulder", "L shoulder"],
+    "goal": ["to promote UE function", "to improve ROM", "to increase strength"],
+    "activity": ["overhead reaching", "bilateral coordination", "fine motor tasks"],
+    "intervention": ["therapeutic activities", "functional training", "strengthening"]
+  },
+  "FINE_MOTOR_COORDINATION": {
+    "equipment": ["pegboard", "therapy putty", "small objects"],
+    "body_region": ["R hand", "L hand", "fingers"],
+    "goal": ["to promote dexterity", "to improve fine motor skills", "to increase ADL independence"],
+    "activity": ["pegboard activities", "pinch strengthening", "in-hand manipulation"],
+    "intervention": ["fine motor training", "coordination activities", "therapeutic activities"]
+  },
+  "DEXTERITY": {
+    "equipment": ["pegs", "beads", "nuts/bolts", "cards"],
+    "body_region": ["R hand", "L hand", "B hands"],
+    "goal": ["to promote hand function", "to improve speed and precision", "to increase ADL performance"],
+    "activity": ["bilateral coordination", "speed tasks", "grasp/release patterns"],
+    "intervention": ["dexterity training", "coordination activities", "functional tasks"]
+  },
+  "FEEDING": {
+    "equipment": ["adaptive utensils", "universal cuff", "plate guard", "rocker knife"],
+    "body_region": ["R hand", "L hand", "BUE", "trunk"],
+    "goal": ["to promote self-feeding independence", "to improve nutritional intake", "to increase safety"],
+    "activity": ["self-feeding", "utensil use", "cup drinking"],
+    "intervention": ["compensatory technique training", "assistive device instruction", "cueing hierarchy training"]
+  },
+  "IADL": {
+    "equipment": ["kitchen tools", "cleaning supplies", "medication organizer"],
+    "body_region": ["BUE", "trunk", "whole body"],
+    "goal": ["to improve household independence", "to increase community participation", "to promote safety"],
+    "activity": ["meal preparation", "light housekeeping", "medication management"],
+    "intervention": ["task training", "compensatory strategies", "safety education"]
+  }
+}

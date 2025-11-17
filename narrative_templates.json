@@ -1,0 +1,648 @@
+{
+  "97535_BATHING": {
+    "cpt": "97535",
+    "category": "BATHING",
+    "variants": [
+      {
+        "id": "bathing_v1",
+        "name": "Standard Facilitation with Compensatory Strategy",
+        "description": "Focus on intervention technique and therapeutic approach",
+        "structure": "Patient facilitated in {{TASK}} with {{INTERVENTION}} to {{GOAL}}. {{TECHNIQUE_DETAIL}}. {{ASSIST_LEVEL}} required for {{SUB_TASK}} 2/2 {{IMPAIRMENT}}. {{OUTCOME}}.",
+        "variables": {
+          "TASK": {
+            "type": "dropdown",
+            "label": "Bathing Task",
+            "options": [
+              "shower transfer and UB washing",
+              "full bathing sequence",
+              "UB hygiene and drying",
+              "tub transfer",
+              "bathing sequence",
+              "seated bathing tasks on tub bench",
+              "tub transfer and LB washing"
+            ]
+          },
+          "INTERVENTION": {
+            "type": "dropdown",
+            "label": "Intervention Type",
+            "options": [
+              "compensatory technique training",
+              "energy conservation training",
+              "assistive device instruction",
+              "safety training for functional mobility",
+              "cueing hierarchy training"
+            ]
+          },
+          "GOAL": {
+            "type": "dropdown",
+            "label": "Functional Goal",
+            "options": [
+              "promote bathing independence and safety",
+              "maximize activity tolerance and functional endurance",
+              "address limited BLE ROM and reduce fall risk",
+              "increase independence to advance task performance",
+              "targeting fall risk reduction"
+            ]
+          },
+          "TECHNIQUE_DETAIL": {
+            "type": "dropdown",
+            "label": "Technique Details",
+            "options": [
+              "Seated bathing technique and long-handled sponge instruction provided to address limited BLE ROM and reduce fall risk during transfers",
+              "Skilled instruction provided in seated techniques and pacing to conserve energy during UB/LB washing",
+              "Skilled demonstration and practice provided for long-handled sponge and grab bar use for safety",
+              "Instruction in shower chair positioning and proper body mechanics for transfers",
+              "Verbal cues progressed from general to specific for washing/rinsing sequence"
+            ]
+          },
+          "ASSIST_LEVEL": {
+            "type": "dropdown",
+            "label": "Assistance Level",
+            "options": [
+              "Mod physical assist",
+              "Max assist",
+              "Min assist",
+              "Min physical assist",
+              "Hand held assist",
+              "CGA"
+            ]
+          },
+          "SUB_TASK": {
+            "type": "dropdown",
+            "label": "Specific Sub-Task",
+            "options": [
+              "SPT from w/c to shower chair",
+              "transfer from w/c to shower chair",
+              "drying of back and BLE",
+              "washing of LB and perineal area",
+              "maintain balance while reaching outside base of support",
+              "leg lift into tub"
+            ]
+          },
+          "IMPAIRMENT": {
+            "type": "dropdown",
+            "label": "Impairment/Reason",
+            "options": [
+              "BLE weakness affecting weight-bearing ability",
+              "generalized weakness limiting functional mobility",
+              "limited ROM restricting functional reach and movement",
+              "decreased endurance limiting sustained activity performance",
+              "poor balance increasing fall risk",
+              "decreased proprioception"
+            ]
+          },
+          "OUTCOME": {
+            "type": "dropdown",
+            "label": "Outcome Statement",
+            "options": [
+              "Therapeutic intervention effective as patient able to wash face and BUE independently, 50% of LB with long-handled sponge after skilled demonstration, indicating good potential for adaptive strategy carryover",
+              "Patient able to complete bathing tasks with 2 rest breaks vs continuous max assist at baseline, demonstrating potential for increased independence",
+              "Patient able to demonstrate proper technique with setup by close of session, demonstrating functional gains with skilled intervention",
+              "Patient able to wash face and BUE independently, indicating good learning potential"
+            ]
+          }
+        }
+      },
+      {
+        "id": "bathing_v2",
+        "name": "Task-Specific Activity Focus",
+        "description": "Focus on specific tasks and positioning",
+        "structure": "Patient facilitated in {{SPECIFIC_ACTIVITY}}. {{PHYSICAL_REQUIREMENTS}}. {{ASSIST_WITH_MECHANICS}}. {{ADDITIONAL_DETAILS}}.",
+        "variables": {
+          "SPECIFIC_ACTIVITY": {
+            "type": "dropdown",
+            "label": "Specific Bathing Activity",
+            "options": [
+              "shower transfer and UB washing",
+              "seated bathing tasks on tub bench",
+              "tub transfer and LB washing",
+              "UB hygiene and drying",
+              "full bathing with shower chair"
+            ]
+          },
+          "PHYSICAL_REQUIREMENTS": {
+            "type": "dropdown",
+            "label": "Physical Requirements/Setup",
+            "options": [
+              "Mod physical assist required for SPT from w/c to shower chair 2/2 BLE weakness affecting weight-bearing and transfer ability",
+              "Required long-handled sponge to access LB and back 2/2 decreased trunk mobility",
+              "Hand held assist when ambulating 10 feet with RW to tub",
+              "Max assist for transfer from w/c to shower chair 2/2 generalized weakness",
+              "Setup with shower chair and grab bars for safety"
+            ]
+          },
+          "ASSIST_WITH_MECHANICS": {
+            "type": "dropdown",
+            "label": "Assistance with Body Mechanics",
+            "options": [
+              "Patient able to complete sit<>stand with use of grab bars and min assist. Tactile cues to trunk for improved postural stability once seated",
+              "Min assist to maintain balance while reaching outside base of support. Graded cues required for sequencing of washing and rinsing",
+              "Mod physical assist to complete leg lift into tub. Seated on shower chair, patient required CGA and tactile cues to wash B feet 2/2 poor balance",
+              "CGA for safety with verbal cues for proper weight distribution",
+              "Tactile cues to BUE to assist with washing hair"
+            ]
+          },
+          "ADDITIONAL_DETAILS": {
+            "type": "dropdown",
+            "label": "Task Completion Details",
+            "options": [
+              "Patient washed face and BUE independently, indicating good learning potential",
+              "By close of session, patient able to wash 50% of LB, demonstrating functional gains with skilled intervention",
+              "Patient able to complete UB washing independently with verbal cues for sequencing",
+              "Patient participated by washing chest and face, demonstrating functional gains with skilled intervention",
+              "Patient demonstrated improved safety awareness throughout task"
+            ]
+          }
+        }
+      },
+      {
+        "id": "bathing_v3",
+        "name": "Cueing and Sequencing Emphasis",
+        "description": "Focus on cognitive aspects and cueing progression",
+        "structure": "Patient facilitated in {{TASK}} with {{CUEING_TYPE}} to {{THERAPEUTIC_PURPOSE}}. {{CUEING_DETAILS}}. {{ASSIST_LEVEL}} {{REASON}}. {{MEASURABLE_OUTCOME}}.",
+        "variables": {
+          "TASK": {
+            "type": "dropdown",
+            "label": "Bathing Task",
+            "options": [
+              "bathing sequence",
+              "seated bathing tasks",
+              "full bathing routine",
+              "shower transfer and washing sequence"
+            ]
+          },
+          "CUEING_TYPE": {
+            "type": "dropdown",
+            "label": "Cueing Type",
+            "options": [
+              "cueing hierarchy training",
+              "graded cues",
+              "verbal cues progressing from general to specific",
+              "sequencing cues"
+            ]
+          },
+          "THERAPEUTIC_PURPOSE": {
+            "type": "dropdown",
+            "label": "Therapeutic Purpose",
+            "options": [
+              "increase independence to advance task performance and reduce assistance requirements",
+              "advance task performance",
+              "reduce assistance requirements",
+              "promote proper sequencing and safety"
+            ]
+          },
+          "CUEING_DETAILS": {
+            "type": "dropdown",
+            "label": "Cueing Details",
+            "options": [
+              "Verbal cues progressed from general to specific for washing/rinsing sequence",
+              "Graded cues required for sequencing of washing and rinsing",
+              "Tactile and verbal cues provided for task initiation and completion",
+              "Cueing for proper sequencing and safety checks throughout"
+            ]
+          },
+          "ASSIST_LEVEL": {
+            "type": "dropdown",
+            "label": "Assistance Level",
+            "options": [
+              "Min assist to maintain balance while reaching outside base of support",
+              "Mod assist for task completion",
+              "CGA for safety",
+              "Graded cues required throughout session"
+            ]
+          },
+          "REASON": {
+            "type": "dropdown",
+            "label": "Reason (2/2)",
+            "options": [
+              "2/2 improved task initiation",
+              "2/2 decreased trunk mobility",
+              "2/2 poor balance",
+              "2/2 cognitive deficits affecting sequencing"
+            ]
+          },
+          "MEASURABLE_OUTCOME": {
+            "type": "dropdown",
+            "label": "Measurable Outcome",
+            "options": [
+              "Graded cues reduced from 8 to 5 by close of session, demonstrating potential for increased independence",
+              "By close of session, patient able to wash 50% of LB, demonstrating functional gains with skilled intervention",
+              "Patient completed task with 40% reduction in cues needed",
+              "Patient demonstrated improved sequencing with only 2 prompts vs 7 at baseline"
+            ]
+          }
+        }
+      },
+      {
+        "id": "bathing_v4",
+        "name": "Safety and Mobility Training Focus",
+        "description": "Focus on safety concerns and fall risk",
+        "structure": "Patient facilitated in {{TASK}} with safety training for functional mobility during bathing targeting {{SAFETY_GOAL}}. {{INSTRUCTION_DETAILS}}. {{MOBILITY_REQUIREMENTS}}. {{OUTCOME_SAFETY}}.",
+        "variables": {
+          "TASK": {
+            "type": "dropdown",
+            "label": "Bathing Task",
+            "options": [
+              "tub transfer",
+              "shower transfer",
+              "bathing routine",
+              "transfer activities during bathing"
+            ]
+          },
+          "SAFETY_GOAL": {
+            "type": "dropdown",
+            "label": "Safety Goal",
+            "options": [
+              "fall risk reduction and safe technique development",
+              "balance preservation and injury prevention",
+              "safe transfer technique development",
+              "proper body mechanics and fall prevention"
+            ]
+          },
+          "INSTRUCTION_DETAILS": {
+            "type": "dropdown",
+            "label": "Instruction Details",
+            "options": [
+              "Skilled instruction provided in safe transfer technique and proper grab bar use",
+              "Instruction in balance preservation strategies and weight shifting",
+              "Training in proper body mechanics and fall prevention strategies",
+              "Demonstration of safe transfer sequence with equipment"
+            ]
+          },
+          "MOBILITY_REQUIREMENTS": {
+            "type": "dropdown",
+            "label": "Mobility/Assist Requirements",
+            "options": [
+              "Hand held assist when ambulating 10 feet with RW to tub. Mod physical assist to complete leg lift into tub 2/2 poor balance increasing fall risk and decreased proprioception",
+              "Min assist for sit<>stand from shower chair. CGA for safety during washing 2/2 poor balance",
+              "Patient ambulated 15 ft with RW and SBA. Required min assist for transfer 2/2 decreased LUE motor control",
+              "CGA throughout task 2/2 fall risk. Patient required grab bars for all transitions"
+            ]
+          },
+          "OUTCOME_SAFETY": {
+            "type": "dropdown",
+            "label": "Outcome with Safety Emphasis",
+            "options": [
+              "Patient demonstrated improved safety awareness by session end, demonstrating potential for increased independence",
+              "Patient demonstrated 3/3 safety checks independently, suggesting positive response to therapeutic intervention",
+              "Patient verbalized understanding of safety precautions and demonstrated proper technique",
+              "Patient showed improved awareness of fall risk factors throughout task"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "97535_DRESSING": {
+    "cpt": "97535",
+    "category": "DRESSING",
+    "variants": [
+      {
+        "id": "dressing_v1",
+        "name": "Technique Training with Body Region Focus",
+        "description": "Focus on intervention technique and body region",
+        "structure": "Patient facilitated in {{BODY_REGION}} dressing with {{TECHNIQUE_TYPE}} to {{GOAL}}. {{INSTRUCTION_DETAILS}}. {{ASSIST_LEVEL}} {{REASON}}. {{OUTCOME_COMPARISON}}.",
+        "variables": {
+          "BODY_REGION": {
+            "type": "dropdown",
+            "label": "Body Region",
+            "options": ["LB", "UB", "pants and shoes", "full body", "donning pants and shoes"]
+          },
+          "TECHNIQUE_TYPE": {
+            "type": "dropdown",
+            "label": "Technique Type",
+            "options": [
+              "lower extremity dressing technique training",
+              "upper extremity dressing technique training",
+              "fastener management training",
+              "compensatory technique training"
+            ]
+          },
+          "GOAL": {
+            "type": "dropdown",
+            "label": "Functional Goal",
+            "options": [
+              "promote LB dressing independence and safety",
+              "advance UB dressing skills and reduce assistance needs",
+              "address fine motor deficits and advance dressing independence",
+              "promote independence through adaptive strategy development"
+            ]
+          },
+          "INSTRUCTION_DETAILS": {
+            "type": "dropdown",
+            "label": "Instruction Details",
+            "options": [
+              "Skilled instruction provided in seated pants donning and sock aid proper use",
+              "Instruction in affected arm first technique for pullover shirt management",
+              "Instruction and practice provided in button hook proper use technique",
+              "Skilled instruction provided in reacher and dressing stick use"
+            ]
+          },
+          "ASSIST_LEVEL": {
+            "type": "dropdown",
+            "label": "Assistance Level with Task",
+            "options": [
+              "Min assist to thread B pants over feet using reacher 2/2 hip precautions",
+              "Mod physical assist to manage shirt over head and through affected LUE 2/2 hemiparesis affecting UE coordination",
+              "Mod physical assist required for button management 2/2 fine motor deficits limiting manipulation skills",
+              "CGA for safety during task 2/2 poor balance"
+            ]
+          },
+          "REASON": {
+            "type": "text",
+            "label": "Reason (2/2)",
+            "placeholder": "hip precautions, hemiparesis, fine motor deficits, etc."
+          },
+          "OUTCOME_COMPARISON": {
+            "type": "dropdown",
+            "label": "Outcome with Baseline Comparison",
+            "options": [
+              "Patient able to pull pants up to hips once in standing with SBA vs mod assist at baseline, demonstrating potential for increased independence",
+              "Patient completed task with 40% less assist by session end, demonstrating functional gains with skilled intervention",
+              "Patient able to fasten 3 of 5 buttons independently with button hook vs 0/5 at baseline, indicating good learning potential"
+            ]
+          }
+        }
+      },
+      {
+        "id": "dressing_v2",
+        "name": "Activity-Specific Positional Dressing",
+        "description": "Focus on positioning and specific activities",
+        "structure": "Patient facilitated in {{DRESSING_ACTIVITY}} {{POSITION}}. {{ASSIST_WITH_EQUIPMENT}}. {{POSITIONING_CUEING}}. {{OUTCOME}}.",
+        "variables": {
+          "DRESSING_ACTIVITY": {
+            "type": "dropdown",
+            "label": "Dressing Activity",
+            "options": ["LB dressing", "UB dressing", "donning pants and shoes", "full dressing routine"]
+          },
+          "POSITION": {
+            "type": "dropdown",
+            "label": "Position",
+            "options": ["at EOB", "while seated in w/c", "on firm surface", "in standing", "seated on firm surface without back support"]
+          },
+          "ASSIST_WITH_EQUIPMENT": {
+            "type": "dropdown",
+            "label": "Assistance with Equipment",
+            "options": [
+              "Min assist to thread B pants over feet using reacher 2/2 hip precautions. Patient able to pull pants up to hips once in standing",
+              "Mod physical assist to manage pullover shirt over head and through affected LUE 2/2 hemiparesis affecting UE coordination. Patient able to thread non-affected RUE with min verbal cues",
+              "Mod assist to donn B shoes and socks 2/2 decreased muscle strength and poor fine motor control for tying laces"
+            ]
+          },
+          "POSITIONING_CUEING": {
+            "type": "dropdown",
+            "label": "Positioning/Cueing Details",
+            "options": [
+              "Physical assist to complete last 50% of supine to sit sequence. CGA to donn B socks using a sock aid",
+              "Tactile cues to scapula to promote protraction during task",
+              "Verbal cues for proper body mechanics and sequencing"
+            ]
+          },
+          "OUTCOME": {
+            "type": "dropdown",
+            "label": "Outcome Statement",
+            "options": [
+              "demonstrating functional gains with skilled intervention",
+              "indicating good learning potential",
+              "demonstrating potential for increased independence"
+            ]
+          }
+        }
+      },
+      {
+        "id": "dressing_v3",
+        "name": "Compensatory Strategy Development",
+        "description": "Focus on adaptive equipment and strategies",
+        "structure": "Patient facilitated in {{DRESSING_TASK}} with compensatory technique training to promote independence through adaptive strategy development. {{INSTRUCTION_EQUIPMENT}}. {{ASSIST_IMPLEMENTATION}}. {{OUTCOME_INDEPENDENCE}}.",
+        "variables": {
+          "DRESSING_TASK": {
+            "type": "dropdown",
+            "label": "Dressing Task",
+            "options": ["LB dressing", "UB dressing", "fastener management", "shoe donning", "full dressing"]
+          },
+          "INSTRUCTION_EQUIPMENT": {
+            "type": "dropdown",
+            "label": "Instruction in Equipment/Techniques",
+            "options": [
+              "Skilled instruction provided in reacher and dressing stick use for donning pants while seated",
+              "Instruction in button hook technique for shirt fasteners",
+              "Training in sock aid use and proper positioning",
+              "Demonstration of long-handled shoehorn technique"
+            ]
+          },
+          "ASSIST_IMPLEMENTATION": {
+            "type": "dropdown",
+            "label": "Assistance for Implementation",
+            "options": [
+              "Min assist for item management",
+              "Mod assist for initial setup",
+              "SBA for safety",
+              "CGA during initial trials"
+            ]
+          },
+          "OUTCOME_INDEPENDENCE": {
+            "type": "dropdown",
+            "label": "Outcome with Independence Comparison",
+            "options": [
+              "By close of session, patient able to hook belt loops and pull pants over knees independently vs max assist at baseline, indicating good learning potential",
+              "Patient completed task with SBA vs mod assist at baseline, demonstrating potential for increased independence",
+              "Patient demonstrated proper equipment use with 75% independence vs 25% at baseline"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "97110_SHOULDER_ROM": {
+    "cpt": "97110",
+    "category": "SHOULDER_ROM",
+    "variants": [
+      {
+        "id": "shoulder_rom_v1",
+        "name": "Standard Exercise Protocol for ROM",
+        "description": "Standard therapeutic exercise approach",
+        "structure": "Pt {{ACTION_VERB}} in therapeutic exercise for {{BODY_PART}} {{ROM_TYPE}} to promote {{FUNCTIONAL_GOAL}} 2/2 {{CONDITION}}. {{EXERCISES}} x{{REPS}} x{{SETS}}. {{CUEING}}. {{MEASUREMENT}}.",
+        "variables": {
+          "ACTION_VERB": {
+            "type": "dropdown",
+            "label": "Action Verb",
+            "options": ["participated", "completed", "engaged", "received"]
+          },
+          "BODY_PART": {
+            "type": "dropdown",
+            "label": "Body Part",
+            "options": ["R shoulder", "L shoulder", "B shoulder", "bilateral shoulders"]
+          },
+          "ROM_TYPE": {
+            "type": "dropdown",
+            "label": "ROM Type",
+            "options": ["AROM/PROM", "AROM", "PROM", "AAROM", "flexion/abduction AROM", "flexion/abduction PROM"]
+          },
+          "FUNCTIONAL_GOAL": {
+            "type": "dropdown",
+            "label": "Functional Goal",
+            "options": [
+              "functional UE ROM for dressing",
+              "functional reach for kitchen tasks",
+              "overhead reach for grooming",
+              "independence in bathing",
+              "overhead reach for self-care"
+            ]
+          },
+          "CONDITION": {
+            "type": "dropdown",
+            "label": "Condition/Diagnosis",
+            "options": ["adhesive capsulitis", "frozen shoulder", "post-op capsular tightness", "rotator cuff repair", "bilateral frozen shoulder"]
+          },
+          "EXERCISES": {
+            "type": "dropdown",
+            "label": "Exercise List",
+            "options": [
+              "Pulleys, wand exercises, and wall walks",
+              "Table slides, wall walks progressing height, seated overhead reach",
+              "Supine shoulder flexion, side-lying external rotation, and seated table slides",
+              "Passive elevation, external rotation, AAROM with pulley assist"
+            ]
+          },
+          "REPS": {
+            "type": "dropdown",
+            "label": "Repetitions",
+            "options": ["8", "10", "12", "15"]
+          },
+          "SETS": {
+            "type": "dropdown",
+            "label": "Sets",
+            "options": ["2", "3", "4"]
+          },
+          "CUEING": {
+            "type": "dropdown",
+            "label": "Cueing Provided",
+            "options": [
+              "Min verbal cues for proper scapular stabilization",
+              "Verbal cues for proper breathing and scapular control",
+              "Tactile cues at scapula for stability",
+              "Setup assist for positioning and verbal cues for proper breathing"
+            ]
+          },
+          "MEASUREMENT": {
+            "type": "text",
+            "label": "ROM Measurements",
+            "placeholder": "PROM shoulder flexion 115 degrees, AROM 95 degrees"
+          }
+        }
+      },
+      {
+        "id": "shoulder_rom_v2",
+        "name": "Post-Surgical ROM Progression",
+        "description": "Focus on post-surgical protocols",
+        "structure": "Pt completed therapeutic exercise for {{BODY_PART}} {{ROM_TYPE}} in {{POSITION}} to promote {{GOAL}} 2/2 {{SURGICAL_HISTORY}}. {{TECHNIQUES}}. {{CUEING_PRECAUTIONS}}. Current {{MEASUREMENTS}}.",
+        "variables": {
+          "BODY_PART": {
+            "type": "dropdown",
+            "label": "Body Part",
+            "options": ["L shoulder", "R shoulder", "affected shoulder"]
+          },
+          "ROM_TYPE": {
+            "type": "dropdown",
+            "label": "ROM Type",
+            "options": ["PROM", "AAROM", "PROM/AAROM", "flexion/abduction PROM"]
+          },
+          "POSITION": {
+            "type": "dropdown",
+            "label": "Position",
+            "options": ["supine position", "seated position", "standing position"]
+          },
+          "GOAL": {
+            "type": "dropdown",
+            "label": "Functional Goal",
+            "options": ["overhead reach for self-care", "functional reaching", "restore mobility", "independence in ADLs"]
+          },
+          "SURGICAL_HISTORY": {
+            "type": "dropdown",
+            "label": "Surgical History",
+            "options": ["rotator cuff repair", "shoulder arthroscopy", "total shoulder replacement"]
+          },
+          "TECHNIQUES": {
+            "type": "dropdown",
+            "label": "Techniques with Parameters",
+            "options": [
+              "Passive elevation to 105 degrees, external rotation to 30 degrees in scapular plane, AAROM with pulley assist x12 reps x2 sets",
+              "Pendulum exercises, passive flexion, and assisted elevation with pulley system x12 reps x2 sets",
+              "Supine passive flexion, AAROM with cane assist, progressive wall climbing x8 reps x3 sets"
+            ]
+          },
+          "CUEING_PRECAUTIONS": {
+            "type": "dropdown",
+            "label": "Cueing with Precautions",
+            "options": [
+              "Mod verbal cues for pain management and avoiding active muscle contraction",
+              "Mod verbal cues for pain management and avoiding compensatory trunk movement",
+              "Tactile cues for proper mechanics, verbal cues to avoid compensatory patterns"
+            ]
+          },
+          "MEASUREMENTS": {
+            "type": "text",
+            "label": "Current Measurements",
+            "placeholder": "L shoulder PROM 105 degrees, pain 3/10 with PROM"
+          }
+        }
+      },
+      {
+        "id": "shoulder_rom_v3",
+        "name": "Functional ROM Training",
+        "description": "Focus on functional activities and progression",
+        "structure": "Pt {{ACTION_VERB}} in therapeutic exercise for {{BODY_PART}} ROM to promote {{FUNCTIONAL_TASK}} 2/2 {{CONDITION}}. {{FUNCTIONAL_EXERCISES}}. {{CUEING_QUALITY}}. {{ROM_IMPROVEMENT}}.",
+        "variables": {
+          "ACTION_VERB": {
+            "type": "dropdown",
+            "label": "Action Verb",
+            "options": ["received", "engaged", "completed"]
+          },
+          "BODY_PART": {
+            "type": "dropdown",
+            "label": "Body Part",
+            "options": ["R shoulder", "L shoulder", "B shoulders"]
+          },
+          "FUNCTIONAL_TASK": {
+            "type": "dropdown",
+            "label": "Functional Task",
+            "options": [
+              "independence in bathing",
+              "overhead reach for dressing",
+              "functional reaching for kitchen tasks",
+              "independence in household tasks"
+            ]
+          },
+          "CONDITION": {
+            "type": "dropdown",
+            "label": "Condition",
+            "options": ["post-op capsular tightness", "adhesive capsulitis", "frozen shoulder", "rotator cuff weakness"]
+          },
+          "FUNCTIONAL_EXERCISES": {
+            "type": "dropdown",
+            "label": "Functional Exercise Progression",
+            "options": [
+              "Supine passive flexion, AAROM with cane assist, progressive wall climbing x8 reps x3 sets",
+              "Passive stretching, active-assistive flexion/abduction, and progressive wall walking x8 reps x3 sets",
+              "Functional reaching activities, overhead placement tasks, simulated ADL movements x10 reps x3 sets"
+            ]
+          },
+          "CUEING_QUALITY": {
+            "type": "dropdown",
+            "label": "Cueing for Quality",
+            "options": [
+              "Tactile cues at scapula for stability, min verbal cues for progression",
+              "Verbal cues for proper mechanics and avoiding compensatory patterns",
+              "Min verbal cues for scapular control and proper body alignment"
+            ]
+          },
+          "ROM_IMPROVEMENT": {
+            "type": "text",
+            "label": "ROM Improvement with Baseline",
+            "placeholder": "PROM improved to 120 degrees, AROM 100 degrees"
+          }
+        }
+      }
+    ]
+  }
+}

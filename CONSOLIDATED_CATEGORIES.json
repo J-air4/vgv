@@ -1,0 +1,143 @@
+{
+  "97110": {
+    "Upper Extremity": {
+      "description": "Shoulder, elbow, wrist, and hand exercises",
+      "subcategories": [
+        "SHOULDER_ROM",
+        "SHOULDER_STRENGTHENING",
+        "ELBOW_WRIST_ROM",
+        "GRIP_STRENGTHENING",
+        "HAND_FINGER_EXERCISE",
+        "BUE_STRENGTHENING"
+      ]
+    },
+    "Lower Extremity": {
+      "description": "Hip, knee, ankle, and general leg exercises",
+      "subcategories": [
+        "HIP_KNEE_ROM",
+        "ANKLE_ROM",
+        "BLE_STRENGTHENING"
+      ]
+    },
+    "Spine & Core": {
+      "description": "Cervical, trunk, and core strengthening",
+      "subcategories": [
+        "CERVICAL_ROM",
+        "TRUNK_ROM",
+        "CORE_STRENGTHENING"
+      ]
+    },
+    "General Conditioning": {
+      "description": "Overall strength, flexibility, and conditioning",
+      "subcategories": [
+        "PROGRESSIVE_RESISTIVE",
+        "STRETCHING_FLEXIBILITY",
+        "ROM_FLEXIBILITY",
+        "STRENGTH_ENDURANCE"
+      ]
+    },
+    "Specialized": {
+      "description": "Edema management and specialized interventions",
+      "subcategories": [
+        "EDEMA_REDUCTION"
+      ]
+    }
+  },
+  "97112": {
+    "Balance Training": {
+      "description": "Sitting and standing balance activities",
+      "subcategories": [
+        "STATIC_SITTING_BALANCE",
+        "DYNAMIC_SITTING_BALANCE",
+        "STATIC_STANDING_BALANCE",
+        "DYNAMIC_STANDING_BALANCE",
+        "WEIGHT_SHIFT_TRAINING"
+      ]
+    },
+    "Proprioception & Sensory": {
+      "description": "Body awareness and sensory retraining",
+      "subcategories": [
+        "PROPRIOCEPTION_UE",
+        "PROPRIOCEPTION_LE",
+        "SENSORY_RETRAINING",
+        "VESTIBULAR_TRAINING"
+      ]
+    },
+    "Motor Control & Coordination": {
+      "description": "Movement patterns and coordination",
+      "subcategories": [
+        "COORDINATION_TRAINING",
+        "MOTOR_PLANNING",
+        "MOVEMENT_PATTERNS",
+        "TRUNK_CONTROL",
+        "POSTURAL_CONTROL"
+      ]
+    },
+    "Cognitive & Perceptual": {
+      "description": "Cognitive and visual-motor integration",
+      "subcategories": [
+        "COGNITIVE_PERCEPTUAL",
+        "VISUAL_MOTOR_INTEGRATION"
+      ]
+    }
+  },
+  "97530": {
+    "Mobility Training": {
+      "description": "Bed mobility and functional movement",
+      "subcategories": [
+        "BED_MOBILITY",
+        "FUNCTIONAL_MOBILITY"
+      ]
+    },
+    "Transfer Training": {
+      "description": "All types of transfers",
+      "subcategories": [
+        "TRANSFERS"
+      ]
+    },
+    "Balance": {
+      "description": "Static and dynamic balance activities",
+      "subcategories": [
+        "BALANCE"
+      ]
+    },
+    "Upper Extremity Function": {
+      "description": "UE ROM and fine motor activities",
+      "subcategories": [
+        "UPPER_EXTREMITY",
+        "UE_ROM",
+        "FINE_MOTOR_COORDINATION",
+        "DEXTERITY"
+      ]
+    }
+  },
+  "97535": {
+    "Self-Care": {
+      "description": "Activities of Daily Living",
+      "subcategories": [
+        "BATHING",
+        "DRESSING",
+        "FEEDING",
+        "TOILETING",
+        "GROOMING"
+      ]
+    },
+    "Home Management": {
+      "description": "Instrumental Activities of Daily Living",
+      "subcategories": [
+        "IADL"
+      ]
+    }
+  },
+  "_metadata": {
+    "description": "Consolidated category structure for CPT code narratives",
+    "created": "2025-11-13",
+    "purpose": "Organize narratives into high-level categories for easier browsing",
+    "notes": {
+      "97110": "Therapeutic Exercise - Organized into 5 major body regions and training types",
+      "97112": "Neuromuscular Reeducation - Organized into 4 functional domains",
+      "97530": "Therapeutic Activities - Organized into 4 functional skill areas",
+      "97535": "Self-Care/ADL Training - Already well-organized, kept as-is with 6 categories"
+    }
+  }
+}

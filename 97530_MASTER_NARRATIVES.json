@@ -1,0 +1,342 @@
+[
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Lifting/carrying to increase functional skills",
+    "narrative": "Pt performed simulated grocery shopping task with lifting/carrying training to increase functional skills. Graded weight lifting activities with functional objects, pushing weighted cart and reaching for items on shelves. Min verbal cues for proper body mechanics. Pt tolerated 5 lb items x 10 reps vs 3 reps at baseline."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Bending/lifting/carrying tasks",
+    "narrative": "Pt engaged in simulated laundry task with bending/lifting/carrying training to increase functional skill performance. Activity involved carrying 5 lb basket for 15 ft and bending to retrieve items using proper body mechanics. SBA for safety with mod verbal cues for pacing. Pt completed 8/10 trials with improved technique."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Dynamic functional activities",
+    "narrative": "Pt practiced opening/closing weighted door with dynamic functional activities to increase strength/ROM in progressive manner. Activity required maneuvering RW for access with multi-planar movements. CGA with min tactile cues at hips to facilitate weight shifting and sequencing. Pt demonstrated improved door management with proper timing."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Placement of objects out of reach",
+    "narrative": "Skilled instruction in UB dressing at EOB with placement of objects out of reach training. Overhead and side reaching activities for items to increase functional reaching. Min verbal cues to thread arms through sleeves with improved sequencing. Pt demonstrated increased shoulder flexion to 130 degrees vs 110 at baseline."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Standing tolerance activities",
+    "narrative": "Pt engaged in standing activities at counter with dynamic reaching to increase standing tolerance. Folding towels while standing with RW support x 8 minutes. Min verbal cues for weight distribution and posture. Pt tolerated standing 8 min vs 4 min at baseline with improved endurance."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Floor-level reaching",
+    "narrative": "Floor-level reaching activity completed while seated using visual cues of observable goal to promote trunk flexion and hip mobility for LB dressing tasks. 8/10 trials completed with min verbal cues for increased trunk flexion and proper body mechanics when reaching toward BLE."
+  },
+  {
+    "category": "BED_MOBILITY",
+    "intervention": "Bed mobility training",
+    "narrative": "Pt performed bridging in supine with bed mobility training to increase functional independence. 8 reps of bridging technique for position adjustment and pressure relief to facilitate LB dressing. Mod tactile cues to glutes for activation and min verbal cues for controlled lowering. Pt able to hold bridge 5 sec vs 2 sec at baseline."
+  },
+  {
+    "category": "BED_MOBILITY",
+    "intervention": "Bed mobility training - rolling",
+    "narrative": "Pt practiced rolling with bed mobility training technique using segmental rotation. Supine <> sidelying B for pressure relief using proper body mechanics. Max verbal cues for head/neck placement and use of BUE to initiate and control momentum. Pt completed 4/5 trials with improved fluidity vs 2/5 at baseline."
+  },
+  {
+    "category": "BED_MOBILITY",
+    "intervention": "Bed mobility training - scooting",
+    "narrative": "Pt completed scooting in bed with bed mobility training using upper body strength. Activity performed x4 up/down in bed using BUE/BLE to assist. Mod assist for leg management with min verbal cues to coordinate pushing/pulling movements. Pt advanced 8 inches independently vs 4 inches with max assist."
+  },
+  {
+    "category": "BED_MOBILITY",
+    "intervention": "Bed mobility training - transitions",
+    "narrative": "Skilled training for supine to sit at EOB with bed mobility transition technique. Emphasis on core engagement and controlled movement with proper body mechanics. CGA with mod tactile cues to trunk to prevent loss of balance. Pt completed transition in 12 sec vs 20 sec at baseline with improved control."
+  },
+  {
+    "category": "BED_MOBILITY",
+    "intervention": "Bed mobility - lateral movement",
+    "narrative": "Pt completed lateral scooting in bed with bed mobility training to increase independence. Sidelying to supine with controlled movement x6 reps. Tactile cues to initiate with BUE and verbal cues for segmental movement. Pt completed 5/6 reps independently vs 2/6 at baseline."
+  },
+  {
+    "category": "TRANSFERS",
+    "intervention": "Closed kinetic chain activity",
+    "narrative": "Pt performed STS transfers with closed kinetic chain activity to increase functional skills. 5 STS from standard height chair using RW with proper mechanics. Min verbal cues for forward weight shift and tactile cues at knees for extension. Pt completed transfers with 30% less assist vs baseline."
+  },
+  {
+    "category": "TRANSFERS",
+    "intervention": "Dynamic functional activities",
+    "narrative": "Pt completed w/c to/from bed transfer with dynamic functional activities training in progressive manner. Transfer sequence training with emphasis on proper body mechanics and safety. SBA with min verbal cues for sequencing, including w/c positioning, brake management, and removing leg rests. Pt demonstrated 5/5 safety checks independently."
+  },
+  {
+    "category": "TRANSFERS",
+    "intervention": "Closed kinetic chain - transfer training",
+    "narrative": "Skilled training in toilet transfers with closed kinetic chain activity using grab bars. Proper weight-bearing activities through UE with controlled sit<>stand. CGA with mod verbal cues to push up from support surface and control descent. Pt tolerated 6 reps vs 3 reps at baseline with improved endurance."
+  },
+  {
+    "category": "TRANSFERS",
+    "intervention": "Dynamic functional activities - transfers",
+    "narrative": "Pt practiced tub transfer with dynamic functional activities to increase strength/ROM/flexibility in progressive manner. Activity performed using tub bench with proper body mechanics. SBA with min verbal cues for leg management over tub wall. Pt demonstrated improved control and confidence with 4/4 transfers completed safely."
+  },
+  {
+    "category": "TRANSFERS",
+    "intervention": "Stand pivot transfers",
+    "narrative": "Pt performed stand pivot transfers with dynamic functional activities from w/c to mat table. Transfer completed with RW and proper sequencing. Mod verbal cues for foot positioning and tactile cues at hips for weight shift. Pt completed 4/5 transfers with SBA vs mod assist at baseline."
+  },
+  {
+    "category": "TRANSFERS",
+    "intervention": "Modified transfer training",
+    "narrative": "Pt completed modified squat pivot transfer from w/c to plinth with closed kinetic chain activity. Activity emphasized controlled eccentric lowering with proper body mechanics. Mod assist for initial positioning with min verbal cues for safety. Pt demonstrated improved technique and confidence."
+  },
+  {
+    "category": "DYNAMIC_BALANCE",
+    "intervention": "Throwing/catching activities",
+    "narrative": "6 trials of standing ring toss with throwing/catching activities to facilitate dynamic task performance. Activity performed using 5 large lightweight rings to facilitate B shoulder ROM for enhanced dressing. RW, SBA for stability with min verbal cues for timed release. Pt achieved 5/6 successful tosses vs 2/6 at baseline."
+  },
+  {
+    "category": "DYNAMIC_BALANCE",
+    "intervention": "Bilateral integration",
+    "narrative": "Pt performed seated balloon toss with bilateral integration training x 15 reps. Activity required coordinated hand use to challenge trunk rotation and stability. Min verbal cues to cross midline and maintain posture. Pt demonstrated improved midline crossing with 12/15 successful catches."
+  },
+  {
+    "category": "DYNAMIC_BALANCE",
+    "intervention": "Dynamic balance sitting - crossing midline",
+    "narrative": "Skilled interventions focused on dynamic balance during sitting with crossing midline activities to facilitate independence. Tasks graded with placement of objects out of reach to promote dynamic skill performance and weight shifting. Demonstrations and min verbal cues for safety. Pt completed 8/10 reaches across midline vs 5/10."
+  },
+  {
+    "category": "DYNAMIC_BALANCE",
+    "intervention": "Dynamic balance standing",
+    "narrative": "Pt completed standing cone taps with dynamic balance activities while standing x 10 reps B BLE. Activity challenged single-leg stance and coordination for improved mobility. SBA with RW for support and min verbal cues for pacing. Pt maintained balance 9/10 trials with improved weight transfer."
+  },
+  {
+    "category": "DYNAMIC_BALANCE",
+    "intervention": "Weight shifting activities",
+    "narrative": "Pt performed anterior-posterior weight shift activities with dynamic balance training while standing. A-P weight shifts x10 reps with RW using controlled movement. Tactile cues at hips for awareness and verbal cues for proper sequencing. Pt maintained balance 8/10 trials vs 5/10 at baseline."
+  },
+  {
+    "category": "DYNAMIC_BALANCE",
+    "intervention": "Reaching beyond base of support",
+    "narrative": "Pt engaged in seated reaching beyond base of support with dynamic balance activities x12 reps. Multi-directional reaching for functional objects to challenge postural control. Min verbal cues for controlled weight shift and return to center. Pt completed all reaches without loss of balance vs 7/12 at baseline."
+  },
+  {
+    "category": "UPPER_EXTREMITY",
+    "intervention": "Overhead activities to increase ROM",
+    "narrative": "Pt engaged in overhead reaching activities with wall washing to increase shoulder mobility for ADL performance. Activity performed to promote sustained overhead positioning for 5 min. Min verbal cues for proper scapular stabilization. Pt achieved 145-degree shoulder flexion vs 120 degrees at baseline."
+  },
+  {
+    "category": "UPPER_EXTREMITY",
+    "intervention": "Bilateral integration training",
+    "narrative": "Pt performed bilateral assembly tasks with bilateral integration training requiring coordinated hand use. Stabilize-and-manipulate tasks for bilateral coordination using nuts/bolts. Min verbal cues for timing. Pt completed 8/10 assemblies with both hands vs 5/10 at baseline."
+  },
+  {
+    "category": "UPPER_EXTREMITY",
+    "intervention": "Fine motor coordination",
+    "narrative": "Pt completed pegboard activities with fine motor coordination training using graded sizes of pegs. Activity performed with various sized pegs/openings to improve dexterity for ADLs. Tactile cues for precision. Pt placed 12 pegs in 60 sec vs 8 pegs at baseline."
+  },
+  {
+    "category": "UPPER_EXTREMITY",
+    "intervention": "Theraputty techniques to increase grip",
+    "narrative": "Pt practiced theraputty techniques to increase grip strength for functional tasks. Pinching theraputty with various finger combinations and rolling into balls. Graded resistance progression from soft to medium. Pt tolerated medium resistance x 10 reps vs soft at baseline."
+  },
+  {
+    "category": "UPPER_EXTREMITY",
+    "intervention": "Sustained grasp activities",
+    "narrative": "Pt completed sustained grasp activities with weighted objects to increase endurance for functional tasks. Carrying 3 lb weighted can x 20 feet and sustained hold x45 sec. Min verbal cues for proper grasp pattern. Pt sustained grasp 45 sec vs 20 sec at baseline."
+  },
+  {
+    "category": "BALANCE_COORDINATION",
+    "intervention": "Bending to increase dynamic balance",
+    "narrative": "Pt performed floor-level object retrieval with bending activities to increase dynamic balance skills. Forward bending with controlled return to standing using proper body mechanics. Weight shifting during bending required. Pt completed 8/10 bends with improved postural control vs 5/10."
+  },
+  {
+    "category": "BALANCE_COORDINATION",
+    "intervention": "Dual-task activities",
+    "narrative": "Pt engaged in dual-task training with balance and cognitive activities. Standing balance while sorting objects by color/size using RW for support. Mod verbal cues for divided attention and safety. Pt sorted 15/20 objects correctly while maintaining balance vs 8/20 at baseline."
+  },
+  {
+    "category": "DYNAMIC_BALANCE",
+    "intervention": "Marching in place",
+    "narrative": "Pt engaged in marching in place with dynamic functional activities to increase strength/endurance. Activity performed x 2 min with RW for support and proper body mechanics. Min verbal cues to increase step height and maintain upright posture. Pt achieved 3-inch step height vs 1.5-inch at baseline."
+  },
+  {
+    "category": "DYNAMIC_BALANCE",
+    "intervention": "Obstacle management training",
+    "narrative": "Pt practiced stepping over obstacles with dynamic balance training for safety. Small objects (2-inch cones) x 10 reps using RW with controlled movement. SBA with min verbal cues for foot clearance and placement. Pt cleared obstacles 9/10 trials vs 6/10 at baseline."
+  },
+  {
+    "category": "DYNAMIC_BALANCE",
+    "intervention": "Static balance training",
+    "narrative": "Skilled instruction in tandem stance with static balance activities to improve standing tolerance. Activity performed 30 sec x 4 trials to increase balance endurance. CGA with hands ready to stabilize as needed. Pt maintained stance 25 sec vs 12 sec at baseline."
+  },
+  {
+    "category": "DYNAMIC_BALANCE",
+    "intervention": "Lateral weight shifting",
+    "narrative": "Pt performed lateral weight shift activities with dynamic balance training while standing. M-L weight shifts x10 reps each direction with RW using controlled movement. Tactile cues at hips for awareness and verbal cues for proper sequencing. Pt maintained balance 8/10 trials vs 5/10 at baseline."
+  },
+  {
+    "category": "FINE_MOTOR_COORDINATION",
+    "intervention": "Pegboard activities",
+    "narrative": "Pt completed pegboard activities with fine motor coordination training using graded sizes of pegs. Activity performed with various sized pegs/openings to improve dexterity for ADLs. Tactile cues for precision and verbal cues for tripod grasp. Pt placed 12 pegs in 60 sec vs 8 pegs at baseline."
+  },
+  {
+    "category": "FINE_MOTOR_COORDINATION",
+    "intervention": "Pinch strengthening",
+    "narrative": "Pt engaged in pinch strengthening activities with theraputty to increase functional grasp. Lateral pinch, tip pinch, and palmar pinch exercises x10 reps x3 sets using medium resistance. Min verbal cues for proper positioning. Pt tolerated medium resistance vs soft at baseline."
+  },
+  {
+    "category": "FINE_MOTOR_COORDINATION",
+    "intervention": "In-hand manipulation",
+    "narrative": "Pt practiced in-hand manipulation tasks with small objects to increase fine motor skills. Coin rotation, finger-to-palm translation activities x15 trials. Tactile cues for precision and verbal cues for isolated finger movements. Pt completed 12/15 trials successfully vs 7/15 at baseline."
+  },
+  {
+    "category": "FINE_MOTOR_COORDINATION",
+    "intervention": "Functional object manipulation",
+    "narrative": "Pt completed functional object manipulation tasks with buttons, zippers, and snaps. Opening/closing 10 fasteners of varying sizes to increase fine motor dexterity. Demonstrations and min verbal cues for compensatory techniques. Pt completed 8/10 fasteners independently vs 4/10 at baseline."
+  },
+  {
+    "category": "DEXTERITY",
+    "intervention": "Bilateral hand coordination",
+    "narrative": "Pt performed bilateral hand coordination activities with stabilize-and-manipulate tasks. Nut and bolt assembly, card shuffling exercises x12 trials. Min verbal cues for timing and coordination. Pt completed 10/12 tasks with improved speed and accuracy vs 6/12 at baseline."
+  },
+  {
+    "category": "DEXTERITY",
+    "intervention": "Speed and precision tasks",
+    "narrative": "Pt engaged in speed and precision training with timed peg placement and bead stringing. Activities performed to increase hand dexterity for functional tasks x3 sets of 10 items. Verbal cues for pacing and accuracy. Pt placed all items in 45 sec vs 75 sec at baseline."
+  },
+  {
+    "category": "DEXTERITY",
+    "intervention": "Grasp and release patterns",
+    "narrative": "Pt completed grasp and release pattern training with various sized objects. Graded cylindrical, spherical, and lateral pinch patterns x15 reps each. Tactile cues for optimal hand positioning and verbal cues for controlled release. Pt demonstrated improved control 14/15 trials vs 9/15 at baseline."
+  },
+  {
+    "category": "DEXTERITY",
+    "intervention": "Functional reach and grasp",
+    "narrative": "Pt practiced functional reach and grasp activities with weighted objects at varying heights. Reaching for and manipulating items from shelves while seated x10 reps. Min verbal cues for trunk stability and proper body mechanics. Pt completed all reaches with improved control vs 7/10 at baseline."
+  },
+  {
+    "category": "UE_ROM",
+    "intervention": "Overhead reaching activities",
+    "narrative": "Pt engaged in overhead reaching activities with wall washing to increase shoulder mobility. Activity performed to promote sustained overhead positioning for 5 min. Min verbal cues for proper scapular stabilization and trunk control. Pt achieved 145-degree shoulder flexion vs 120 degrees at baseline."
+  },
+  {
+    "category": "UE_ROM",
+    "intervention": "Functional reaching patterns",
+    "narrative": "Pt completed functional reaching patterns in multiple planes to increase UE ROM. Diagonal reaching, cross-body reaching, and behind-back reaching x10 reps each direction. Tactile cues for scapular mobility and verbal cues for proper mechanics. Pt demonstrated increased reach distance in all planes."
+  },
+  {
+    "category": "UE_ROM",
+    "intervention": "Weight-bearing activities",
+    "narrative": "Pt performed UE weight-bearing activities on elevated surface to increase shoulder/elbow ROM. Quadruped position on mat table, plank holds x30 sec x4 reps. Mod verbal cues for alignment and tactile cues for elbow extension. Pt tolerated 30 sec holds vs 15 sec at baseline."
+  },
+  {
+    "category": "UE_ROM",
+    "intervention": "Bilateral UE elevation",
+    "narrative": "Pt engaged in bilateral UE elevation activities with resistance band to increase shoulder ROM. Overhead pulls, lateral raises x10 reps x3 sets using yellow band. Min verbal cues for synchronous movement and proper breathing. Pt achieved full overhead elevation vs 130 degrees at baseline."
+  },
+  {
+    "category": "UE_ROM",
+    "intervention": "Sustained stretch positioning",
+    "narrative": "Pt completed sustained stretch positioning for shoulder/elbow ROM to increase flexibility. Corner stretch for pectorals, overhead tricep stretch x45 sec hold x3 reps each. Instruction in proper positioning and breathing techniques. Pt tolerated full stretch positions with min discomfort."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Simulated Grocery Shopping",
+    "narrative": "Pt performed simulated grocery shopping task, pushing a weighted cart and reaching for items on shelves to challenge BUE strength and activity tolerance. Min verbal cues for body mechanics."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Simulated Laundry Task",
+    "narrative": "Pt engaged in a simulated laundry task, involving carrying a basket (5 lbs) for 15 ft and bending to retrieve items. SBA for safety with mod verbal cues for pacing."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Weighted Door with RW",
+    "narrative": "Pt practiced opening/closing a weighted door while maneuvering RW for access. CGA with min tactile cues at hips to facilitate weight shifting and sequencing."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "UB Dressing Training at EOB",
+    "narrative": "Skilled instruction in UB dressing at EOB, focusing on sequencing and energy conservation. Min verbal cues to thread arms through sleeves and manage clothing fasteners."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Standing Ring Toss",
+    "narrative": "6 trials of standing ring toss using 5 large lightweight rings to facilitate B shoulder ROM for enhanced dressing. RW, SBA for stability with min verbal cues for timed release."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Seated Balloon Toss",
+    "narrative": "Pt performed seated balloon toss x 15 reps to challenge trunk rotation and stability. Min verbal cues to cross midline and maintain posture."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY",
+    "intervention": "Dynamic Balance Sitting",
+    "narrative": "Skilled interventions focused on dynamic balance during sitting while crossing midline. Tasks graded with objects out of reach. Demonstrations and min verbal cues for safety."
+  },
+  {
+    "category": "BED_MOBILITY",
+    "intervention": "Bridging for Strengthening",
+    "narrative": "Pt performed 8 reps of bridging in supine to facilitate LB dressing and bed mobility. Mod tactile cues to glutes for activation and min verbal cues for controlled lowering."
+  },
+  {
+    "category": "BED_MOBILITY",
+    "intervention": "Rolling for Pressure Relief",
+    "narrative": "Pt practiced rolling supine <> sidelying B for pressure relief. Max verbal cues for head/neck placement and use of BUE to initiate and control momentum."
+  },
+  {
+    "category": "BED_MOBILITY",
+    "intervention": "Scooting in Bed",
+    "narrative": "Pt completed scooting up/down in bed x4 using BUE/BLE to assist. Mod assist for leg management with min verbal cues to coordinate pushing/pulling movements."
+  },
+  {
+    "category": "BED_MOBILITY",
+    "intervention": "Supine to Sit Training",
+    "narrative": "Skilled training for supine to sit at EOB, emphasizing core engagement and controlled movement. CGA with mod tactile cues to trunk to prevent loss of balance."
+  },
+  {
+    "category": "TRANSFERS",
+    "intervention": "STS Transfers with RW",
+    "narrative": "Pt performed 5 STS transfers from standard height chair using RW. Min verbal cues for forward weight shift and tactile cues at knees for extension."
+  },
+  {
+    "category": "TRANSFERS",
+    "intervention": "W/C to Bed Transfer",
+    "narrative": "Pt completed w/c to/from bed transfer with SBA. Min verbal cues for sequencing, including w/c positioning, brake management, and removing leg rests."
+  },
+  {
+    "category": "TRANSFERS",
+    "intervention": "Toilet Transfer Training",
+    "narrative": "Skilled training in toilet transfers with grab bars. CGA with mod verbal cues to push up from support surface and control descent onto toilet."
+  },
+  {
+    "category": "TRANSFERS",
+    "intervention": "Tub Transfer Practice",
+    "narrative": "Pt practiced tub transfer using a tub bench. SBA with min verbal cues for leg management over tub wall and body mechanics to prevent injury."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY_BALANCE",
+    "intervention": "Balance Maintained with DME Support",
+    "narrative": "Patient demonstrated maintained balance and functional mobility with consistent use of RW. Patient able to ambulate 50 ft with RW and SBA for safety. Static standing balance adequate for short grooming tasks at sink with one hand on walker. Dynamic balance maintained during ADL tasks with CGA for safety during reaching outside base of support."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY_BALANCE",
+    "intervention": "Mobility Sustained with Assistive Device",
+    "narrative": "Patient facilitated in functional mobility tasks demonstrating maintained balance with adaptive equipment in place. Patient able to complete w/c propulsion independently for distances up to 100 ft. Transfers maintained at baseline level requiring min assist with grab bars for w/c<>bed/toilet. Static sitting balance adequate for all seated ADL tasks."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY_BALANCE",
+    "intervention": "Balance Decline Requiring Increased Assist",
+    "narrative": "Patient exhibited declining balance and mobility skills 2/2 progressive condition. Assist level upgraded from SBA to mod physical assist for ambulation with RW over 20 ft. Patient demonstrated increased loss of balance during transfers, requiring tactile cues to trunk and BLE for stability. CGA upgraded to min assist for safety during all standing tasks."
+  },
+  {
+    "category": "FUNCTIONAL_MOBILITY_BALANCE",
+    "intervention": "Functional Mobility Deteriorating with Falls Risk",
+    "narrative": "Patient facilitated in mobility tasks with noted decline in balance and coordination compared to baseline. Patient now requires max assist of 1 for pivot transfers using RW 2/2 severe BLE weakness and impaired balance. Ambulation distance decreased from 50 ft to 10 ft before requiring rest. Falls risk significantly increased requiring constant physical assist for all mobility tasks."
+  },
+  {
+    "category": "BED-CHAIR_TRANSFER_-_CONTACT_GUARD",
+    "intervention": "Bed-Chair Transfer - Contact Guard",
+    "narrative": "Task training focused on functional transfer training (bed-to-chair) to increase performance with transfers. Contact guard at hips for safety to increase performance. Patient completed transfer with contact guard for safety 2/2 impaired dynamic balance."
+  },
+  {
+    "category": "BED_MOBILITY_-_MIN_VERBAL_CUES",
+    "intervention": "Bed Mobility - Min Verbal Cues",
+    "narrative": "Task training focused on bed mobility training to advance independence with bed mobility. Min verbal cues to roll to right side to advance independence. Patient able to roll to right with 1-2 verbal cues 2/2 decreased trunk rotation."
+  }
+]
