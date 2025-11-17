@@ -759,101 +759,6 @@
             }
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-                padding: 5px;
-            }
-
-            .resizer {
-                display: none;
-            }
-
-            .sidebar {
-                width: 80%;
-                max-width: 300px;
-                left: 10px;
-            }
-
-            #sidebar.collapsed {
-                left: -100%;
-            }
-
-            .floating-toggle {
-                width: 48px;
-                height: 48px;
-                left: 5px;
-                top: 5px;
-            }
-
-            .floating-toggle span {
-                font-size: 24px;
-            }
-
-            .sidebar-backdrop.visible {
-                display: block;
-            }
-
-            .panel-title {
-                font-size: 16px;
-                padding: 10px 12px;
-            }
-
-            .filter-tab {
-                font-size: 12px;
-                padding: 4px 10px;
-            }
-
-            .sidebar-item {
-                padding: 12px 10px;
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                font-size: 14px;
-            }
-
-            .sidebar {
-                width: 90%;
-                max-width: none;
-                left: 5px;
-            }
-
-            .panel-title {
-                font-size: 14px;
-                padding: 8px 10px;
-            }
-
-            .sidebar-item {
-                padding: 10px 8px;
-                font-size: 13px;
-            }
-
-            .sidebar-category-item {
-                padding: 8px 8px 8px 16px;
-                font-size: 12px;
-            }
-        }
-
-        /* Touch-friendly improvements */
-        @media (hover: none) and (pointer: coarse) {
-            .sidebar-item,
-            .sidebar-category-item,
-            .floating-toggle,
-            .sidebar-toggle {
-                min-height: 44px;
-                display: flex;
-                align-items: center;
-            }
-
-            .filter-tab {
-                min-height: 44px;
-                padding: 8px 14px;
-            }
-        }
 
         .editor-actions {
             padding: 12px;
@@ -1332,13 +1237,9 @@ function toggleSidebar() {
 
     // Toggle the collapsed state
     if (isCurrentlyCollapsed) {
-        // Expand: remove collapsed, show backdrop ONLY on mobile
+        // Expand: remove collapsed
         sidebar.classList.remove('collapsed');
-
-        // Only show backdrop on mobile screens
-        if (window.innerWidth <= 768) {
-            backdrop.classList.add('visible');
-        }
+        backdrop.classList.remove('visible');
 
         localStorage.setItem('ot_sidebar_collapsed', 'false');
         sidebar.setAttribute('aria-hidden', 'false');
@@ -2674,19 +2575,7 @@ function populateFilters() {
             Object.keys(consolidatedCategories[cptCode]).forEach(groupName => {
                 const group = consolidatedCategories[cptCode][groupName];
 
-                // Group container
-                const groupContainer = document.createElement('div');
-                groupContainer.style.marginBottom = '4px';
-
-                // Group item (clickable header)
-                const groupItem = document.createElement('div');
-                groupItem.className = 'sidebar-category-item';
-                groupItem.style.fontWeight = '500';
-                groupItem.style.paddingLeft = '12px';
-                groupItem.innerHTML = `<span class="sidebar-arrow" style="font-size: 10px; margin-right: 6px;">▶</span>${groupName}`;
-                groupItem.dataset.group = groupName;
-
-                // Subcategories container
+                // Subcategories container - create first to check if we have any items
                 const subContainer = document.createElement('div');
                 subContainer.className = 'sidebar-subcategories';
                 subContainer.id = `subcategories-${cptCode}-${groupName.replace(/\s+/g, '_')}`;
@@ -2713,18 +2602,33 @@ function populateFilters() {
                     }
                 });
 
-                // Toggle group expansion
-                groupItem.onclick = (e) => {
-                    e.stopPropagation();
-                    const isExpanded = subContainer.style.display === 'block';
-                    subContainer.style.display = isExpanded ? 'none' : 'block';
-                    const arrow = groupItem.querySelector('.sidebar-arrow');
-                    arrow.textContent = isExpanded ? '▶' : '▼';
-                };
+                // Only create the group if it has subcategories
+                if (subContainer.children.length > 0) {
+                    // Group container
+                    const groupContainer = document.createElement('div');
+                    groupContainer.style.marginBottom = '4px';
 
-                groupContainer.appendChild(groupItem);
-                groupContainer.appendChild(subContainer);
-                categoriesContainer.appendChild(groupContainer);
+                    // Group item (clickable header)
+                    const groupItem = document.createElement('div');
+                    groupItem.className = 'sidebar-category-item';
+                    groupItem.style.fontWeight = '500';
+                    groupItem.style.paddingLeft = '12px';
+                    groupItem.innerHTML = `<span class="sidebar-arrow" style="font-size: 10px; margin-right: 6px;">▶</span>${groupName}`;
+                    groupItem.dataset.group = groupName;
+
+                    // Toggle group expansion
+                    groupItem.onclick = (e) => {
+                        e.stopPropagation();
+                        const isExpanded = subContainer.style.display === 'block';
+                        subContainer.style.display = isExpanded ? 'none' : 'block';
+                        const arrow = groupItem.querySelector('.sidebar-arrow');
+                        arrow.textContent = isExpanded ? '▶' : '▼';
+                    };
+
+                    groupContainer.appendChild(groupItem);
+                    groupContainer.appendChild(subContainer);
+                    categoriesContainer.appendChild(groupContainer);
+                }
             });
         } else {
             // Use simple flat category list (for CPT 97535)
