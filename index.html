@@ -2778,7 +2778,7 @@ function buildCPTTabs() {
     tabsContainer.innerHTML = '';
 
     // Define CPT codes in order
-    const cptCodes = ['97110', '97112', '97530', '97535'];
+    const cptCodes = Object.keys(CPT_DESCRIPTIONS);
 
     cptCodes.forEach(cptCode => {
         const count = narratives.filter(n => n.cpt === `CPT ${cptCode}`).length;
