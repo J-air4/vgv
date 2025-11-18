@@ -3675,7 +3675,7 @@ function displayNarratives() {
         }
 
         // Filter by Intervention Area
-        if (currentInterventionArea && currentInterventionArea !== 'All') {
+        if (currentInterventionArea) {
             const categoryData = consolidatedCategories[currentCptTab]?.[currentInterventionArea];
             if (categoryData && categoryData.subcategories) {
                 filtered = filtered.filter(n => categoryData.subcategories.includes(n.category));
