@@ -47,6 +47,9 @@
             --amber-800: #92400e;
             --amber-900: #78350f;
 
+            --green-performance: #86efac;
+            --blue-intervention: #93c5fd;
+
             --bg-primary: #1a1515;
             --bg-secondary: #2a2424;
             --bg-tertiary: #332828;
@@ -710,6 +713,44 @@
             color: #e0e0e0;
         }
 
+        /* Editor Empty State */
+        .editor-empty-state {
+            color: var(--text-secondary);
+            padding: 20px;
+            line-height: 1.8;
+        }
+
+        .editor-empty-state__title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--rose-300);
+        }
+
+        .editor-empty-state__steps {
+            margin-left: 12px;
+        }
+
+        .editor-empty-state__step {
+            margin-bottom: 12px;
+        }
+
+        .editor-empty-state__step:last-child {
+            margin-bottom: 0;
+        }
+
+        .editor-empty-state__step-number {
+            color: var(--rose-400);
+            font-weight: 600;
+        }
+
+        .editor-empty-state__highlight {
+            background: rgba(251, 113, 133, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--rose-300);
+        }
+
         .editable-component {
             padding: 3px 6px;
             cursor: pointer;
@@ -735,8 +776,8 @@
         /* Component type specific colors - Warm color palette */
         .component-assistance { background: var(--amber-400); border-color: var(--amber-600); color: #000; font-weight: 500; }
         .component-impairment { background: var(--rose-400); border-color: var(--rose-600); color: #fff; font-weight: 500; }
-        .component-performance { background: #86efac; border-color: #4ade80; color: #000; font-weight: 500; }
-        .component-intervention { background: #93c5fd; border-color: #60a5fa; color: #000; font-weight: 500; }
+        .component-performance { background: var(--green-performance); border-color: #4ade80; color: #000; font-weight: 500; }
+        .component-intervention { background: var(--blue-intervention); border-color: #60a5fa; color: #000; font-weight: 500; }
         .component-equipment { background: #B197FC; border-color: #9775FA; color: #000; font-weight: 500; }
         .component-body_region { background: #FFE066; border-color: #FCC419; color: #000; font-weight: 500; }
         .component-goal { background: #8CE99A; border-color: #69DB7C; color: #000; font-weight: 500; }
@@ -938,6 +979,57 @@
         .suggestion-chip:active {
             background: #1e4a2f;
             transform: translateX(0px);
+        }
+
+        /* Color Legend */
+        .legend {
+            padding: 12px;
+            border-top: 1px solid var(--border-primary);
+            background: var(--bg-tertiary);
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .legend__title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--text-primary);
+        }
+
+        .legend__items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .legend__item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend__swatch {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .legend__swatch--impairment {
+            background-color: var(--rose-400);
+        }
+
+        .legend__swatch--assistance {
+            background-color: var(--amber-400);
+        }
+
+        .legend__swatch--performance {
+            background-color: var(--green-performance);
+        }
+
+        .legend__swatch--intervention {
+            background-color: var(--blue-intervention);
         }
 
         /* Two-Step Assistance Selection */
@@ -1648,12 +1740,12 @@
         <div class="panel-title">Editor</div>
         <div class="panel-content">
             <div class="editor-content" id="editorContent" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Edit narrative content">
-                <div style="color: #d0b0b0; padding: 20px; line-height: 1.8;">
-                    <div style="font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--rose-300);">Welcome! Here's how to build your note:</div>
-                    <div style="margin-left: 12px;">
-                        <div style="margin-bottom: 12px;"><span style="color: var(--rose-400); font-weight: 600;">1.</span> Select a narrative from the library on the left.</div>
-                        <div style="margin-bottom: 12px;"><span style="color: var(--rose-400); font-weight: 600;">2.</span> Click any <span style="background: rgba(251, 113, 133, 0.2); padding: 2px 6px; border-radius: 3px; color: var(--rose-300);">[highlighted component]</span> in the text.</div>
-                        <div><span style="color: var(--rose-400); font-weight: 600;">3.</span> Choose a replacement from the panel on the right.</div>
+                <div class="editor-empty-state">
+                    <div class="editor-empty-state__title">Welcome! Here's how to build your note:</div>
+                    <div class="editor-empty-state__steps">
+                        <div class="editor-empty-state__step"><span class="editor-empty-state__step-number">1.</span> Select a narrative from the library on the left.</div>
+                        <div class="editor-empty-state__step"><span class="editor-empty-state__step-number">2.</span> Click any <span class="editor-empty-state__highlight">[highlighted component]</span> in the text.</div>
+                        <div class="editor-empty-state__step"><span class="editor-empty-state__step-number">3.</span> Choose a replacement from the panel on the right.</div>
                     </div>
                 </div>
             </div>
@@ -1677,23 +1769,23 @@
         <div id="suggestionsPanel" style="display: none;" role="complementary" aria-label="Related component suggestions"></div>
 
         <!-- Color Legend -->
-        <div style="padding: 12px; border-top: 1px solid var(--border-primary); background: var(--bg-tertiary); font-size: 11px; color: var(--text-secondary);">
-            <div style="font-weight: 600; margin-bottom: 8px; font-size: 12px; color: var(--text-primary);">Component Types:</div>
-            <div style="display: flex; flex-direction: column; gap: 6px;">
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <span style="background: var(--rose-400); width: 14px; height: 14px; border-radius: 3px; display: inline-block;"></span>
+        <div class="legend">
+            <div class="legend__title">Component Types:</div>
+            <div class="legend__items">
+                <div class="legend__item">
+                    <span class="legend__swatch legend__swatch--impairment"></span>
                     <span>Impairment</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <span style="background: var(--amber-400); width: 14px; height: 14px; border-radius: 3px; display: inline-block;"></span>
+                <div class="legend__item">
+                    <span class="legend__swatch legend__swatch--assistance"></span>
                     <span>Assistance</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <span style="background: #86efac; width: 14px; height: 14px; border-radius: 3px; display: inline-block;"></span>
+                <div class="legend__item">
+                    <span class="legend__swatch legend__swatch--performance"></span>
                     <span>Goal/Performance</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <span style="background: #93c5fd; width: 14px; height: 14px; border-radius: 3px; display: inline-block;"></span>
+                <div class="legend__item">
+                    <span class="legend__swatch legend__swatch--intervention"></span>
                     <span>Intervention</span>
                 </div>
             </div>
@@ -1702,6 +1794,10 @@
 </div>
 
 <script>
+// Constants
+const EDITOR_EMPTY_STATE_WELCOME_TEXT = "Welcome! Here's how to build your note:";
+
+// State variables
 let narratives = [];
 let currentNarrative = null;
 let selectedComponent = null;
@@ -3777,7 +3873,7 @@ function selectNarrative(narrative, itemElement) {
     const currentText = editorContent.innerText;
     const hasChanges = currentNarrative && currentText &&
                        currentText !== currentNarrative.narrative &&
-                       !currentText.includes('Welcome! Here\'s how to build your note:');
+                       !currentText.includes(EDITOR_EMPTY_STATE_WELCOME_TEXT);
 
     if (hasChanges) {
         if (!confirm('You have unsaved changes. Load new narrative anyway?')) {
@@ -4298,7 +4394,7 @@ function showCompleteDocumentationModal() {
     const editorContent = document.getElementById('editorContent');
     const narrativeText = editorContent.innerText;
 
-    if (!narrativeText || narrativeText.includes('Welcome! Here\'s how to build your note:')) {
+    if (!narrativeText || narrativeText.includes(EDITOR_EMPTY_STATE_WELCOME_TEXT)) {
         alert('Please select a narrative first');
         return;
     }
