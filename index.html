@@ -285,6 +285,141 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
+        /* CPT Code Tabs - Primary Navigation */
+        .cpt-tabs-container {
+            padding: 8px 12px;
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            border-bottom: 2px solid var(--border-primary);
+            flex-shrink: 0;
+        }
+
+        .cpt-tabs {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .cpt-tab {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-primary);
+            border-radius: 8px 8px 0 0;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .cpt-tab:hover {
+            background: var(--bg-hover);
+            border-color: var(--amber-700);
+            color: var(--amber-200);
+            transform: translateY(-2px);
+        }
+
+        .cpt-tab.active {
+            background: linear-gradient(135deg, var(--rose-700) 0%, var(--rose-800) 100%);
+            color: var(--rose-100);
+            border-color: var(--rose-600);
+            border-bottom-color: transparent;
+            box-shadow: 0 -2px 8px rgba(244, 63, 94, 0.3);
+            transform: translateY(2px);
+        }
+
+        .cpt-tab-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            opacity: 0.7;
+            margin-bottom: 2px;
+        }
+
+        .cpt-tab-code {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .cpt-tab-count {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 2px 8px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .cpt-tab.active .cpt-tab-count {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Intervention Areas */
+        .intervention-areas-container {
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-primary);
+            flex-shrink: 0;
+        }
+
+        .intervention-area-header {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--amber-400);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .intervention-areas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .intervention-area {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+            color: var(--text-secondary);
+        }
+
+        .intervention-area:hover {
+            background: var(--bg-hover);
+            border-color: var(--amber-700);
+            color: var(--amber-200);
+            transform: translateY(-1px);
+        }
+
+        .intervention-area.active {
+            background: linear-gradient(135deg, var(--amber-900) 0%, var(--amber-800) 100%);
+            color: var(--amber-100);
+            border-color: var(--amber-600);
+            box-shadow: 0 2px 4px rgba(251, 191, 36, 0.3);
+        }
+
+        .intervention-area-count {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 2px 6px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .intervention-area.active .intervention-area-count {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
         #narrativeList {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1473,6 +1608,17 @@
                 <span id="modeToggleText" aria-hidden="true">📝 Templates</span>
             </button>
         </div>
+        <!-- CPT Code Tabs - Primary Navigation -->
+        <div class="cpt-tabs-container">
+            <div class="cpt-tabs" id="cptTabs" role="tablist" aria-label="CPT Code selection"></div>
+        </div>
+
+        <!-- Intervention Areas - Secondary Navigation -->
+        <div class="intervention-areas-container hidden" id="interventionAreasContainer">
+            <div class="intervention-area-header" id="interventionAreaHeader">Select Intervention Area:</div>
+            <div class="intervention-areas" id="interventionAreas" role="tablist" aria-label="Intervention area selection"></div>
+        </div>
+
         <!-- Search Bar -->
         <div class="search-bar-container">
             <div class="search-bar">
@@ -1482,21 +1628,15 @@
             </div>
             <div class="search-results-count" id="searchResultsCount" style="display: none;" role="status" aria-live="polite"></div>
         </div>
-        <!-- Quick Access Filters -->
+
+        <!-- Quick Access Filters (moved to bottom of header) -->
         <div class="quick-access-filters">
-            <button class="filter-btn active" data-filter="ALL" id="filterAll" aria-label="Show all narratives">
-                📋 All
-            </button>
             <button class="filter-btn" data-filter="FAVORITES" id="filterFavorites" aria-label="Show favorite narratives">
                 ★ Favorites <span class="filter-count" id="favoritesCount">(0)</span>
             </button>
             <button class="filter-btn" data-filter="RECENT" id="filterRecent" aria-label="Show recently viewed narratives">
                 ⌚ Recent <span class="filter-count" id="recentCount">(0)</span>
             </button>
-        </div>
-        <!-- Evidence-Based UI: Category Tabs for Better Navigation -->
-        <div class="category-tabs-container" id="categoryTabsContainer" style="display: none;" hidden>
-            <div class="category-tabs" id="categoryTabs" role="tablist" aria-label="Category selection"></div>
         </div>
         <div class="panel-content" id="narrativeList" role="list" aria-label="Available narratives"></div>
         <div class="panel-content" id="templateBuilder" style="display: none; padding: 15px;">
@@ -2616,70 +2756,148 @@ async function loadConsolidatedCategories() {
 }
 
 // ============================================================================
-// Evidence-Based UI: Category Tabs for Better Navigation
+// Tab-Based Navigation: CPT Codes → Intervention Areas → Narratives
 // ============================================================================
-let currentSelectedCategory = null;
+let currentCptTab = null;
+let currentInterventionArea = null;
 
-function buildCategoryTabs() {
-    const tabsContainer = document.getElementById('categoryTabs');
-    const tabsWrapper = document.getElementById('categoryTabsContainer');
+// CPT Code descriptions
+const CPT_DESCRIPTIONS = {
+    '97110': 'Therapeutic Exercise',
+    '97112': 'Neuromuscular Reeducation',
+    '97530': 'Therapeutic Activities',
+    '97535': 'Self-Care/ADL Training'
+};
 
-    if (!tabsContainer || !tabsWrapper) return;
+// Build CPT Code Tabs
+function buildCPTTabs() {
+    const tabsContainer = document.getElementById('cptTabs');
+    if (!tabsContainer) return;
 
-    // Clear existing tabs
     tabsContainer.innerHTML = '';
 
-    // Get the current CPT code (extract from filter like "97530" from "CPT 97530")
-    const cptCode = currentCptFilter.replace('CPT ', '');
+    // Derive CPT codes from CPT_DESCRIPTIONS to ensure consistency
+    const cptCodes = Object.keys(CPT_DESCRIPTIONS);
 
-    // Hide tabs if ALL or no specific CPT selected
-    if (!cptCode || cptCode === 'ALL') {
-        tabsWrapper.style.display = 'none';
-        currentSelectedCategory = null;
-        return;
-    }
-
-    // Get categories for this CPT code
-    const categories = consolidatedCategories[cptCode];
-    if (!categories || Object.keys(categories).length === 0) {
-        tabsWrapper.style.display = 'none';
-        currentSelectedCategory = null;
-        return;
-    }
-
-    // Show tabs container
-    tabsWrapper.style.display = 'block';
-
-    // Add "All" tab
-    const allTab = document.createElement('button');
-    allTab.className = 'category-tab active';
-    allTab.textContent = '📋 All Categories';
-    allTab.setAttribute('data-category', 'ALL');
-    allTab.setAttribute('role', 'tab');
-    allTab.setAttribute('aria-selected', 'true');
-    allTab.onclick = () => selectCategoryTab('ALL');
-    tabsContainer.appendChild(allTab);
-
-    // Add category tabs
-    Object.entries(categories).forEach(([categoryName, categoryData]) => {
-        // Skip metadata
-        if (categoryName === '_metadata') return;
-
-        // Count narratives in this category
-        const count = countNarrativesInCategory(cptCode, categoryData.subcategories || []);
+    cptCodes.forEach(cptCode => {
+        const count = narratives.filter(n => n.cpt === `CPT ${cptCode}`).length;
 
         const tab = document.createElement('button');
-        tab.className = 'category-tab';
-        tab.setAttribute('data-category', categoryName);
+        tab.className = 'cpt-tab';
+        tab.setAttribute('data-cpt', cptCode);
         tab.setAttribute('role', 'tab');
         tab.setAttribute('aria-selected', 'false');
-        tab.onclick = () => selectCategoryTab(categoryName);
 
-        // Add category name and count
-        tab.innerHTML = `${categoryName} <span class="category-tab-count">${count}</span>`;
+        tab.innerHTML = `
+            <span class="cpt-tab-label">${CPT_DESCRIPTIONS[cptCode]}</span>
+            <span class="cpt-tab-code">CPT ${cptCode} <span class="cpt-tab-count">${count}</span></span>
+        `;
 
+        tab.addEventListener('click', () => selectCPTTab(cptCode));
         tabsContainer.appendChild(tab);
     });
+
+    // Select first tab by default
+    if (!currentCptTab && cptCodes.length > 0) {
+        selectCPTTab(cptCodes[0]);
+    }
+}
+
+// Select CPT Tab
+function selectCPTTab(cptCode) {
+    currentCptTab = cptCode;
+    currentInterventionArea = null; // Reset intervention area selection
+
+    // Update tab states
+    document.querySelectorAll('.cpt-tab').forEach(tab => {
+        const isSelected = tab.getAttribute('data-cpt') === cptCode;
+        tab.classList.toggle('active', isSelected);
+        tab.setAttribute('aria-selected', isSelected);
+    });
+
+    // Build intervention areas for this CPT code
+    buildInterventionAreas(cptCode);
+
+    // Show toast notification
+    showToast(`Viewing ${CPT_DESCRIPTIONS[cptCode]} (CPT ${cptCode})`, 'info', 2000);
+}
+
+// Build Intervention Areas for selected CPT code
+function buildInterventionAreas(cptCode) {
+    const areasContainer = document.getElementById('interventionAreas');
+    const areasWrapper = document.getElementById('interventionAreasContainer');
+    const header = document.getElementById('interventionAreaHeader');
+
+    if (!areasContainer || !areasWrapper) return;
+
+    areasContainer.innerHTML = '';
+
+    // Get categories for this CPT code from consolidated categories
+    const categories = consolidatedCategories[cptCode];
+    if (!categories || Object.keys(categories).length === 0) {
+        areasWrapper.classList.add('hidden');
+        displayNarratives();
+        return;
+    }
+
+    // Show intervention areas
+    areasWrapper.classList.remove('hidden');
+    header.textContent = `${CPT_DESCRIPTIONS[cptCode]} - Intervention Areas:`;
+
+    // Add "All" intervention area
+    const allArea = document.createElement('button');
+    allArea.className = 'intervention-area active';
+    allArea.setAttribute('data-area', 'ALL');
+    allArea.setAttribute('role', 'tab');
+    allArea.setAttribute('aria-selected', 'true');
+
+    const allCount = narratives.filter(n => n.cpt === `CPT ${cptCode}`).length;
+    allArea.innerHTML = `📋 All <span class="intervention-area-count">${allCount}</span>`;
+
+    allArea.addEventListener('click', () => selectInterventionArea(cptCode, 'ALL'));
+    areasContainer.appendChild(allArea);
+
+    // Add intervention areas from consolidated categories
+    Object.entries(categories).forEach(([areaName, areaData]) => {
+        // Skip metadata
+        if (areaName === '_metadata') return;
+
+        const count = countNarrativesInCategory(cptCode, areaData.subcategories || []);
+
+        const area = document.createElement('button');
+        area.className = 'intervention-area';
+        area.setAttribute('data-area', areaName);
+        area.setAttribute('role', 'tab');
+        area.setAttribute('aria-selected', 'false');
+
+        area.innerHTML = `${areaName} <span class="intervention-area-count">${count}</span>`;
+
+        area.addEventListener('click', () => selectInterventionArea(cptCode, areaName));
+        areasContainer.appendChild(area);
+    });
+
+    // Select "All" by default
+    selectInterventionArea(cptCode, 'ALL');
+}
+
+// Select Intervention Area
+function selectInterventionArea(cptCode, areaName) {
+    currentInterventionArea = areaName === 'ALL' ? null : areaName;
+
+    // Update intervention area states
+    document.querySelectorAll('.intervention-area').forEach(area => {
+        const isSelected = area.getAttribute('data-area') === areaName;
+        area.classList.toggle('active', isSelected);
+        area.setAttribute('aria-selected', isSelected);
+    });
+
+    // Display narratives for this CPT code and intervention area
+    displayNarratives();
+
+    // Show toast notification
+    if (areaName !== 'ALL') {
+        showToast(`Viewing: ${areaName}`, 'info', 2000);
+    }
 }
 
 function countNarrativesInCategory(cptCode, subcategories) {
@@ -2690,42 +2908,6 @@ function countNarrativesInCategory(cptCode, subcategories) {
         if (nCpt !== cptCode) return false;
         return subcategories.includes(n.category);
     }).length;
-}
-
-function selectCategoryTab(categoryName) {
-    currentSelectedCategory = categoryName === 'ALL' ? null : categoryName;
-
-    // Update tab states
-    document.querySelectorAll('.category-tab').forEach(tab => {
-        const isSelected = tab.getAttribute('data-category') === categoryName;
-        tab.classList.toggle('active', isSelected);
-        tab.setAttribute('aria-selected', isSelected);
-    });
-
-    // Re-render narrative list with category filter
-    displayNarratives();
-
-    // Show toast notification for better feedback
-    if (categoryName !== 'ALL') {
-        showToast(`Showing: ${categoryName}`, 'info', 2000);
-    }
-}
-
-function getNarrativesForSelectedCategory() {
-    if (!currentSelectedCategory) return narratives;
-
-    const cptCode = currentCptFilter.replace('CPT ', '');
-    const categoryData = consolidatedCategories[cptCode]?.[currentSelectedCategory];
-
-    if (!categoryData) return narratives;
-
-    const subcategories = categoryData.subcategories || [];
-
-    return narratives.filter(n => {
-        const nCpt = n.cpt?.replace('CPT ', '');
-        if (nCpt !== cptCode) return false;
-        return subcategories.includes(n.category);
-    });
 }
 
 async function loadNarratives() {
@@ -3388,22 +3570,17 @@ function displayNarratives() {
             return recent.indexOf(getNarrativeId(a)) - recent.indexOf(getNarrativeId(b));
         });
     } else {
-        // Filter by CPT
-        if (currentCptFilter !== 'ALL') {
-            filtered = filtered.filter(n => n.cpt === currentCptFilter);
+        // Filter by CPT Tab
+        if (currentCptTab) {
+            filtered = filtered.filter(n => n.cpt === `CPT ${currentCptTab}`);
         }
 
-        // Evidence-Based UI: Filter by selected category tab
-        if (currentSelectedCategory) {
-            const cptCode = currentCptFilter.replace('CPT ', '');
-            const categoryData = consolidatedCategories[cptCode]?.[currentSelectedCategory];
+        // Filter by Intervention Area
+        if (currentInterventionArea) {
+            const categoryData = consolidatedCategories[currentCptTab]?.[currentInterventionArea];
             if (categoryData && categoryData.subcategories) {
                 filtered = filtered.filter(n => categoryData.subcategories.includes(n.category));
             }
-        }
-        // Filter by Category (legacy support)
-        else if (currentCategoryFilter !== 'ALL') {
-            filtered = filtered.filter(n => n.category === currentCategoryFilter);
         }
     }
 
@@ -5000,6 +5177,7 @@ loadNarratives();
 loadTemplates();
 initializeNarrativeSearch();
 initializeQuickAccessFilters();
+buildCPTTabs();
 
 // Resizable panels functionality
 (function initResizablePanels() {
