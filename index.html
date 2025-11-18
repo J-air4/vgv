@@ -1592,11 +1592,21 @@ function showToast(message, type = 'info', duration = 4000) {
         info: 'ℹ'
     };
 
-    toast.innerHTML = `
-        <span class="toast-icon">${icons[type] || icons.info}</span>
-        <span class="toast-content">${message}</span>
-        <button class="toast-close" onclick="this.parentElement.remove()" aria-label="Close notification">×</button>
-    `;
+    const iconSpan = document.createElement('span');
+    iconSpan.className = 'toast-icon';
+    iconSpan.textContent = icons[type] || icons.info;
+
+    const contentSpan = document.createElement('span');
+    contentSpan.className = 'toast-content';
+    contentSpan.textContent = message;
+
+    const closeButton = document.createElement('button');
+    closeButton.className = 'toast-close';
+    closeButton.setAttribute('aria-label', 'Close notification');
+    closeButton.innerHTML = '&times;';
+    closeButton.addEventListener('click', () => toast.remove());
+
+    toast.append(iconSpan, contentSpan, closeButton);
 
     container.appendChild(toast);
 
