@@ -1614,7 +1614,7 @@
         </div>
 
         <!-- Intervention Areas - Secondary Navigation -->
-        <div class="intervention-areas-container" id="interventionAreasContainer" hidden>
+        <div class="intervention-areas-container hidden" id="interventionAreasContainer">
             <div class="intervention-area-header" id="interventionAreaHeader">Select Intervention Area:</div>
             <div class="intervention-areas" id="interventionAreas" role="tablist" aria-label="Intervention area selection"></div>
         </div>
@@ -2760,7 +2760,6 @@ async function loadConsolidatedCategories() {
 // ============================================================================
 let currentCptTab = null;
 let currentInterventionArea = null;
-let currentSelectedCategory = null;
 
 // CPT Code descriptions
 const CPT_DESCRIPTIONS = {
@@ -2777,7 +2776,7 @@ function buildCPTTabs() {
 
     tabsContainer.innerHTML = '';
 
-    // Define CPT codes in order
+    // Derive CPT codes from CPT_DESCRIPTIONS to ensure consistency
     const cptCodes = Object.keys(CPT_DESCRIPTIONS);
 
     cptCodes.forEach(cptCode => {
@@ -2836,13 +2835,13 @@ function buildInterventionAreas(cptCode) {
     // Get categories for this CPT code from consolidated categories
     const categories = consolidatedCategories[cptCode];
     if (!categories || Object.keys(categories).length === 0) {
-        areasWrapper.style.display = 'none';
+        areasWrapper.classList.add('hidden');
         displayNarratives();
         return;
     }
 
     // Show intervention areas
-    areasWrapper.style.display = 'block';
+    areasWrapper.classList.remove('hidden');
     header.textContent = `${CPT_DESCRIPTIONS[cptCode]} - Intervention Areas:`;
 
     // Add "All" intervention area
@@ -2901,68 +2900,6 @@ function selectInterventionArea(cptCode, areaName) {
     }
 }
 
-function buildCategoryTabs() {
-    const tabsContainer = document.getElementById('categoryTabs');
-    const tabsWrapper = document.getElementById('categoryTabsContainer');
-
-    if (!tabsContainer || !tabsWrapper) return;
-
-    // Clear existing tabs
-    tabsContainer.innerHTML = '';
-
-    // Get the current CPT code (extract from filter like "97530" from "CPT 97530")
-    const cptCode = currentCptFilter.replace('CPT ', '');
-
-    // Hide tabs if ALL or no specific CPT selected
-    if (!cptCode || cptCode === 'ALL') {
-        tabsWrapper.style.display = 'none';
-        currentSelectedCategory = null;
-        return;
-    }
-
-    // Get categories for this CPT code
-    const categories = consolidatedCategories[cptCode];
-    if (!categories || Object.keys(categories).length === 0) {
-        tabsWrapper.style.display = 'none';
-        currentSelectedCategory = null;
-        return;
-    }
-
-    // Show tabs container
-    tabsWrapper.style.display = 'block';
-
-    // Add "All" tab
-    const allTab = document.createElement('button');
-    allTab.className = 'category-tab active';
-    allTab.textContent = '📋 All Categories';
-    allTab.setAttribute('data-category', 'ALL');
-    allTab.setAttribute('role', 'tab');
-    allTab.setAttribute('aria-selected', 'true');
-    allTab.onclick = () => selectCategoryTab('ALL');
-    tabsContainer.appendChild(allTab);
-
-    // Add category tabs
-    Object.entries(categories).forEach(([categoryName, categoryData]) => {
-        // Skip metadata
-        if (categoryName === '_metadata') return;
-
-        // Count narratives in this category
-        const count = countNarrativesInCategory(cptCode, categoryData.subcategories || []);
-
-        const tab = document.createElement('button');
-        tab.className = 'category-tab';
-        tab.setAttribute('data-category', categoryName);
-        tab.setAttribute('role', 'tab');
-        tab.setAttribute('aria-selected', 'false');
-        tab.onclick = () => selectCategoryTab(categoryName);
-
-        // Add category name and count
-        tab.innerHTML = `${categoryName} <span class="category-tab-count">${count}</span>`;
-
-        tabsContainer.appendChild(tab);
-    });
-}
-
 function countNarrativesInCategory(cptCode, subcategories) {
     if (!subcategories || subcategories.length === 0) return 0;
 
@@ -2971,42 +2908,6 @@ function countNarrativesInCategory(cptCode, subcategories) {
         if (nCpt !== cptCode) return false;
         return subcategories.includes(n.category);
     }).length;
-}
-
-function selectCategoryTab(categoryName) {
-    currentSelectedCategory = categoryName === 'ALL' ? null : categoryName;
-
-    // Update tab states
-    document.querySelectorAll('.category-tab').forEach(tab => {
-        const isSelected = tab.getAttribute('data-category') === categoryName;
-        tab.classList.toggle('active', isSelected);
-        tab.setAttribute('aria-selected', isSelected);
-    });
-
-    // Re-render narrative list with category filter
-    displayNarratives();
-
-    // Show toast notification for better feedback
-    if (categoryName !== 'ALL') {
-        showToast(`Showing: ${categoryName}`, 'info', 2000);
-    }
-}
-
-function getNarrativesForSelectedCategory() {
-    if (!currentSelectedCategory) return narratives;
-
-    const cptCode = currentCptFilter.replace('CPT ', '');
-    const categoryData = consolidatedCategories[cptCode]?.[currentSelectedCategory];
-
-    if (!categoryData) return narratives;
-
-    const subcategories = categoryData.subcategories || [];
-
-    return narratives.filter(n => {
-        const nCpt = n.cpt?.replace('CPT ', '');
-        if (nCpt !== cptCode) return false;
-        return subcategories.includes(n.category);
-    });
 }
 
 async function loadNarratives() {
@@ -5276,7 +5177,6 @@ loadNarratives();
 loadTemplates();
 initializeNarrativeSearch();
 initializeQuickAccessFilters();
-initializeEvidenceBasedUI();
 buildCPTTabs();
 
 // Resizable panels functionality
