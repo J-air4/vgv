@@ -294,18 +294,27 @@
 
         .narrative-group-header {
             grid-column: 1 / -1;
-            padding: 8px 12px;
-            margin-top: 12px;
-            margin-bottom: 4px;
-            background: linear-gradient(135deg, #2c5282 0%, #2d3748 100%);
-            color: #e2e8f0;
-            font-weight: 600;
-            font-size: 11px;
+            padding: 10px 14px;
+            margin-top: 16px;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, var(--rose-900) 0%, var(--rose-800) 100%);
+            color: var(--rose-100);
+            font-weight: 700;
+            font-size: 13px;
             letter-spacing: 0.5px;
-            text-transform: uppercase;
-            border-left: 4px solid #4299e1;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            border-left: 5px solid var(--rose-600);
+            border-radius: 6px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Evidence-Based UI: Visual hierarchy for CPT code organization */
+        .narrative-group-header::before {
+            content: '📋';
+            font-size: 16px;
+            flex-shrink: 0;
         }
 
         .narrative-group-header:first-child {
@@ -3272,211 +3281,76 @@ function getSmartTitle(narrative, currentCategory) {
 }
 
 function determineNarrativeGroup(narrative) {
-    const intervention = (narrative.intervention || '').toLowerCase();
-    const category = (narrative.category || '').toLowerCase();
+    // Evidence-Based UI: Organize by CPT code first, then intervention area
+    const cpt = narrative.cpt || 'Unknown CPT';
+    const category = narrative.category || 'UNCATEGORIZED';
 
-    // 97110 - Therapeutic Exercise: Focus on impairment and body region, not condition
+    // Get CPT code number for lookup
+    const cptCode = cpt.replace('CPT ', '');
 
-    // Shoulder exercises
-    if (intervention.includes('shoulder')) {
-        if (intervention.includes('rom')) {
-            return 'Shoulder ROM';
-        } else if (intervention.includes('strengthen')) {
-            return 'Shoulder Strengthening';
-        }
-        return 'Shoulder';
-    }
+    // Map category codes to friendly names using consolidated categories
+    const categoryMapping = {
+        // CPT 97110 - Therapeutic Exercise
+        'SHOULDER_ROM': 'Upper Extremity - Shoulder',
+        'SHOULDER_STRENGTHENING': 'Upper Extremity - Shoulder',
+        'ELBOW_WRIST_ROM': 'Upper Extremity - Elbow/Wrist',
+        'GRIP_STRENGTHENING': 'Upper Extremity - Hand/Grip',
+        'HAND_FINGER_EXERCISE': 'Upper Extremity - Hand/Finger',
+        'BUE_STRENGTHENING': 'Upper Extremity - General',
+        'HIP_KNEE_ROM': 'Lower Extremity - Hip/Knee',
+        'ANKLE_ROM': 'Lower Extremity - Ankle',
+        'BLE_STRENGTHENING': 'Lower Extremity - General',
+        'CERVICAL_ROM': 'Spine & Core - Cervical',
+        'TRUNK_ROM': 'Spine & Core - Trunk',
+        'CORE_STRENGTHENING': 'Spine & Core - Core',
+        'PROGRESSIVE_RESISTIVE': 'General Conditioning - Progressive Resistive',
+        'STRETCHING_FLEXIBILITY': 'General Conditioning - Stretching',
+        'ROM_FLEXIBILITY': 'General Conditioning - ROM/Flexibility',
+        'STRENGTH_ENDURANCE': 'General Conditioning - Strength/Endurance',
+        'EDEMA_REDUCTION': 'Specialized - Edema Management',
 
-    // Elbow/Wrist/Forearm exercises
-    if (intervention.includes('elbow') || intervention.includes('wrist') || intervention.includes('forearm')) {
-        if (intervention.includes('strengthen')) {
-            return 'Elbow/Wrist Strengthening';
-        }
-        return 'Elbow/Wrist/Forearm ROM';
-    }
+        // CPT 97112 - Neuromuscular Reeducation
+        'STATIC_SITTING_BALANCE': 'Balance Training - Sitting',
+        'DYNAMIC_SITTING_BALANCE': 'Balance Training - Sitting',
+        'STATIC_STANDING_BALANCE': 'Balance Training - Standing',
+        'DYNAMIC_STANDING_BALANCE': 'Balance Training - Standing',
+        'WEIGHT_SHIFT_TRAINING': 'Balance Training - Weight Shift',
+        'PROPRIOCEPTION_UE': 'Proprioception & Sensory - Upper Extremity',
+        'PROPRIOCEPTION_LE': 'Proprioception & Sensory - Lower Extremity',
+        'SENSORY_RETRAINING': 'Proprioception & Sensory - Sensory',
+        'VESTIBULAR_TRAINING': 'Proprioception & Sensory - Vestibular',
+        'COORDINATION_TRAINING': 'Motor Control & Coordination',
+        'MOTOR_PLANNING': 'Motor Control & Coordination',
+        'MOVEMENT_PATTERNS': 'Motor Control & Coordination',
+        'TRUNK_CONTROL': 'Motor Control & Coordination',
+        'POSTURAL_CONTROL': 'Motor Control & Coordination',
+        'COGNITIVE_PERCEPTUAL': 'Cognitive & Perceptual',
+        'VISUAL_MOTOR_INTEGRATION': 'Cognitive & Perceptual',
 
-    // Hand/Finger ROM and Function
-    if (intervention.includes('finger') || (intervention.includes('hand') && intervention.includes('rom'))) {
-        return 'Hand/Finger ROM';
-    }
+        // CPT 97530 - Therapeutic Activities
+        'BED_MOBILITY': 'Mobility Training - Bed Mobility',
+        'FUNCTIONAL_MOBILITY': 'Mobility Training - Functional',
+        'TRANSFERS': 'Transfer Training',
+        'BALANCE': 'Balance Activities',
+        'UPPER_EXTREMITY': 'Upper Extremity Function',
+        'UE_ROM': 'Upper Extremity Function - ROM',
+        'FINE_MOTOR_COORDINATION': 'Upper Extremity Function - Fine Motor',
+        'DEXTERITY': 'Upper Extremity Function - Dexterity',
 
-    // Grip and Hand Strengthening
-    if (intervention.includes('grip') || intervention.includes('hand intrinsic') ||
-        (intervention.includes('hand') && intervention.includes('strengthen'))) {
-        return 'Grip Strengthening';
-    }
+        // CPT 97535 - Self-Care/ADL Training
+        'BATHING': 'Self-Care - Bathing',
+        'DRESSING': 'Self-Care - Dressing',
+        'FEEDING': 'Self-Care - Feeding',
+        'TOILETING': 'Self-Care - Toileting',
+        'GROOMING': 'Self-Care - Grooming',
+        'IADL': 'Home Management - IADL'
+    };
 
-    // Hip/Knee ROM
-    if ((intervention.includes('hip') || intervention.includes('knee')) && intervention.includes('rom')) {
-        return 'Hip/Knee ROM';
-    }
+    // Get friendly category name
+    const friendlyCategory = categoryMapping[category] || formatCategoryName(category);
 
-    // Ankle ROM
-    if (intervention.includes('ankle') && intervention.includes('rom')) {
-        return 'Ankle ROM';
-    }
-
-    // Lower Extremity Strengthening
-    if (intervention.includes('le strengthen')) {
-        return 'Lower Extremity Strengthening';
-    }
-
-    // Cervical ROM
-    if (intervention.includes('cervical')) {
-        return 'Cervical ROM';
-    }
-
-    // Trunk ROM
-    if (intervention.includes('trunk') && intervention.includes('rom')) {
-        return 'Trunk ROM';
-    }
-
-    // Core Strengthening
-    if (intervention.includes('core strengthen')) {
-        return 'Core Strengthening';
-    }
-
-    // Progressive Resistive Exercise (PRE)
-    if (intervention.includes('pre ') || intervention.includes('progressive resistive')) {
-        return 'Progressive Resistive Exercise';
-    }
-
-    // Stretching & Flexibility
-    if (intervention.includes('stretching') || intervention.includes('flexibility')) {
-        return 'Stretching & Flexibility';
-    }
-
-    // Generic ROM fallback
-    if (intervention.includes('rom') || intervention.includes('prom') || intervention.includes('arom')) {
-        return 'ROM';
-    }
-
-    // Generic Strengthening fallback
-    if (intervention.includes('strengthening') || intervention.includes('strength') || intervention.includes('resistance')) {
-        return 'Strengthening';
-    }
-
-    // Balance groups
-    if (intervention.includes('balance') || category.includes('balance')) {
-        if (intervention.includes('seated') || intervention.includes('sitting') || category.includes('sitting')) {
-            return 'Balance - Seated';
-        } else if (intervention.includes('standing') || intervention.includes('stand') || category.includes('standing')) {
-            return 'Balance - Standing';
-        } else if (intervention.includes('dynamic') || category.includes('dynamic')) {
-            return 'Balance - Dynamic';
-        }
-        return 'Balance';
-    }
-
-    // Posture & Trunk Control (97112)
-    if (intervention.includes('postur') || intervention.includes('trunk') ||
-        category.includes('posture') || category.includes('trunk')) {
-        return 'Posture & Trunk Control';
-    }
-
-    // Proprioception & Sensory (97112)
-    if (intervention.includes('proprioception') || intervention.includes('sensory') ||
-        category.includes('proprioception') || category.includes('sensory')) {
-        if (intervention.includes('ue') || intervention.includes('upper') || category.includes('_ue')) {
-            return 'Proprioception - Upper Extremity';
-        } else if (intervention.includes('le') || intervention.includes('lower') || category.includes('_le')) {
-            return 'Proprioception - Lower Extremity';
-        }
-        return 'Proprioception & Sensory';
-    }
-
-    // Coordination & Motor Planning (97112)
-    if (intervention.includes('coordination') || intervention.includes('motor planning') ||
-        category.includes('coordination') || category.includes('motor_planning')) {
-        return 'Coordination & Motor Planning';
-    }
-
-    // Vestibular Training (97112)
-    if (intervention.includes('vestibular') || category.includes('vestibular')) {
-        return 'Vestibular Training';
-    }
-
-    // Cognitive & Perceptual (97112)
-    if (intervention.includes('cognitive') || intervention.includes('perceptual') ||
-        intervention.includes('visual motor') || category.includes('cognitive') ||
-        category.includes('perceptual') || category.includes('visual_motor')) {
-        return 'Cognitive & Perceptual';
-    }
-
-    // Bed Mobility (97530)
-    if (intervention.includes('bed mobility') || category.includes('bed_mobility')) {
-        return 'Bed Mobility';
-    }
-
-    // Functional Mobility (97530)
-    if (intervention.includes('functional mobility') || category.includes('functional_mobility')) {
-        return 'Functional Mobility';
-    }
-
-    // Reaching & Bending (97530)
-    if (intervention.includes('reaching') || intervention.includes('bending') ||
-        intervention.includes('lifting') || intervention.includes('carrying') ||
-        intervention.includes('floor-level') || intervention.includes('overhead') ||
-        intervention.includes('placement of objects')) {
-        return 'Reaching & Bending';
-    }
-
-    // Fine Motor & Dexterity (97530)
-    if (intervention.includes('fine motor') || intervention.includes('dexterity') ||
-        intervention.includes('grasp') || intervention.includes('theraputty') ||
-        category.includes('fine_motor') || category.includes('dexterity')) {
-        return 'Fine Motor & Dexterity';
-    }
-
-    // Upper Extremity Function (97530)
-    if ((intervention.includes('ue ') || intervention.includes('upper extremity') ||
-        intervention.includes('bilateral') || category.includes('upper_extremity') ||
-        category.includes('ue_rom')) && !intervention.includes('proprioception')) {
-        return 'Upper Extremity Function';
-    }
-
-    // Dynamic Functional Activities (97530)
-    if (intervention.includes('throwing') || intervention.includes('catching') ||
-        intervention.includes('dynamic functional') || intervention.includes('weight shift') ||
-        intervention.includes('closed kinetic chain')) {
-        return 'Dynamic Functional Activities';
-    }
-
-    // Transfer groups (97530)
-    if (intervention.includes('transfer') || category.includes('transfer')) {
-        if (intervention.includes('sit to stand') || intervention.includes('sit-to-stand')) {
-            return 'Transfers - Sit-to-Stand';
-        } else if (intervention.includes('pivot')) {
-            return 'Transfers - Pivot';
-        } else if (intervention.includes('toilet')) {
-            return 'Transfers - Toilet';
-        } else if (intervention.includes('tub') || intervention.includes('shower')) {
-            return 'Transfers - Tub/Shower';
-        }
-        return 'Transfers';
-    }
-
-    // ADL groups (97535)
-    if (intervention.includes('adl') ||
-        intervention.includes('bathing') ||
-        intervention.includes('dressing') ||
-        intervention.includes('grooming') ||
-        intervention.includes('hygiene') ||
-        intervention.includes('toileting')) {
-        if (intervention.includes('bathing') || intervention.includes('shower')) {
-            return 'ADLs - Bathing';
-        } else if (intervention.includes('dressing')) {
-            return 'ADLs - Dressing';
-        } else if (intervention.includes('grooming')) {
-            return 'ADLs - Grooming';
-        } else if (intervention.includes('toileting')) {
-            return 'ADLs - Toileting';
-        }
-        return 'ADLs';
-    }
-
-    // Default: return category as group
-    return narrative.category || 'Other';
+    // Return format: "CPT Code | Category"
+    return `${cpt} | ${friendlyCategory}`;
 }
 
 function displayNarratives() {
@@ -3536,6 +3410,20 @@ function displayNarratives() {
         return;
     }
 
+    // Evidence-Based UI: Sort by CPT code first, then by category for clear organization
+    filtered.sort((a, b) => {
+        // Sort by CPT code first
+        const cptCompare = (a.cpt || '').localeCompare(b.cpt || '');
+        if (cptCompare !== 0) return cptCompare;
+
+        // Then by category
+        const categoryCompare = (a.category || '').localeCompare(b.category || '');
+        if (categoryCompare !== 0) return categoryCompare;
+
+        // Finally by intervention name
+        return (a.intervention || '').localeCompare(b.intervention || '');
+    });
+
     // Track previous group for header insertion
     let previousGroup = null;
 
@@ -3547,7 +3435,36 @@ function displayNarratives() {
         if (currentGroup !== previousGroup) {
             const groupHeader = document.createElement('div');
             groupHeader.className = 'narrative-group-header';
-            groupHeader.textContent = currentGroup;
+
+            // Evidence-Based UI: Format CPT code | Category with visual distinction
+            const parts = currentGroup.split(' | ');
+            if (parts.length === 2) {
+                const cptPart = document.createElement('span');
+                cptPart.style.cssText = 'font-weight: 700; opacity: 1;';
+                cptPart.textContent = parts[0];
+
+                const separator = document.createElement('span');
+                separator.style.cssText = 'opacity: 0.6; margin: 0 6px;';
+                separator.textContent = '|';
+
+                const categoryPart = document.createElement('span');
+                categoryPart.style.cssText = 'font-weight: 500; opacity: 0.95;';
+                categoryPart.textContent = parts[1];
+
+                // Clear the textContent and append structured elements
+                groupHeader.innerHTML = '';
+                // Re-add the icon
+                const icon = document.createElement('span');
+                icon.textContent = '📋';
+                icon.style.fontSize = '16px';
+                groupHeader.appendChild(icon);
+                groupHeader.appendChild(cptPart);
+                groupHeader.appendChild(separator);
+                groupHeader.appendChild(categoryPart);
+            } else {
+                groupHeader.textContent = currentGroup;
+            }
+
             listContainer.appendChild(groupHeader);
             previousGroup = currentGroup;
         }
