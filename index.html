@@ -50,6 +50,7 @@
             --bg-primary: #1a1515;
             --bg-secondary: #2a2424;
             --bg-tertiary: #332828;
+            --bg-hover: #3a2828;
             --border-primary: #553333;
             --border-hover: #774444;
             --text-primary: #f0e0e0;
@@ -101,7 +102,7 @@
         }
 
         .panel-title {
-            background: linear-gradient(135deg, var(--bg-tertiary) 0%, #3a2828 100%);
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-hover) 100%);
             color: var(--text-primary);
             padding: 12px 16px;
             font-weight: 600;
@@ -428,7 +429,7 @@
         .search-bar:focus-within {
             border-color: var(--amber-700);
             box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
-            background: linear-gradient(135deg, var(--bg-tertiary) 0%, #3a2828 100%);
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-hover) 100%);
         }
 
         .search-icon {
@@ -478,6 +479,54 @@
         .search-results-count.has-search {
             color: #aaa;
             font-weight: 500;
+        }
+
+        /* Quick Access Filters */
+        .quick-access-filters {
+            display: flex;
+            gap: 8px;
+            padding: 10px 12px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #444;
+            flex-shrink: 0;
+        }
+
+        .filter-btn {
+            flex: 1;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: 6px;
+            padding: 8px 10px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .filter-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--amber-900) 0%, var(--amber-800) 100%);
+            border-color: var(--amber-700);
+            color: var(--amber-100);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .filter-btn.active:hover {
+            background: linear-gradient(135deg, var(--amber-800) 0%, var(--amber-700) 100%);
+        }
+
+        .filter-count {
+            font-size: 11px;
+            opacity: 0.8;
         }
 
         /* Middle Panel - Editor */
@@ -649,7 +698,7 @@
             display: block;
             width: 100%;
             text-align: left;
-            background: linear-gradient(135deg, var(--bg-tertiary) 0%, #3a2828 100%);
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-hover) 100%);
             border: 1px solid var(--border-primary);
             border-radius: 6px;
             padding: 10px 14px;
@@ -664,7 +713,7 @@
         }
 
         .option-btn:hover {
-            background: linear-gradient(135deg, var(--amber-900) 0%, #3a2828 100%);
+            background: linear-gradient(135deg, var(--amber-900) 0%, var(--bg-hover) 100%);
             border-color: var(--amber-700);
             color: var(--amber-100);
             transform: translateX(2px);
@@ -844,6 +893,18 @@
                 <button class="search-clear-btn" id="searchClearBtn" onclick="clearNarrativeSearch()" title="Clear search (Esc)" style="display: none;" aria-label="Clear search">×</button>
             </div>
             <div class="search-results-count" id="searchResultsCount" style="display: none;" role="status" aria-live="polite"></div>
+        </div>
+        <!-- Quick Access Filters -->
+        <div class="quick-access-filters">
+            <button class="filter-btn active" data-filter="ALL" id="filterAll" aria-label="Show all narratives">
+                📋 All
+            </button>
+            <button class="filter-btn" data-filter="FAVORITES" id="filterFavorites" aria-label="Show favorite narratives">
+                ★ Favorites <span class="filter-count" id="favoritesCount">(0)</span>
+            </button>
+            <button class="filter-btn" data-filter="RECENT" id="filterRecent" aria-label="Show recently viewed narratives">
+                ⌚ Recent <span class="filter-count" id="recentCount">(0)</span>
+            </button>
         </div>
         <div class="panel-content" id="narrativeList" role="list" aria-label="Available narratives"></div>
         <div class="panel-content" id="templateBuilder" style="display: none; padding: 15px;">
@@ -1058,6 +1119,40 @@ function addToRecent(narrativeId) {
 // Helper to create unique ID for each narrative
 function getNarrativeId(narrative) {
     return `${narrative.cpt}_${narrative.category}_${narrative.narrative.substring(0, 50)}`;
+}
+
+// Quick Access Filter Selection
+function selectQuickAccessFilter(filter) {
+    currentQuickAccessFilter = filter;
+
+    // Update button states
+    document.querySelectorAll('.quick-access-filters .filter-btn').forEach(btn => {
+        const btnFilter = btn.dataset.filter;
+        const isActive = (filter === null && btnFilter === 'ALL') || filter === btnFilter;
+        btn.classList.toggle('active', isActive);
+    });
+
+    // Refresh the narrative display
+    displayNarratives();
+}
+
+// Initialize Quick Access Filter event listeners
+function initializeQuickAccessFilters() {
+    document.querySelectorAll('.quick-access-filters .filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.dataset.filter;
+            selectQuickAccessFilter(filter === 'ALL' ? null : filter);
+        });
+    });
+}
+
+// Update filter counts
+function updateFilterCounts() {
+    const favoritesCount = getFavorites().length;
+    const recentCount = getRecentNarratives().length;
+
+    document.getElementById('favoritesCount').textContent = `(${favoritesCount})`;
+    document.getElementById('recentCount').textContent = `(${recentCount})`;
 }
 
 const replacementOptions = {
@@ -2509,6 +2604,9 @@ function displayNarratives() {
         listContainer.removeChild(listContainer.firstChild);
     }
 
+    // Update filter counts
+    updateFilterCounts();
+
     let filtered = narratives;
 
     // Filter by Quick Access (Favorites or Recent)
@@ -2705,6 +2803,9 @@ function toggleFavoriteUI(narrativeId, itemElement) {
     // If currently viewing favorites and unfavorited, remove from view
     if (currentQuickAccessFilter === 'FAVORITES' && !isFav) {
         displayNarratives();
+    } else {
+        // Update filter counts immediately
+        updateFilterCounts();
     }
 }
 
@@ -2809,6 +2910,9 @@ function selectNarrative(narrative, itemElement) {
 
     // Track in recent narratives
     addToRecent(getNarrativeId(narrative));
+
+    // Update filter counts immediately
+    updateFilterCounts();
 
     // BUGFIX: Clear selectedComponent to prevent stale references
     selectedComponent = null;
@@ -4072,6 +4176,7 @@ loadConsolidatedCategories();
 loadNarratives();
 loadTemplates();
 initializeNarrativeSearch();
+initializeQuickAccessFilters();
 
 // Resizable panels functionality
 (function initResizablePanels() {
